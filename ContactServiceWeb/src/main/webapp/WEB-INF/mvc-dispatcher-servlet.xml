@@ -51,11 +51,11 @@
     </bean>
 
     <jdbc:embedded-database id="dataSource" type="H2">
-        <jdbc:script location="classpath:com/sav/resources/schema.sql"/>
-        <jdbc:script location="classpath:com/sav/resources/test-data.sql"/>
+        <jdbc:script location="classpath:resources/schema.sql"/>
+        <jdbc:script location="classpath:resources/test-data.sql"/>
     </jdbc:embedded-database>
 
     <mvc:annotation-driven />
 
-    <!--<mvc:resources mapping="/resources/**" location="/resources/" />-->
+    <mvc:resources mapping="/resources/**" location="resources/" />
 </beans>
