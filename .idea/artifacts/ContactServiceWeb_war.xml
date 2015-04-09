@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="ContactServiceWeb:war">
+    <output-path>$PROJECT_DIR$/ContactServiceWeb/target</output-path>
+    <root id="archive" name="mitta-webapp.war">
+      <element id="artifact" artifact-name="ContactServiceWeb:war exploded" />
+    </root>
+  </artifact>
+</component>

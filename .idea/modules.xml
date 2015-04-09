@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ContactService/ContactService.iml" filepath="$PROJECT_DIR$/ContactService/ContactService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ContactServiceProject.iml" filepath="$PROJECT_DIR$/ContactServiceProject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ContactServiceWeb/ContactServiceWeb.iml" filepath="$PROJECT_DIR$/ContactServiceWeb/ContactServiceWeb.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="WebContactService:war">
+    <output-path>$PROJECT_DIR$/WebContactService/target</output-path>
+    <root id="archive" name="WebContactService-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="WebContactService:war exploded" />
+    </root>
+  </artifact>
+</component>

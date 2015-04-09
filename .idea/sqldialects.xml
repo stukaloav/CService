@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/ContactService/src/main/resources/schema.sql" dialect="H2" />
+    <file url="file://$PROJECT_DIR$/ContactService/src/main/resources/test-data.sql" dialect="H2" />
+    <file url="file://$PROJECT_DIR$/ContactServiceWeb/src/main/webapp/WEB-INF/mvc-dispatcher-servlet.xml" dialect="H2" />
+    <file url="file://$PROJECT_DIR$/ContactServiceWeb/src/main/webapp/com/sav/resources/schema.sql" dialect="H2" />
+    <file url="file://$PROJECT_DIR$/ContactServiceWeb/src/main/webapp/com/sav/resources/test-data.sql" dialect="H2" />
+  </component>
+</project>

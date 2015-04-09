@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="WebContactService:war exploded">
+    <output-path>$PROJECT_DIR$/WebContactService/target/WebContactService-1.0-SNAPSHOT</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="WebContactService" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="C:\Users\StukaloAV\IdeaProjects\ContactServiceProject\WebContactService\target/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="WebContactService/web/Web" />
+    </root>
+  </artifact>
+</component>
