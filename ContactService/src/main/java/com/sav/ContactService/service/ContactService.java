@@ -1,9 +1,6 @@
 package com.sav.ContactService.service;
 
-import com.sav.ContactService.model.Contact;
-import com.sav.ContactService.model.Friendship;
-import com.sav.ContactService.model.Hobby;
-import com.sav.ContactService.model.Place;
+import com.sav.ContactService.model.*;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
@@ -53,4 +50,18 @@ public interface ContactService {
     void addPlace(Place place);
     @Transactional
     List<Place> getAllPlaces();
+
+    //Methods that deal with MessageDao
+    @Transactional
+    void storeMessage(Contact contact, String content,
+                      Date messageDate);
+
+    @Transactional
+    List<Message> getConversation(Contact from, Contact to);
+
+    @Transactional
+    List<Message> getAllMessages();
+
+    @Transactional
+    List<Message> getAllMessagesFromContact(Contact contact);
 }

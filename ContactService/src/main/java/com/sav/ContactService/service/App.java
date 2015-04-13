@@ -13,6 +13,9 @@ public class App {
 
         ContactService contactService = context.getBean(ContactService.class);
         contactService.createContact("Sasha", "Stukalo", new Date(86, 1, 1));
+        contactService.createContact("Luba", "Fedorchak", new Date(86, 1, 1));
+        contactService.createContact("Jonatan", "Swift", new Date(86, 1, 1));
+        contactService.createContact("Lora", "Ditrich", new Date(86, 1, 1));
         contactService.addHobby("football", "favourite team is Dnipro");
         contactService.addPlace("Lviv", 0.21, 0.15);
         Contact contact = new Contact("Jane", "Patric", new Date(23, 1, 4));
@@ -20,6 +23,18 @@ public class App {
         contactService.addPlace("Paris", 0.2, 0.3);
         contactService.addHobbyToContact(contact, hobby);
         System.out.println(contactService.getHobbiesFromContact(contact));
+
+        Contact contact1 = contactService.getContactById(1l);
+        Contact contact2 = contactService.getContactById(2l);
+
+        System.out.println(contactService.getAllMessages());
+        System.out.println(contactService.getAllMessagesFromContact(contact1));
+//
+//        contactService.storeMessage(contact1,
+//                "SOME TEXT", contact2, new Date(84, 1, 3));
+
+//        contactService.getConversation(contact1, contact2);
+
     }
 }
 

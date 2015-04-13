@@ -3,8 +3,10 @@ package com.sav.ContactService.dao;
 import com.sav.ContactService.model.Contact;
 import com.sav.ContactService.model.Friendship;
 import com.sav.ContactService.model.Hobby;
+import com.sav.ContactService.model.Message;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -34,5 +36,11 @@ public interface ContactDao {
     @Transactional
     Set<Contact> getAllContactsSamePlace(String placeTitle);
 
+    @Transactional
     Set<Hobby> getHobbiesFromContact(Contact contact);
+
+    @Transactional
+    void sendMessage(Contact contact, String content,
+                     Date messageDate);
+
 }

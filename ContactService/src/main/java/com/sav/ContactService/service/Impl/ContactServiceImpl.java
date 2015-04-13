@@ -2,11 +2,9 @@ package com.sav.ContactService.service.Impl;
 
 import com.sav.ContactService.dao.ContactDao;
 import com.sav.ContactService.dao.HobbyDao;
+import com.sav.ContactService.dao.MessageDao;
 import com.sav.ContactService.dao.PlaceDao;
-import com.sav.ContactService.model.Contact;
-import com.sav.ContactService.model.Friendship;
-import com.sav.ContactService.model.Hobby;
-import com.sav.ContactService.model.Place;
+import com.sav.ContactService.model.*;
 import com.sav.ContactService.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,6 +24,8 @@ public class ContactServiceImpl implements ContactService {
     private HobbyDao hobbyDao;
     @Autowired
     private PlaceDao placeDao;
+    @Autowired
+    private MessageDao messageDao;
 
     //Methods that deal with ContactDao
     @Override
@@ -146,4 +146,28 @@ public class ContactServiceImpl implements ContactService {
         return placeDao.getAllPlaces();
     }
 
+    //Methods that deal with MessageDao
+    @Override
+    @Transactional
+    public void storeMessage(Contact contact, String content,
+                             Date messageDate) {
+        contactDao.sendMessage(contact, content, messageDate);
+    }
+
+    @Override
+    @Transactional
+    public List<Message> getAllMessages() {
+        return messageDao.getAllMessages();
+    }
+
+    @Override
+    @Transactional
+    public List<Message> getConversation(Contact from, Contact to) {
+        return messageDao.getConversation(from, to);
+    }
+
+    @Override
+    public List<Message> getAllMessagesFromContact(Contact contact) {
+        return messageDao.getAllMessagesFromContact(contact);
+    }
 }

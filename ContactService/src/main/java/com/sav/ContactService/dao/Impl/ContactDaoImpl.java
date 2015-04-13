@@ -2,17 +2,16 @@ package com.sav.ContactService.dao.Impl;
 
 import com.sav.ContactService.dao.ContactDao;
 import com.sav.ContactService.dao.HobbyDao;
-import com.sav.ContactService.model.Contact;
-import com.sav.ContactService.model.ContactPlaces;
-import com.sav.ContactService.model.Friendship;
-import com.sav.ContactService.model.Hobby;
+import com.sav.ContactService.model.*;
 import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -184,6 +183,14 @@ public class ContactDaoImpl implements ContactDao {
             contactsSamePlace.add(contact);
         }
         return contactsSamePlace;
+    }
+
+    @Override
+    @Transactional
+    public void sendMessage(Contact contact,
+                            String content, Date messageDate) {
+        Message message = new Message(messageDate, contact, content);
+        sessionFactory.getCurrentSession().saveOrUpdate(message);
     }
 
 }

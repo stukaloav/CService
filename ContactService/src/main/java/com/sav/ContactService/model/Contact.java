@@ -40,6 +40,10 @@ public class Contact implements Serializable{
     @ManyToMany(mappedBy = "friends")
     private Set<Contact> inverseFriends;
 
+
+    @OneToMany(mappedBy = "contact", fetch = FetchType.LAZY)
+    private List<Message> messages;
+
     public Contact() {
     }
 
@@ -70,7 +74,6 @@ public class Contact implements Serializable{
     public void setInverseFriends(Set<Contact> inverseFriends) {
         this.inverseFriends = inverseFriends;
     }
-
     public long getId() {
         return id;
     }
@@ -95,6 +98,12 @@ public class Contact implements Serializable{
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
+    public List<Message> getMessages() {
+        return messages;
+    }
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
+    }
 
     @Override
     public String toString() {
@@ -113,12 +122,7 @@ public class Contact implements Serializable{
 
         Contact contact = (Contact) o;
 
-        if (id != contact.id) return false;
-        if (birthDate != null ? !birthDate.equals(contact.birthDate) : contact.birthDate != null) return false;
-        if (firstName != null ? !firstName.equals(contact.firstName) : contact.firstName != null) return false;
-        if (lastName != null ? !lastName.equals(contact.lastName) : contact.lastName != null) return false;
-
-        return true;
+        return id == contact.id;
     }
 
     @Override
