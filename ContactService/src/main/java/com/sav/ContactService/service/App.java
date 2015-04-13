@@ -28,12 +28,8 @@ public class App {
         Contact contact2 = contactService.getContactById(2l);
 
         System.out.println(contactService.getAllMessages());
-        System.out.println(contactService.getAllMessagesFromContact(contact1));
-//
-//        contactService.storeMessage(contact1,
-//                "SOME TEXT", contact2, new Date(84, 1, 3));
 
-//        contactService.getConversation(contact1, contact2);
+        System.out.println(contactService.getConversation(contact1, contact2));
 
     }
 }

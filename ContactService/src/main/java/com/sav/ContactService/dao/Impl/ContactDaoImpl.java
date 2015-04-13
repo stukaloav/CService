@@ -187,9 +187,9 @@ public class ContactDaoImpl implements ContactDao {
 
     @Override
     @Transactional
-    public void sendMessage(Contact contact,
+    public void sendMessage(Contact sender, Contact receiver,
                             String content, Date messageDate) {
-        Message message = new Message(messageDate, contact, content);
+        Message message = new Message(messageDate, sender, receiver, content);
         sessionFactory.getCurrentSession().saveOrUpdate(message);
     }
 

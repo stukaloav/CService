@@ -14,5 +14,5 @@ public interface MessageDao {
     public List<Message> getAllMessages();
 
     @Transactional
-    List<Message> getAllMessagesFromContact(Contact contact);
+    List<Message> getAllMessagesFromContact(Contact receiver);
 }

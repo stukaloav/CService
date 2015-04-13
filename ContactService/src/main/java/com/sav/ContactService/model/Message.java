@@ -20,8 +20,10 @@ public class Message implements Serializable{
     private Date messageDate;
 
     @ManyToOne (targetEntity = Contact.class)
-    private Contact contact;
+    private Contact sender;
 
+    @ManyToOne (targetEntity = Contact.class)
+    private Contact receiver;
 
     @Column(name = "CONTENT")
     private String content;
@@ -29,9 +31,10 @@ public class Message implements Serializable{
     public Message() {
     }
 
-    public Message(Date messageDate, Contact contact, String content) {
+    public Message(Date messageDate, Contact sender, Contact receiver, String content) {
         this.messageDate = messageDate;
-        this.contact = contact;
+        this.sender = sender;
+        this.receiver = receiver;
         this.content = content;
     }
 
@@ -51,12 +54,12 @@ public class Message implements Serializable{
         this.messageDate = messageDate;
     }
 
-    public Contact getContact() {
-        return contact;
+    public Contact getSender() {
+        return sender;
     }
 
-    public void setContact(Contact contact) {
-        this.contact = contact;
+    public void setSender(Contact sender) {
+        this.sender = sender;
     }
 
 
@@ -66,6 +69,14 @@ public class Message implements Serializable{
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Contact getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(Contact receiver) {
+        this.receiver = receiver;
     }
 
     @Override
@@ -88,7 +99,8 @@ public class Message implements Serializable{
         return "Message{" +
                 "id=" + id +
                 ", messageDate=" + messageDate +
-                ", contact=" + contact +
+                ", sender=" + sender +
+                ", receiver=" + receiver +
                 ", content='" + content + '\'' +
                 '}';
     }

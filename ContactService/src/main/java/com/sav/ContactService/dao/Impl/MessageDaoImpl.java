@@ -19,8 +19,13 @@ public class MessageDaoImpl implements MessageDao{
 
     @Override
     @Transactional
-    public List<Message> getConversation(Contact from, Contact to) {
-    return null;
+    public List<Message> getConversation(Contact sender, Contact receiver) {
+        Query query = sessionFactory.getCurrentSession().
+                createQuery("from Message m where " +
+                        "m.sender= ? and m.receiver= ?");
+        query.setParameter(0, sender);
+        query.setParameter(1, receiver);
+        return query.list();
     }
 
     @Override

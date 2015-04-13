@@ -40,7 +40,7 @@ public interface ContactDao {
     Set<Hobby> getHobbiesFromContact(Contact contact);
 
     @Transactional
-    void sendMessage(Contact contact, String content,
+    void sendMessage(Contact sender, Contact receiver, String content,
                      Date messageDate);
 
 }

@@ -41,8 +41,11 @@ public class Contact implements Serializable{
     private Set<Contact> inverseFriends;
 
 
-    @OneToMany(mappedBy = "contact", fetch = FetchType.LAZY)
-    private List<Message> messages;
+    @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY)
+    private List<Message> sentMessages;
+
+    @OneToMany(mappedBy = "receiver", fetch = FetchType.LAZY)
+    private List<Message> receivedMessages;
 
     public Contact() {
     }
@@ -98,11 +101,21 @@ public class Contact implements Serializable{
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
-    public List<Message> getMessages() {
-        return messages;
+
+    public List<Message> getSentMessages() {
+        return sentMessages;
     }
-    public void setMessages(List<Message> messages) {
-        this.messages = messages;
+
+    public void setSentMessages(List<Message> sentMessages) {
+        this.sentMessages = sentMessages;
+    }
+
+    public List<Message> getReceivedMessages() {
+        return receivedMessages;
+    }
+
+    public void setReceivedMessages(List<Message> receivedMessages) {
+        this.receivedMessages = receivedMessages;
     }
 
     @Override

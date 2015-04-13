@@ -149,9 +149,9 @@ public class ContactServiceImpl implements ContactService {
     //Methods that deal with MessageDao
     @Override
     @Transactional
-    public void storeMessage(Contact contact, String content,
+    public void storeMessage(Contact sender, Contact receiver, String content,
                              Date messageDate) {
-        contactDao.sendMessage(contact, content, messageDate);
+        contactDao.sendMessage(sender, receiver, content, messageDate);
     }
 
     @Override
@@ -162,8 +162,8 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     @Transactional
-    public List<Message> getConversation(Contact from, Contact to) {
-        return messageDao.getConversation(from, to);
+    public List<Message> getConversation(Contact sender, Contact receiver) {
+        return messageDao.getConversation(sender, receiver);
     }
 
     @Override

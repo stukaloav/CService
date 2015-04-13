@@ -53,11 +53,11 @@ public interface ContactService {
 
     //Methods that deal with MessageDao
     @Transactional
-    void storeMessage(Contact contact, String content,
+    void storeMessage(Contact sender, Contact receiver, String content,
                       Date messageDate);
 
     @Transactional
-    List<Message> getConversation(Contact from, Contact to);
+    List<Message> getConversation(Contact sender, Contact receiver);
 
     @Transactional
     List<Message> getAllMessages();
