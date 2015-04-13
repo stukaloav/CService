@@ -43,6 +43,8 @@ public class App {
 
         System.out.println(contactService.getConversation(contact1, contact2));
 
+        System.out.println(contactService.getAllMessagesFromContact(contact1));
+
 
 
     }

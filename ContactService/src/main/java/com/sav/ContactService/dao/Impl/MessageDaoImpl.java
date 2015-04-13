@@ -51,7 +51,7 @@ public class MessageDaoImpl implements MessageDao{
     public List<Message> getAllMessagesFromContact(Contact contact){
         Query query = sessionFactory.getCurrentSession().
                 createQuery("from Message m where " +
-                        "m.sender = ? and m.receiver = ?");
+                        "m.sender = ? or m.receiver = ?");
         query.setParameter(0, contact);
         query.setParameter(1, contact);
         return query.list();
