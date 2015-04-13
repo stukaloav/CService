@@ -8,11 +8,9 @@ import java.util.List;
 
 public interface MessageDao {
     @Transactional
-    public List<Message> getConversation(Contact from, Contact to);
-
+    public List<Message> getConversation(Contact first, Contact second);
     @Transactional
     public List<Message> getAllMessages();
-
     @Transactional
     List<Message> getAllMessagesFromContact(Contact receiver);
 }

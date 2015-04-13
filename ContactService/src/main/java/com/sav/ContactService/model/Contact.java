@@ -49,7 +49,6 @@ public class Contact implements Serializable{
 
     public Contact() {
     }
-
     public Contact(String firstName, String lastName, Date birthDate) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -101,19 +100,15 @@ public class Contact implements Serializable{
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
-
     public List<Message> getSentMessages() {
         return sentMessages;
     }
-
     public void setSentMessages(List<Message> sentMessages) {
         this.sentMessages = sentMessages;
     }
-
     public List<Message> getReceivedMessages() {
         return receivedMessages;
     }
-
     public void setReceivedMessages(List<Message> receivedMessages) {
         this.receivedMessages = receivedMessages;
     }
@@ -127,7 +122,6 @@ public class Contact implements Serializable{
                 ", birthDate=" + birthDate +
                 '}';
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -137,7 +131,6 @@ public class Contact implements Serializable{
 
         return id == contact.id;
     }
-
     @Override
     public int hashCode() {
         return  (int) (id ^ (id >>> 32));

@@ -11,16 +11,13 @@ import java.util.List;
 
 @Repository
 public class PlacesDaoImpl implements PlaceDao {
-
     @Autowired
     private SessionFactory sessionFactory;
-
     @Override
     @Transactional
     public void addPlace(Place place) {
         sessionFactory.getCurrentSession().save(place);
     }
-
     @Override
     @Transactional(readOnly = true)
     public List<Place> getAllPlaces() {

@@ -55,13 +55,10 @@ public interface ContactService {
     @Transactional
     void storeMessage(Contact sender, Contact receiver, String content,
                       Date messageDate);
-
     @Transactional
     List<Message> getConversation(Contact sender, Contact receiver);
-
     @Transactional
     List<Message> getAllMessages();
-
     @Transactional
     List<Message> getAllMessagesFromContact(Contact contact);
 }

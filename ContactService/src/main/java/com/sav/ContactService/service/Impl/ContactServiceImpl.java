@@ -167,6 +167,7 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
+    @Transactional
     public List<Message> getAllMessagesFromContact(Contact contact) {
         return messageDao.getAllMessagesFromContact(contact);
     }

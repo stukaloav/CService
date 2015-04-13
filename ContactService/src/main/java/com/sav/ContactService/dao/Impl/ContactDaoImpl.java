@@ -18,12 +18,10 @@ import java.util.Set;
 
 @Repository
 public class ContactDaoImpl implements ContactDao {
-
     @Autowired
     private SessionFactory sessionFactory;
     @Autowired
     private HobbyDao hobbyDao;
-
     @Override
     @Transactional
     public void addContact(Contact contact) {
@@ -33,7 +31,6 @@ public class ContactDaoImpl implements ContactDao {
         sessionFactory.getCurrentSession().
                 saveOrUpdate(contact);
     }
-
     @Override
     @Transactional
     public void deleteContact(Contact contact) {
@@ -43,7 +40,6 @@ public class ContactDaoImpl implements ContactDao {
             sessionFactory.getCurrentSession().delete(contact);
 
     }
-
     @Override
     @Transactional(readOnly = true)
     public Set<Contact> getAllContacts() {
@@ -56,7 +52,6 @@ public class ContactDaoImpl implements ContactDao {
         return contactSet;
 
     }
-
     @Override
     @Transactional
     public Contact getContactById(long id){
@@ -67,14 +62,12 @@ public class ContactDaoImpl implements ContactDao {
         }
         return contact;
     }
-
     @Override
     @Transactional
     public void addHobbyToContact(Contact contact, Hobby hobby){
         contact.getHobbies().add(hobby);
         sessionFactory.getCurrentSession().saveOrUpdate(contact);
     }
-
     @Transactional
     private Long getIdFromHobby(Hobby hobby){
         if (hobby == null){
@@ -90,7 +83,6 @@ public class ContactDaoImpl implements ContactDao {
         }
         return hobby.getId();
     }
-
     @Override
     @Transactional
     public Long getIdFromContact(Contact contact){
@@ -107,7 +99,6 @@ public class ContactDaoImpl implements ContactDao {
         }
         return contact.getId();
     }
-
     @Override
     @Transactional
     public void addFriendship(Contact first, Contact second){
@@ -125,14 +116,12 @@ public class ContactDaoImpl implements ContactDao {
         sessionFactory.getCurrentSession().saveOrUpdate(first);
         sessionFactory.getCurrentSession().saveOrUpdate(second);
     }
-
     @Override
     @Transactional
     public List<Friendship> getAllFriends(){
         return sessionFactory.getCurrentSession().
                 createQuery("from Friendship").list();
     }
-
     @Override
     @Transactional
     public Set<Contact> getFriendsFromContact(Contact contact){
@@ -155,7 +144,6 @@ public class ContactDaoImpl implements ContactDao {
         }
         return contactFriends;
     }
-
     @Override
     public Set<Hobby> getHobbiesFromContact(Contact contact) {
         if (contact == null){
@@ -163,7 +151,6 @@ public class ContactDaoImpl implements ContactDao {
         }
         return contact.getHobbies();
     }
-
     @Override
     @Transactional
     public Set<Contact> getAllContactsSamePlace(String placeTitle){
@@ -184,7 +171,6 @@ public class ContactDaoImpl implements ContactDao {
         }
         return contactsSamePlace;
     }
-
     @Override
     @Transactional
     public void sendMessage(Contact sender, Contact receiver,

@@ -16,16 +16,13 @@ import java.util.Set;
 
 @Repository
 public class HobbyDaoImpl implements HobbyDao {
-
     @Autowired
     private SessionFactory sessionFactory;
-
     @Override
     @Transactional
     public void addHobby(Hobby hobby) {
         sessionFactory.getCurrentSession().save(hobby);
     }
-
     @Transactional
     private Set<Long> getIdOfAllContactsWithHobby() {
         List<ContactHobbies> contactHobbiesList =
@@ -40,13 +37,11 @@ public class HobbyDaoImpl implements HobbyDao {
         }
         return contactsId;
     }
-
     @Transactional
     private Contact getContactById(long id){
         return (Contact) sessionFactory.getCurrentSession().get(Contact.class, id);
 
     }
-
     @Override
     @Transactional
     public Set<Contact> getAllContactsWithHobby() {
@@ -60,20 +55,17 @@ public class HobbyDaoImpl implements HobbyDao {
         }
         return contactsWithHobby;
     }
-
     @Override
     @Transactional
     public List<Hobby> getAllHobbies() {
         return sessionFactory.getCurrentSession().
                 createQuery("from Hobby").list();
     }
-
     @Override
     @Transactional
     public Hobby getHobbyById(long id) {
         return (Hobby) sessionFactory.getCurrentSession().get(Hobby.class, id);
     }
-
     @Override
     @Transactional
     public void deleteHobbyByTitle(String title){

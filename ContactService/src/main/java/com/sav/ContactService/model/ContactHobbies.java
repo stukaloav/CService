@@ -1,5 +1,7 @@
 package com.sav.ContactService.model;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.*;
 import java.io.Serializable;
 

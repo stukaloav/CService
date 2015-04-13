@@ -27,7 +27,6 @@ public class Hobby implements Serializable{
 
     public Hobby() {
     }
-
     public Hobby(String title, String description) {
         this.title = title;
         this.description = description;
@@ -39,7 +38,6 @@ public class Hobby implements Serializable{
     public void setContacts(List<Contact> contacts) {
         this.contacts = contacts;
     }
-
     public long getId() {
         return id;
     }
@@ -67,7 +65,6 @@ public class Hobby implements Serializable{
                 ", description='" + description + '\'' +
                 '}';
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -77,7 +74,6 @@ public class Hobby implements Serializable{
 
         return id == hobby.id;
     }
-
     @Override
     public int hashCode() {
         return (int) (id ^ (id >>> 32));

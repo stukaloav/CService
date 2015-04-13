@@ -56,7 +56,6 @@ public class Place {
                 ", latitude=" + latitude +
                 '}';
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -66,7 +65,6 @@ public class Place {
 
         return id == place.id;
     }
-
     @Override
     public int hashCode() {
         return (int) (id ^ (id >>> 32));
