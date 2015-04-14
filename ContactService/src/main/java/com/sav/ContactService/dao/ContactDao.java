@@ -13,24 +13,16 @@ import java.util.Set;
 public interface ContactDao {
     void addContact(Contact contact);
     void deleteContact(Contact contact);
-    Set<Contact> getAllContacts();
-    @Transactional
-    Contact getContactById(long id);
-    @Transactional
+    List<Contact> getAllContacts();
     void addHobbyToContact(Contact id, Hobby hobby);
-    @Transactional
-    Long getIdFromContact(Contact contact);
-    @Transactional
+
+    Contact getContactById(long id);
+
     void addFriendship(Contact first, Contact second);
-    @Transactional
     List<Friendship> getAllFriends();
-    @Transactional
-    Set<Contact> getFriendsFromContact(Contact contact);
-    @Transactional
+    List<Contact> getFriendsFromContact(Contact contact);
     Set<Contact> getAllContactsSamePlace(String placeTitle);
-    @Transactional
     Set<Hobby> getHobbiesFromContact(Contact contact);
-    @Transactional
     void sendMessage(Contact sender, Contact receiver, String content,
                      Date messageDate);
 }

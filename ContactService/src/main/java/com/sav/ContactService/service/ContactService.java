@@ -12,7 +12,7 @@ public interface ContactService {
     @Transactional
     void createContact(String firstName, String lastName, Date birthDate);
     @Transactional
-    Set<Contact> getAllContacts();
+    List<Contact> getAllContacts();
     @Transactional
     void addHobbyToContact(Contact contact, Hobby hobby);
     @Transactional
@@ -22,14 +22,13 @@ public interface ContactService {
     @Transactional
     void deleteContact(Contact contact);
     @Transactional
-    Long getIdFromContact(Contact contact);
     Set<Hobby> getHobbiesFromContact(Contact contact);
     @Transactional
     void addFriendship(Contact first, Contact second);
     @Transactional
     List<Friendship> getAllFriendPairs();
     @Transactional
-    Set<Contact> getFriendsContacts(Contact contact);
+    List<Contact> getFriendsContacts(Contact contact);
 
     //Methods that deal with HobbyDao
     @Transactional

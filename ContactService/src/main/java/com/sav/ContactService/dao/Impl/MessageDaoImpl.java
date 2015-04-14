@@ -17,21 +17,18 @@ import java.util.List;
 public class MessageDaoImpl implements MessageDao{
     @Autowired
     private SessionFactory sessionFactory;
+
     @Override
-    @Transactional
     public List<Message> getConversation(Contact first, Contact second) {
         Query query = sessionFactory.getCurrentSession().
                 createQuery("from Message m where " +
-                        "m.sender= ? and m.receiver= ?");
+                        "(m.sender= ? and m.receiver= ?)" +
+                "or (m.sender = ? and m.receiver = ?)");
         query.setParameter(0, first);
         query.setParameter(1, second);
-        List<Message> fromFirstToSecond = query.list();
-        query.setParameter(1, first);
-        query.setParameter(0, second);
-        List<Message> fromSecondToFirst = query.list();
-        List<Message> conversation = new ArrayList<>();
-        conversation.addAll(fromFirstToSecond);
-        conversation.addAll(fromSecondToFirst);
+        query.setParameter(2, second);
+        query.setParameter(3, first);
+        List<Message> conversation = query.list();
         conversation.sort(new Comparator<Message>() {
             @Override
             public int compare(Message o1, Message o2) {
@@ -41,13 +38,11 @@ public class MessageDaoImpl implements MessageDao{
         return conversation;
     }
     @Override
-    @Transactional
     public List<Message> getAllMessages() {
         Query query = sessionFactory.getCurrentSession().createQuery("from Message");
         return query.list();
     }
     @Override
-    @Transactional
     public List<Message> getAllMessagesFromContact(Contact contact){
         Query query = sessionFactory.getCurrentSession().
                 createQuery("from Message m where " +

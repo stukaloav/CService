@@ -40,7 +40,6 @@ public class Contact implements Serializable{
     @ManyToMany(mappedBy = "friends")
     private Set<Contact> inverseFriends;
 
-
     @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY)
     private List<Message> sentMessages;
 

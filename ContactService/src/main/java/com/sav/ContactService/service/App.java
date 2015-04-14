@@ -45,8 +45,6 @@ public class App {
 
         System.out.println(contactService.getAllMessagesFromContact(contact1));
 
-
-
     }
 }
 

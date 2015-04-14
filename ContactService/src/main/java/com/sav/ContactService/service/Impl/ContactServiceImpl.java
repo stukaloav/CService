@@ -39,7 +39,7 @@ public class ContactServiceImpl implements ContactService {
     }
     @Override
     @Transactional
-    public Set<Contact> getAllContacts() {
+    public List<Contact> getAllContacts() {
         return contactDao.getAllContacts();
     }
     @Override
@@ -56,11 +56,6 @@ public class ContactServiceImpl implements ContactService {
     @Transactional
     public void deleteContact(Contact contact){
         contactDao.deleteContact(contact);
-    }
-    @Override
-    @Transactional
-    public Long getIdFromContact(Contact contact){
-        return contactDao.getIdFromContact(contact);
     }
     @Override
     public Set<Hobby> getHobbiesFromContact(Contact contact) {
@@ -83,7 +78,7 @@ public class ContactServiceImpl implements ContactService {
     }
     @Override
     @Transactional
-    public Set<Contact> getFriendsContacts(Contact contact){
+    public List<Contact> getFriendsContacts(Contact contact){
         return contactDao.getFriendsFromContact(contact);
     }
 
@@ -153,19 +148,16 @@ public class ContactServiceImpl implements ContactService {
                              Date messageDate) {
         contactDao.sendMessage(sender, receiver, content, messageDate);
     }
-
     @Override
     @Transactional
     public List<Message> getAllMessages() {
         return messageDao.getAllMessages();
     }
-
     @Override
     @Transactional
     public List<Message> getConversation(Contact sender, Contact receiver) {
         return messageDao.getConversation(sender, receiver);
     }
-
     @Override
     @Transactional
     public List<Message> getAllMessagesFromContact(Contact contact) {
