@@ -22,7 +22,7 @@ public interface ContactService {
     @Transactional
     void deleteContact(Contact contact);
     @Transactional
-    Set<Hobby> getHobbiesFromContact(Contact contact);
+    List<Hobby> getHobbiesFromContact(Contact contact);
     @Transactional
     void addFriendship(Contact first, Contact second);
     @Transactional

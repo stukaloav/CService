@@ -8,10 +8,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Repository
 public class ContactDaoImpl implements ContactDao {
@@ -37,7 +34,7 @@ public class ContactDaoImpl implements ContactDao {
     @Override
     public List<Contact> getAllContacts() {
         return sessionFactory.getCurrentSession().
-                createQuery("from Conatct").list();
+                createQuery("from Contact").list();
     }
     @Override
     public void addHobbyToContact(Contact contact, Hobby hobby){
@@ -80,14 +77,14 @@ public class ContactDaoImpl implements ContactDao {
         return query.list();
     }
     @Override
-    public Set<Hobby> getHobbiesFromContact(Contact contact) {
+    public List<Hobby> getHobbiesFromContact(Contact contact) {
         if (contact == null){
             throw new IllegalArgumentException("argument should not be null");
         }
         return contact.getHobbies();
     }
     @Override
-    public Set<Contact> getAllContactsSamePlace(String placeTitle){
+    public List<Contact> getAllContactsSamePlace(String placeTitle){
         if (placeTitle == null){
             throw new IllegalArgumentException("argument should not be null");
         }
@@ -97,7 +94,7 @@ public class ContactDaoImpl implements ContactDao {
         if (contactPlacesesList.isEmpty()){
             return null;
         }
-        Set<Contact> contactsSamePlace = new HashSet<Contact>();
+        List<Contact> contactsSamePlace = new ArrayList<>();
         for (ContactPlaces contactPlaces: contactPlacesesList){
             long contactId = contactPlaces.getContactId();
             Contact contact = getContactById(contactId);

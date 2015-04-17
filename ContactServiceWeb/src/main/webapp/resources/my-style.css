@@ -5,3 +5,7 @@
 span {
     cursor: pointer;
 }
+
+#firstFormRef{
+	background: red;
+}

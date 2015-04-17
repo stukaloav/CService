@@ -3,6 +3,7 @@ package com.sav.ContactService.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import org.hibernate.MappingException;
 import java.util.*;
 
 import static javax.persistence.GenerationType.IDENTITY;
@@ -29,16 +30,16 @@ public class Contact implements Serializable{
     @JoinTable(name="CONTACT_HOBBIES"
             , joinColumns={@JoinColumn(name = "CONTACT_ID")}
             , inverseJoinColumns={@JoinColumn(name = "HOBBY_ID")})
-    private Set<Hobby> hobbies;
+    private List<Hobby> hobbies;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "FRIENDSHIP"
             , joinColumns = {@JoinColumn(name = "FIRST_CONTACT_ID")}
             , inverseJoinColumns = {@JoinColumn(name = "SECOND_CONTACT_ID")})
-    private Set<Contact> friends;
+    private List<Contact> friends;
 
     @ManyToMany(mappedBy = "friends")
-    private Set<Contact> inverseFriends;
+    private List<Contact> inverseFriends;
 
     @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY)
     private List<Message> sentMessages;
@@ -54,25 +55,25 @@ public class Contact implements Serializable{
         this.birthDate = birthDate;
     }
 
-    public Set<Hobby> getHobbies() {
+    public List<Hobby> getHobbies() {
         if (hobbies == null){
-            hobbies = new HashSet<Hobby>();
+            hobbies = new ArrayList<>();
         }
         return hobbies;
     }
-    public void setHobbies(Set<Hobby> hobbies) {
+    public void setHobbies(List<Hobby> hobbies) {
         this.hobbies = hobbies;
     }
-    public Set<Contact> getFriends() {
+    public List<Contact> getFriends() {
         return friends;
     }
-    public void setFriends(Set<Contact> friends) {
+    public void setFriends(List<Contact> friends) {
         this.friends = friends;
     }
-    public Set<Contact> getInverseFriends() {
+    public List<Contact> getInverseFriends() {
         return inverseFriends;
     }
-    public void setInverseFriends(Set<Contact> inverseFriends) {
+    public void setInverseFriends(List<Contact> inverseFriends) {
         this.inverseFriends = inverseFriends;
     }
     public long getId() {

@@ -6,14 +6,12 @@ import com.sav.ContactService.dao.MessageDao;
 import com.sav.ContactService.dao.PlaceDao;
 import com.sav.ContactService.model.*;
 import com.sav.ContactService.service.ContactService;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Component
 public class ContactServiceImpl implements ContactService {
@@ -38,8 +36,9 @@ public class ContactServiceImpl implements ContactService {
         contactDao.addContact(contact);
     }
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Contact> getAllContacts() {
+        Hibernate.initialize(contactDao.getAllContacts());
         return contactDao.getAllContacts();
     }
     @Override
@@ -58,7 +57,7 @@ public class ContactServiceImpl implements ContactService {
         contactDao.deleteContact(contact);
     }
     @Override
-    public Set<Hobby> getHobbiesFromContact(Contact contact) {
+    public List<Hobby> getHobbiesFromContact(Contact contact) {
         return contactDao.getHobbiesFromContact(contact);
     }
     @Override

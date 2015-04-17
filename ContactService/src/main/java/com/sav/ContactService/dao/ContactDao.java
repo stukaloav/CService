@@ -21,8 +21,8 @@ public interface ContactDao {
     void addFriendship(Contact first, Contact second);
     List<Friendship> getAllFriends();
     List<Contact> getFriendsFromContact(Contact contact);
-    Set<Contact> getAllContactsSamePlace(String placeTitle);
-    Set<Hobby> getHobbiesFromContact(Contact contact);
+    List<Contact> getAllContactsSamePlace(String placeTitle);
+    List<Hobby> getHobbiesFromContact(Contact contact);
     void sendMessage(Contact sender, Contact receiver, String content,
                      Date messageDate);
 }

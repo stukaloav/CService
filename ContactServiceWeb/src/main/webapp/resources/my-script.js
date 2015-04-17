@@ -1,6 +1,19 @@
 $(document).ready(function(){
-    
-    $("#firstFormRef").click(function(){
+
+    $(document).ready(function(){
+        $("#getAllContacts").click(function () {
+            $.get("/contacts", {}, function (data){
+                    var answer = "";
+                    $.each(data, function(index, value) {
+                            answer += "Name: " + value.firstName;
+                            answer += "</br>";
+                    });
+                    $("#qwerty").html(data);
+            });
+        });
+    });
+});
+    /*   $("#firstFormRef").click(function(){
         $("#form1").removeClass("hidden");
         $("#form2").addClass("hidden");
     });
@@ -26,6 +39,7 @@ $(document).ready(function(){
             })
         }
 
-    })
-});
+    }) */
+
+//});
 
