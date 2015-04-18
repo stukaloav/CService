@@ -3,6 +3,7 @@ package com.sav.controller;
 import com.google.gson.Gson;
 import com.sav.ContactService.service.ContactService;
 import com.sav.ContactService.model.Contact;
+import com.sav.DTO.ContactDTO;
 import com.thoughtworks.xstream.XStream;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -38,9 +40,13 @@ public class ControllerMain {
     }
 
     @RequestMapping(value = "/contacts", method = RequestMethod.GET)
-    public @ResponseBody String getAllContacts(){
+    public @ResponseBody List<ContactDTO> getAllContacts(){
         List<Contact> contactList = contactService.getAllContacts();
-        String contactListJson = new Gson().toJson(contactList);
-        return contactListJson;
+        List<ContactDTO> contactDTOs = new ArrayList<>();
+        for (Contact contact: contactList){
+            contactDTOs.add(new ContactDTO(contact.getFirstName(),
+                    contact.getLastName(), contact.getBirthDate()));
+        }
+        return contactDTOs;
     }
 }
