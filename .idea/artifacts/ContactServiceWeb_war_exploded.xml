@@ -56,7 +56,7 @@
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="C:\Users\StukaloAV\IdeaProjects\CSProject\ContactServiceWeb\target/MANIFEST.MF" />
+        <element id="file-copy" path="C:\Users\StukaloAV\IdeaProjects\CService\ContactServiceWeb\target/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="ContactServiceWeb/web/Web" />
     </root>

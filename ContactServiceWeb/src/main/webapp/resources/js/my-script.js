@@ -1,15 +1,20 @@
 $(document).ready(function(){
+    var height = $("#content").css("height");
+    $("#sidebar").css("height",height);
+    var width = $("#content").css("width");
+    $("#header").css("width",width);
+    $("#footer").css("width",width);
+    var textMargin = $("#sidebar").css("width");
+    $("#contentText").css("margin-left",textMargin);
 
-    $(document).ready(function(){
-        $("#getAllContacts").click(function () {
-            $.get("/contacts", {}, function (data){
-                    var answer = "";
-                    $.each(data, function(index, value) {
-                            answer += "Name: " + value.firstName;
-                            answer += "</br>";
-                    });
-                    $("#qwerty").html(data);
+    $("#getAllContacts").click(function () {
+        $.get("/contacts", {}, function (data){
+            var answer = "";
+            $.each(data, function(index, value) {
+                answer += "Name: " + value.firstName;
+                answer += "</br>";
             });
+            $("#qwerty").html(answer);
         });
     });
 });
