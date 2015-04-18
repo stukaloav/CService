@@ -7,14 +7,16 @@ $(document).ready(function(){
     var textMargin = $("#sidebar").css("width");
     $("#contentText").css("margin-left",textMargin);
 
-    $("#getAllContacts").click(function () {
+    $("#getAll").click(function () {
         $.get("/contacts", {}, function (data){
             var answer = "";
             $.each(data, function(index, value) {
-                answer += "Name: " + value.firstName;
-                answer += "</br>";
+                $("#table_allContacts > tbody:last").append("<tr><td>"+index+"</td><td>"+
+                value.firstName+"</td><td>"+ value.lastName +"</td><td>"+ value.birthDate +"</td></tr>");
             });
-            $("#qwerty").html(answer);
+            //$("#allContacts").html(answer);
+            $("#mainTable").addClass("invisible");
+            $("#tableAllContacts").removeClass("invisible");
         });
     });
 });

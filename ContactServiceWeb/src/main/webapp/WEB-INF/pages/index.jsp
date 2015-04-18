@@ -27,7 +27,7 @@
                 <!-- Side bar -->
                <div id="sidebarBtn">
                     <ul class="unstyled" >
-                        <li><input class="btn btn btn-primary" type="button" style="width: 140px; margin: 10px; margin-top: 80px; margin-bottom: 15px; background: #7851A9; height: 40px;" value="Input"></li>
+                        <li><input id="getAll" class="btn btn btn-primary" type="button" style="width: 140px; margin: 10px; margin-top: 80px; margin-bottom: 15px; background: #7851A9; height: 40px;" value="getAll"></li>
                         <li><input class="btn btn btn-primary" type="button" style="width: 140px; margin: 10px; margin-top: 0px; margin-bottom: 15px; background: #7851A9; height: 40px;" value="Input"></li>
                         <li><input class="btn btn btn-primary" type="button" style="width: 140px; margin: 10px; margin-top: 0px; margin-bottom: 15px; background: #7851A9; height: 40px;" value="Input"></li>
                         <li><input class="btn btn btn-primary" type="button" style="width: 140px; margin: 10px; margin-top: 0px; margin-bottom: 15px; background: #7851A9; height: 40px;" value="Input"></li>
@@ -37,7 +37,22 @@
 
             <div class="span6" id="contentText">
                     <!--Text-->
-                    <div class="tabbable"> <!-- Only required for left/right tabs -->
+                <div class="invisible table-responsive" id="tableAllContacts">
+                    <table class="table table-striped table-bordered" id="table_allContacts">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Birth Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="tabbable" id="mainTable"> <!-- Only required for left/right tabs -->
                         <ul class="nav nav-tabs">
                             <li class="active"><a href="#tab1" data-toggle="tab">UserInfo</a></li>
                             <li><a href="#tab2" data-toggle="tab">Friends</a></li>
@@ -50,7 +65,7 @@
                                     <!--UserInfo-->
                                     <div class="span4" id="userInfo">
                                         <div class="row" id="photo">
-                                            <img src="img/UsersPhoto.jpg" class="img-polaroid">
+                                            <img src="/resources/img/UsersPhoto.jpg" class="img-polaroid">
                                         </div>
                                         <div class="row" id="info">
                                             <div id="tableInfo">
@@ -101,8 +116,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
-
+            </div>
         </div>
 
         <div class="row" id="footer">
