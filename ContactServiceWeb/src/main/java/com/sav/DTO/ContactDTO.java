@@ -1,6 +1,6 @@
 package com.sav.DTO;
 
-import com.sav.util.JsonDateDeSerial;
+import com.sav.util.JsonDateDeserial;
 import com.sav.util.JsonDateSerial;
 import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
@@ -49,7 +49,7 @@ public class ContactDTO {
         return birthDate;
     }
 
-    @JsonDeserialize(using=JsonDateDeSerial.class, as = Date.class)
+    @JsonDeserialize(using= JsonDateDeserial.class, as = Date.class)
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
