@@ -15,34 +15,6 @@
     </head>
 
     <body>
-        <%--<div class="modal hide fade" id="myModal" tabindex="-1" role="dialog">--%>
-            <%--<button class="close invisible" id="btn_closeStartDialog" type="button" data-dismiss="modal"></button>--%>
-            <%--<div class="modal-body" style="padding: 0px;">--%>
-                <%--<div id="start-form">--%>
-                    <%--<form class="form-horizontal" style="margin-top: 50px;">--%>
-                        <%--<div class="control-group">--%>
-                            <%--<label class="control-label">First Name</label>--%>
-                            <%--<div class="controls"><input type="text" id="firstName" placeholder="John"></div>--%>
-                        <%--</div>--%>
-                        <%--<div class="control-group">--%>
-                            <%--<label class="control-label">Last Name</label>--%>
-                            <%--<div class="controls"><input type="text" id="lastName" placeholder="Smith"></div>--%>
-                        <%--</div>--%>
-                        <%--<div class="control-group">--%>
-                            <%--<label class="control-label">Birth Date</label>--%>
-                            <%--<div class="controls"><input type="text" id="birthDate" placeholder="01/01/01"></div>--%>
-                        <%--</div>--%>
-                    <%--</form>--%>
-                <%--</div>--%>
-                <%--<div class="row" id="enterDialog">--%>
-                    <%--<button class="btn" id="enter" style="margin-right: 30px;">Enter</button>--%>
-                    <%--<button class="btn btn-mini" id="registration">Registration</button>--%>
-                <%--</div>--%>
-            <%--</div>--%>
-        <%--</div>--%>
-        <%--<div>--%>
-            <%--<a class="btn invisible" id="start" href="#myModal" data-toggle="modal">Start</a>--%>
-        <%--</div>--%>
 
         <div class="container" id="container">
         <div class="row" id="header">
