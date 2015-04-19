@@ -1,19 +1,6 @@
 $(document).ready(function(){
 
-    //css dependencies
-    var height = $("#content").css("height");
-    $("#sidebar").css("height",height);
-    var width = $("#content").css("width");
-    $("#header").css("width",width);
-    $("#footer").css("width",width);
-    var textMargin = $("#sidebar").css("width");
-    $("#contentText").css("margin-left",textMargin);
-
-    $("#addContact").click(function(){
-        $("#mainTable").addClass("invisible");
-        $("#tableAllContacts").addClass("invisible");
-
-
+    $("#sidebar").css("height", $("#content").css("height"));
 
         //var firstName = $("#firstName").val();
         //var lastName = $("#lastName").val();
@@ -30,23 +17,40 @@ $(document).ready(function(){
         //        function(data){
         //
         //        });
-        //}
-    });
-
+        //
     //get all contacts
-    $("#getAll").click(function () {
-        $("#table_allContacts").find("tr:gt(0)").remove();
+    $("#getAllContacts").click(function () {
+        $("#getAllContacts").addClass("active");
+        $("#addContact").removeClass("active");
+        $("#table-allContacts").find("tr:gt(0)").remove();
         $.get("/contacts", {}, function (data){
-            var answer = "";
             $.each(data, function(index, value) {
-                $("#table_allContacts > tbody:last").append("<tr><td>"+index+"</td><td>"+
+                $("#table-allContacts > tbody:last").append("<tr><td>"+index+"</td><td>"+
                 value.firstName+"</td><td>"+ value.lastName +"</td><td>"+ value.birthDate +"</td></tr>");
             });
-            //$("#allContacts").html(answer);
-            $("#mainTable").addClass("invisible");
-            $("#tableAllContacts").removeClass("invisible");
+            $("#div-form-addContact").addClass("invisible");
+            $("#div-form-addContact").addClass("collapsed");
+            $("#div-table-allContacts").removeClass("collapsed");
+            $("#div-table-allContacts").removeClass("invisible");
+
         });
     });
+
+    $("#addContact").click(function(){
+        $("#getAllContacts").removeClass("active");
+        $("#addContact").addClass("active");
+        $("#div-table-allContacts").addClass("collapsed");
+        $("#div-table-allContacts").addClass("invisible");
+        $("#div-form-addContact").removeClass("collapsed");
+        $("#div-form-addContact").removeClass("invisible");
+    });
+
+    //
+    //$.post("/addContact", {firstName: firstName,
+    //    lastName: lastName, brithDate: birthDate}, function(data){
+    //    alert("catch");
+    //});
+
 });
     /*   $("#firstFormRef").click(function(){
         $("#form1").removeClass("hidden");

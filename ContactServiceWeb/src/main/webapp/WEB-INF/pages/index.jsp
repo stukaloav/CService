@@ -15,8 +15,72 @@
     </head>
 
     <body>
+    <div class="container">
+        <div class="row" id="header">
+            <div class="span12" id="header-div">
+                header
+            </div>
+        </div>
+        <div class="row" id="content">
+            <div class="span3" id="sidebar">
+                <div class="row" id="sidebar-btns">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li id="getAllContacts"><a href="#">getAllContacts</a></li>
+                        <li id="addContact"><a href="#">addContact</a></li>
+                        <li><a href="#">Сообщения</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="span9" id="info" style="margin-left: 280px">
 
-        <div class="container" id="container">
+                <div class="invisible collapsed table-responsive" id="div-table-allContacts">
+                    <table class="table table-striped table-bordered" id="table-allContacts">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Birth Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="invisible collapsed" id="div-form-addContact">
+                        <form class="form-horizontal" style="margin-top: 50px;">
+                            <div class="control-group">
+                                <label class="control-label">First Name</label>
+                                <div class="controls">
+                                    <input type="text" id="firstName" placeholder="John">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">Last Name</label>
+                                <div class="controls">
+                                    <input type="text" id="lastName" placeholder="Smith">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">Birth Date</label>
+                                <div class="controls">
+                                    <input type="text" id="birthDate" placeholder="01/01/01">
+                                </div>
+                            </div>
+                        </form>
+                    <div class="row" id="btn-addContact-submit">
+                        <button class="btn" id="submit" style="margin-left: 200px;">Submit</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </body>
+</html>
+
+        <%--<div class="container" id="container">
         <div class="row" id="header">
             header
         </div>
@@ -121,12 +185,8 @@
         </div>
     </div>
     </body>
-</html>
+</html>--%>
 
-            <%--<div>--%>
-                <%--<button id="getAllContacts" class="btn">Find All</button>--%>
-            <%--</div>--%>
-            <%--<div id="qwerty"></div>--%>
 <!--  
         <div>
             <span id="firstFormRef">Form1</span>

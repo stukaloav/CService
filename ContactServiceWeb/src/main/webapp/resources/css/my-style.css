@@ -7,6 +7,10 @@
     height: 0;
 }
 
+body {
+    background: url("../img/ornaments_texture1146.jpg");
+}
+
 #enterDialog {
     width: 200px;
     height: 50px;
@@ -17,72 +21,39 @@
     padding-top: 30px;
 }
 
-#firstFormRef{
-	background: red;
-}
-
-
-#container {
-    min-width: 1000px;
-    min-height: 100px;
-}
-
-
 #header {
-    width: 1000px;
-    background: #7851A9;
-    margin: 0 auto;
+    background: #434343;
+    margin-left: 0;
     min-height: 50px;
-    text-align: left;
     position: fixed;
 }
 
+#header-div {
+    margin-left: 0;
+}
 
 #content {
-    min-height: 600px;
-    background: #ECEABE;
     margin-top: 50px;
+    min-height: 600px;
+    background: #fff;
+    margin-left: 0;
+    border: 1px solid red;
 }
-
-
 
 #sidebar {
-    padding-left: 20px;
-    height: 100%;
-    background: #FFB02E;
-    position: fixed;
-
-}
-
-#contentText {
-    height: 100%;
-    padding: 10px;
-    margin: 0 auto;
+    background: #ccc;
+    margin-left: 0;
+    border: 1px solid blue;
     position: fixed;
 }
 
-#userInfo {
-    position: fixed;
+#sidebar-btns{
+    margin-left: 0;
+    padding-bottom: 0;
 }
 
-#photo {
-    background: #FBCEB1;
-    min-height: 350px;
-    margin: 5px;
-    margin-left: 10px;
-    padding-left: 20px;
-}
-
-#tableInfo {
-    min-height: 100px;
-    margin: 5px;
-    margin-left: 30px;
-    background: #BDECB6;
-}
-
-#footer {
-    background: #7851A9;
-    min-height: 50px;
-    margin: 0 auto;
-    position: fixed;
+#info {
+    background: #fff;
+    margin-left: 0;
+    border: 1px solid yellow;
 }
