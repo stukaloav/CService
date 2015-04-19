@@ -15,12 +15,39 @@
     </head>
 
     <body>
-        <div class="container" id="container">
+        <%--<div class="modal hide fade" id="myModal" tabindex="-1" role="dialog">--%>
+            <%--<button class="close invisible" id="btn_closeStartDialog" type="button" data-dismiss="modal"></button>--%>
+            <%--<div class="modal-body" style="padding: 0px;">--%>
+                <%--<div id="start-form">--%>
+                    <%--<form class="form-horizontal" style="margin-top: 50px;">--%>
+                        <%--<div class="control-group">--%>
+                            <%--<label class="control-label">First Name</label>--%>
+                            <%--<div class="controls"><input type="text" id="firstName" placeholder="John"></div>--%>
+                        <%--</div>--%>
+                        <%--<div class="control-group">--%>
+                            <%--<label class="control-label">Last Name</label>--%>
+                            <%--<div class="controls"><input type="text" id="lastName" placeholder="Smith"></div>--%>
+                        <%--</div>--%>
+                        <%--<div class="control-group">--%>
+                            <%--<label class="control-label">Birth Date</label>--%>
+                            <%--<div class="controls"><input type="text" id="birthDate" placeholder="01/01/01"></div>--%>
+                        <%--</div>--%>
+                    <%--</form>--%>
+                <%--</div>--%>
+                <%--<div class="row" id="enterDialog">--%>
+                    <%--<button class="btn" id="enter" style="margin-right: 30px;">Enter</button>--%>
+                    <%--<button class="btn btn-mini" id="registration">Registration</button>--%>
+                <%--</div>--%>
+            <%--</div>--%>
+        <%--</div>--%>
+        <%--<div>--%>
+            <%--<a class="btn invisible" id="start" href="#myModal" data-toggle="modal">Start</a>--%>
+        <%--</div>--%>
 
+        <div class="container" id="container">
         <div class="row" id="header">
             header
         </div>
-
         <div class="row-fluid" id="content">
 
             <div class="span2" id="sidebar">
@@ -28,7 +55,7 @@
                <div id="sidebarBtn">
                     <ul class="unstyled" >
                         <li><input id="getAll" class="btn btn btn-primary" type="button" style="width: 140px; margin: 10px; margin-top: 80px; margin-bottom: 15px; background: #7851A9; height: 40px;" value="getAll"></li>
-                        <li><input class="btn btn btn-primary" type="button" style="width: 140px; margin: 10px; margin-top: 0px; margin-bottom: 15px; background: #7851A9; height: 40px;" value="Input"></li>
+                        <li><input id="addContact" class="btn btn btn-primary" type="button" style="width: 140px; margin: 10px; margin-top: 0px; margin-bottom: 15px; background: #7851A9; height: 40px;" value="addContact"></li>
                         <li><input class="btn btn btn-primary" type="button" style="width: 140px; margin: 10px; margin-top: 0px; margin-bottom: 15px; background: #7851A9; height: 40px;" value="Input"></li>
                         <li><input class="btn btn btn-primary" type="button" style="width: 140px; margin: 10px; margin-top: 0px; margin-bottom: 15px; background: #7851A9; height: 40px;" value="Input"></li>
                     </ul>
@@ -51,7 +78,6 @@
                         </tbody>
                     </table>
                 </div>
-
                 <div class="tabbable" id="mainTable"> <!-- Only required for left/right tabs -->
                         <ul class="nav nav-tabs">
                             <li class="active"><a href="#tab1" data-toggle="tab">UserInfo</a></li>
@@ -70,7 +96,7 @@
                                         <div class="row" id="info">
                                             <div id="tableInfo">
                                                 <!-- TableInfo -->
-                                                <table class="table table-striped">
+                                                <table class="table table-striped" id="table_contactInfo">
                                                     <thead>
                                                     <tr>
                                                         <th>#</th>
@@ -115,10 +141,9 @@
                                 <p>Hobbies</p>
                             </div>
                         </div>
-                    </div>
+                </div>
             </div>
         </div>
-
         <div class="row" id="footer">
             footer
         </div>

@@ -1,4 +1,6 @@
 $(document).ready(function(){
+
+    //css dependencies
     var height = $("#content").css("height");
     $("#sidebar").css("height",height);
     var width = $("#content").css("width");
@@ -7,6 +9,38 @@ $(document).ready(function(){
     var textMargin = $("#sidebar").css("width");
     $("#contentText").css("margin-left",textMargin);
 
+    //var userId;
+    //
+    //if(userId === "" || userId == undefined){
+    //    $("#start").trigger("click");
+    //}
+    //
+    //$("#registration").click(function(){
+    //    var firstName = $("#firstName").val();
+    //    var lastName = $("#lastName").val();
+    //    var birthDate = $("#birthDate").val();
+    //    if(firstName === "" || firstName == undefined){
+    //        alert("First Name is undefined");
+    //    }else if(lastName === "" || firstName == undefined){
+    //        alert("Last Name is undefined");
+    //    }else if(birthDate === "" || birthDate == undefined){
+    //        alert("Birth Date is undefined");
+    //    }else {
+    //        $.post("/addContact", {firstName: firstName,
+    //                lastName: lastName, brithDate: birthDate},
+    //            function(data){
+    //                userId = data;
+    //            });
+    //        $("#table_contactInfo > tbody:last").append("<tr><td>"+firstName+
+    //        "</td><td>"+lastName +"</td><td>"+ birthDate + "</td></tr>");
+    //        $("#btn_closeStartDialog").trigger("click");
+    //        $("#container").removeClass("invisible");
+    //        $("#container").removeClass("collapsed");
+    //    }
+    //});
+
+
+    //get all contacts
     $("#getAll").click(function () {
         $.get("/contacts", {}, function (data){
             var answer = "";

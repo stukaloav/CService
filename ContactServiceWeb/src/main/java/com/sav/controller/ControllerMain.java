@@ -1,11 +1,8 @@
 package com.sav.controller;
 
-import com.google.gson.Gson;
 import com.sav.ContactService.service.ContactService;
 import com.sav.ContactService.model.Contact;
 import com.sav.DTO.ContactDTO;
-import com.thoughtworks.xstream.XStream;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -13,13 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -44,9 +37,18 @@ public class ControllerMain {
         List<Contact> contactList = contactService.getAllContacts();
         List<ContactDTO> contactDTOs = new ArrayList<>();
         for (Contact contact: contactList){
-            contactDTOs.add(new ContactDTO(contact.getFirstName(),
+            contactDTOs.add(new ContactDTO(contact.getId(), contact.getFirstName(),
                     contact.getLastName(), contact.getBirthDate()));
         }
         return contactDTOs;
+    }
+
+    @RequestMapping(value = "/addContact", method = RequestMethod.POST)
+    public @ResponseBody Long addContact(@RequestParam(value = "firstName", required = true) String firstName,
+                                         @RequestParam(value = "lastName", required = true) String lastName,
+                                         @RequestParam(value = "birthDate", required = true)Date birthDate){
+        Contact contact = new Contact(firstName, lastName, birthDate);
+        contactService.addContact(contact);
+        return contact.getId();
     }
 }

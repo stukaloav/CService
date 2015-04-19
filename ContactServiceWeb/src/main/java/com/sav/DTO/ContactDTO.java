@@ -1,16 +1,31 @@
 package com.sav.DTO;
 
+import com.sav.util.JsonDateDeSerial;
+import com.sav.util.JsonDateSerial;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
 import java.util.Date;
 
 public class ContactDTO {
+    private long id;
     private String firstName;
     private String lastName;
     private Date birthDate;
 
-    public ContactDTO(String firstName, String lastName, Date birthDate) {
+    public ContactDTO(long id, String firstName, String lastName, Date birthDate) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -29,10 +44,12 @@ public class ContactDTO {
         this.lastName = lastName;
     }
 
+    @JsonSerialize(using=JsonDateSerial.class, as = Date.class)
     public Date getBirthDate() {
         return birthDate;
     }
 
+    @JsonDeserialize(using=JsonDateDeSerial.class, as = Date.class)
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
