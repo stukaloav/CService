@@ -43,7 +43,7 @@ public class ControllerMain {
         return contactDTOs;
     }
 
-    @RequestMapping(value = "/addContact", method = RequestMethod.POST)
+    @RequestMapping(value = "/addContact", method = RequestMethod.GET)
     public @ResponseBody Long addContact(@RequestParam(value = "firstName", required = true) String firstName,
                                          @RequestParam(value = "lastName", required = true) String lastName,
                                          @RequestParam(value = "birthDate", required = true)Date birthDate){

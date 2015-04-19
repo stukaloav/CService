@@ -6,8 +6,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <script type="text/javascript" src="resources/js/jquery-2.1.1.js"></script>
+        <script type="text/javascript" src="resources/js/jquery-ui.min.js"></script>
         <script type="text/javascript" src="resources/js/my-script.js"></script>
         <link rel="stylesheet" type="text/css" href="resources/css/my-style.css">
+        <link rel="stylesheet" type="text/css" href="resources/css/jquery-ui.structure.min.css">
+        <link rel="stylesheet" type="text/css" href="resources/css/jquery-ui.theme.min.css">
+        <link rel="stylesheet" type="text/css" href="resources/css/jquery-ui.min.css">
         <script type="text/javascript" src="resources/js/bootstrap.js"></script>
         <link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="resources/css/bootstrap-responsive.css">
@@ -65,12 +69,12 @@
                             <div class="control-group">
                                 <label class="control-label">Birth Date</label>
                                 <div class="controls">
-                                    <input type="text" id="birthDate" placeholder="01/01/01">
+                                    <input type="text" id="datepicker" placeholder="mm/dd/yyyy">
                                 </div>
                             </div>
                         </form>
-                    <div class="row" id="btn-addContact-submit">
-                        <button class="btn" id="submit" style="margin-left: 200px;">Submit</button>
+                    <div class="row" id="div-addContact-submit">
+                        <button class="btn" id="btn-addContact-submit" style="margin-left: 200px;">Submit</button>
                     </div>
                 </div>
 

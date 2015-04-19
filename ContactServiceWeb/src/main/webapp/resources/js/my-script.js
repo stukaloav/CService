@@ -2,6 +2,8 @@ $(document).ready(function(){
 
     $("#sidebar").css("height", $("#content").css("height"));
 
+
+
         //var firstName = $("#firstName").val();
         //var lastName = $("#lastName").val();
         //var birthDate = $("#birthDate").val();
@@ -36,6 +38,8 @@ $(document).ready(function(){
         });
     });
 
+    $("#datepicker").datepicker();
+
     $("#addContact").click(function(){
         $("#getAllContacts").removeClass("active");
         $("#addContact").addClass("active");
@@ -43,6 +47,28 @@ $(document).ready(function(){
         $("#div-table-allContacts").addClass("invisible");
         $("#div-form-addContact").removeClass("collapsed");
         $("#div-form-addContact").removeClass("invisible");
+    });
+
+    $("#btn-addContact-submit").click(function(){
+        var firstName = $("#firstName").val();
+        var lastName = $("#lastName").val();
+        var birthDate = $("#datepicker").val();
+        if(firstName === "" || firstName == undefined){
+            alert("First Name is undefined");
+        }else if(lastName === "" || firstName == undefined){
+            alert("Last Name is undefined");
+        }else if(birthDate === "" || birthDate == undefined){
+            alert("Birth Date is undefined");
+        }else {
+            alert("in");
+            $.get("/addContact", {
+                    firstName: firstName,
+                    lastName: lastName, birthDate: birthDate
+                },
+                function (data) {
+                    alert("" + data);
+                });
+        }
     });
 
     //
