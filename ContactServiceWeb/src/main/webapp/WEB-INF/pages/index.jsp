@@ -6,15 +6,14 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <script type="text/javascript" src="resources/js/jquery-2.1.1.js"></script>
-        <script type="text/javascript" src="resources/js/jquery-ui.min.js"></script>
         <script type="text/javascript" src="resources/js/my-script.js"></script>
         <link rel="stylesheet" type="text/css" href="resources/css/my-style.css">
-        <link rel="stylesheet" type="text/css" href="resources/css/jquery-ui.structure.min.css">
-        <link rel="stylesheet" type="text/css" href="resources/css/jquery-ui.theme.min.css">
-        <link rel="stylesheet" type="text/css" href="resources/css/jquery-ui.min.css">
         <script type="text/javascript" src="resources/js/bootstrap.js"></script>
+        <script type="text/javascript" src="resources/js/bootstrap-datepicker.js"></script>
         <link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="resources/css/bootstrap-responsive.css">
+        <link rel="stylesheet" type="text/css" href="resources/css/datepicker.css">
+
 
     </head>
 
@@ -29,15 +28,15 @@
             <div class="span3" id="sidebar">
                 <div class="row" id="sidebar-btns">
                     <ul class="nav nav-pills nav-stacked">
-                        <li id="getAllContacts"><a href="#">getAllContacts</a></li>
-                        <li id="addContact"><a href="#">addContact</a></li>
+                        <li id="getAllContacts" class="btn-method"><a href="#">getAllContacts</a></li>
+                        <li id="addContact" class="btn-method"><a href="#">addContact</a></li>
                         <li><a href="#">Сообщения</a></li>
                     </ul>
                 </div>
             </div>
             <div class="span9" id="info" style="margin-left: 280px">
 
-                <div class="invisible collapsed table-responsive" id="div-table-allContacts">
+                <div class="div-info invisible collapsed table-responsive" id="div-table-allContacts">
                     <table class="table table-striped table-bordered" id="table-allContacts">
                         <thead>
                         <tr>
@@ -52,7 +51,7 @@
                     </table>
                 </div>
 
-                <div class="invisible collapsed" id="div-form-addContact">
+                <div class="div-info invisible collapsed" id="div-form-addContact">
                         <form class="form-horizontal" style="margin-top: 50px;">
                             <div class="control-group">
                                 <label class="control-label">First Name</label>
@@ -69,7 +68,7 @@
                             <div class="control-group">
                                 <label class="control-label">Birth Date</label>
                                 <div class="controls">
-                                    <input type="text" id="datepicker" placeholder="mm/dd/yyyy">
+                                    <input type="text" name="date" class="datepicker" id="birthDate" placeholder="mm/dd/yyyy">
                                 </div>
                             </div>
                         </form>

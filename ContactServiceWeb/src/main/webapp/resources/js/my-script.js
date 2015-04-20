@@ -2,6 +2,7 @@ $(document).ready(function(){
 
     $("#sidebar").css("height", $("#content").css("height"));
 
+    $("#birthDate").datepicker();
 
 
         //var firstName = $("#firstName").val();
@@ -22,29 +23,28 @@ $(document).ready(function(){
         //
     //get all contacts
     $("#getAllContacts").click(function () {
+        $(".btn-method").removeClass("active");
         $("#getAllContacts").addClass("active");
-        $("#addContact").removeClass("active");
         $("#table-allContacts").find("tr:gt(0)").remove();
         $.get("/contacts", {}, function (data){
             $.each(data, function(index, value) {
                 $("#table-allContacts > tbody:last").append("<tr><td>"+index+"</td><td>"+
                 value.firstName+"</td><td>"+ value.lastName +"</td><td>"+ value.birthDate +"</td></tr>");
             });
-            $("#div-form-addContact").addClass("invisible");
-            $("#div-form-addContact").addClass("collapsed");
+            $(".div-info").addClass("invisible");
+            $(".div-info").addClass("collapsed");
             $("#div-table-allContacts").removeClass("collapsed");
             $("#div-table-allContacts").removeClass("invisible");
 
         });
     });
 
-    $("#datepicker").datepicker();
 
     $("#addContact").click(function(){
-        $("#getAllContacts").removeClass("active");
+        $(".btn-method").removeClass("active");
         $("#addContact").addClass("active");
-        $("#div-table-allContacts").addClass("collapsed");
-        $("#div-table-allContacts").addClass("invisible");
+        $(".div-info").addClass("collapsed");
+        $(".div-info").addClass("invisible");
         $("#div-form-addContact").removeClass("collapsed");
         $("#div-form-addContact").removeClass("invisible");
     });
@@ -52,7 +52,7 @@ $(document).ready(function(){
     $("#btn-addContact-submit").click(function(){
         var firstName = $("#firstName").val();
         var lastName = $("#lastName").val();
-        var birthDate = $("#datepicker").val();
+        var birthDate = $("#birthDate").val();
         if(firstName === "" || firstName == undefined){
             alert("First Name is undefined");
         }else if(lastName === "" || firstName == undefined){
@@ -70,6 +70,7 @@ $(document).ready(function(){
                 });
         }
     });
+
 
     //
     //$.post("/addContact", {firstName: firstName,
