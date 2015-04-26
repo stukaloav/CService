@@ -13,8 +13,15 @@ public class ContactDTO {
     private String lastName;
     private Date birthDate;
 
+
     public ContactDTO(long id, String firstName, String lastName, Date birthDate) {
         this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthDate = birthDate;
+    }
+
+    public ContactDTO(String firstName, String lastName, Date birthDate) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
@@ -53,4 +60,5 @@ public class ContactDTO {
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
+    
 }

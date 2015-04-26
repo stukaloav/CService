@@ -1,8 +1,5 @@
 .invisible {
     display: none;
-}
-
-.collapsed {
     width: 0;
     height: 0;
 }
@@ -11,7 +8,6 @@
 }
 
 .btn-method{
-
 }
 
 body {
@@ -63,4 +59,12 @@ body {
     background: #fff;
     margin-left: 0;
     border: 1px solid yellow;
+}
+
+.tr-allContacts {
+    background: red;
+}
+
+#1 {
+    color: green;
 }

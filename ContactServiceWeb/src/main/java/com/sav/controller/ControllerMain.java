@@ -45,10 +45,13 @@ public class ControllerMain {
 
     @RequestMapping(value = "/addContact", method = RequestMethod.GET)
     public @ResponseBody Long addContact(@RequestParam(value = "firstName", required = true) String firstName,
-                                         @RequestParam(value = "lastName", required = true) String lastName,
-                                         @RequestParam(value = "birthDate", required = true)Date birthDate){
-        Contact contact = new Contact(firstName, lastName, birthDate);
-        contactService.addContact(contact);
-        return contact.getId();
+                                         @RequestParam(value = "lastName", required = true) String lastName){
+        List<Contact> contactList = contactService.getAllContacts();
+        for (Contact contact: contactList){
+            if (firstName.equals(contact.getFirstName())){
+                return -1l;
+            }
+        }
+        return 1l;
     }
 }

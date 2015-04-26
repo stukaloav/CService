@@ -27,5 +27,8 @@
         <module name="WebContactService" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="ContactServiceWeb" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

@@ -36,7 +36,7 @@
             </div>
             <div class="span9" id="info" style="margin-left: 280px">
 
-                <div class="div-info invisible collapsed table-responsive" id="div-table-allContacts">
+                <div class="div-info invisible table-responsive" id="div-table-allContacts">
                     <table class="table table-striped table-bordered" id="table-allContacts">
                         <thead>
                         <tr>
@@ -47,11 +47,13 @@
                         </tr>
                         </thead>
                         <tbody>
+                        <tr class="tr-allContacts">
+                        </tr>
                         </tbody>
                     </table>
                 </div>
 
-                <div class="div-info invisible collapsed" id="div-form-addContact">
+                <div class="div-info invisible" id="div-form-addContact">
                         <form class="form-horizontal" style="margin-top: 50px;">
                             <div class="control-group">
                                 <label class="control-label">First Name</label>

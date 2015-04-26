@@ -1,6 +1,6 @@
-insert into contact (id, first_name, last_name, birth_date) values (1, 'John', 'Smith', '1986-02-28');
-insert into contact (id, first_name, last_name, birth_date) values (2, 'Mark', 'Loren', '1986-02-28');
-insert into contact (id, first_name, last_name, birth_date) values (3, 'Liam', 'Nissen', '1986-02-28');
+insert into contact (id, first_name, last_name, birth_date) values (1, 'John', 'Smith', '2015-04-01');
+insert into contact (id, first_name, last_name, birth_date) values (2, 'Mark', 'Loren', '2015-04-01');
+insert into contact (id, first_name, last_name, birth_date) values (3, 'Liam', 'Nissen', '2015-04-01');
 
 insert into hobby (id, title, description) values (1, 'basketball', 'the best game in the world');
 
