@@ -10,12 +10,12 @@ $(document).ready(function(){
     if(($.cookie("userFirstName") === "")||
         ($.cookie("userFirstName") == undefined)){
         $("#user-name").text("unknown");
-        $("#btn-exit").addClass("invisible");
-        $("#btn-enter").removeClass("invisible");
+        $("#btn-userExit").addClass("invisible");
+        $("#btn-userEnter").removeClass("invisible");
     }else{
         $("#user-name").text("" + $.cookie("userFirstName") + " " + $.cookie("userLastName"));
-        $("#btn-enter").addClass("invisible");
-        $("#btn-exit").removeClass("invisible");
+        $("#btn-userEnter").addClass("invisible");
+        $("#btn-userExit").removeClass("invisible");
     }
 
 
@@ -70,18 +70,29 @@ $(document).ready(function(){
             $.get("/add", {firstName: firstName, lastName: lastName,
                 birthDate: date, birthMonth: month, birthYear: year},
                 function(data){
-                if(data === -1){
+                if(data === "" || data == undefined){
                     alert("contact is already exists");
                 }else {
-                    alert("new contact added, id: " + data);
+                    alert("new contact added, id: " + data.id);
                 }
             })
         }
     });
 
-    $("#btn-enter").on("click", function(){
+    $("#btn-userExit").on("click", function(){
+        $.cookie("userFirstName", "");
+        $.cookie("userLastName", "");
+        $.cookie("userId", "");
+    });
+
+    $(".btn-exit").on("click", function(){
+        location.reload();
+    });
+
+
+    $("#btn-userEnter").on("click", function(){
         $(".btn").removeClass("active");
-        $("#btn-enter").addClass("active");
+        $("#btn-userEnter").addClass("active");
         $(".div-info").addClass("invisible");
         $("#userFirstName").val("");
         $("#userLastName").val("");
@@ -104,7 +115,7 @@ $(document).ready(function(){
             var month = dateBirthDate.getMonth();
             var date = dateBirthDate.getDate();
             var year = (dateBirthDate.getFullYear() - 1900);
-            $.get("/userEnter", {firstName: firstName, lastName: lastName,
+            $.get("/user", {firstName: firstName, lastName: lastName,
                     birthDate: date, birthMonth: month, birthYear: year},
                 function(data){
                     if(data !== "" && data != undefined){
@@ -113,10 +124,45 @@ $(document).ready(function(){
                         $.cookie("userId", data.id);
                         location.reload();
                     }else {
-                        alert("unknown");
+                        $("#div-userEnter-submit").addClass("invisible");
+                        $("#div-add-newUserOnEnter").removeClass("invisible");
                     }
                 });
         }
+    });
+
+    $("#btn-add-newUserOnEnter").on("click", function() {
+        var firstName = $("#userFirstName").val();
+        var lastName = $("#userLastName").val();
+        var birthDate = $("#userBirthDate").val();
+        if (firstName === "" || firstName == undefined) {
+            alert("First Name is undefined");
+        } else if (lastName === "" || firstName == undefined) {
+            alert("Last Name is undefined");
+        } else if (birthDate === "" || birthDate == undefined) {
+            alert("Birth Date is undefined");
+        } else {
+            var dateBirthDate = new Date(birthDate);
+            var month = dateBirthDate.getMonth();
+            var date = dateBirthDate.getDate();
+            var year = (dateBirthDate.getFullYear() - 1900);
+            $.get("/add", {firstName: firstName, lastName: lastName,
+                    birthDate: date, birthMonth: month, birthYear: year},
+                function(data){
+                    if(data !== "" && data != undefined){
+                        $.cookie("userFirstName", data.firstName);
+                        $.cookie("userLastName", data.lastName);
+                        $.cookie("userId", data.id);
+                        location.reload();
+                    }else{
+                        alert("something wrong! this user is already exists");
+                    }
+                });
+        }
+    });
+
+    $("#btn-exit-newUserOnEnter").on("click", function() {
+        location.reload();
     });
 
 });

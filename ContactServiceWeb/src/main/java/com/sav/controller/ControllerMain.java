@@ -44,7 +44,7 @@ public class ControllerMain {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public @ResponseBody Long addContact(
+    public @ResponseBody ContactDTO addContact(
                             @RequestParam(value = "firstName", required = true) String firstName,
                             @RequestParam(value = "lastName", required = true) String lastName,
                             @RequestParam(value = "birthDate", required = true) int birthDate,
@@ -57,15 +57,18 @@ public class ControllerMain {
                     (birthDate == contact.getBirthDate().getDate())&&
                     (birthMonth == contact.getBirthDate().getMonth())&&
                     (birthYear == contact.getBirthDate().getYear())){
-                return -1l;
+                return null;
             }
         }
         Contact contact = new Contact(firstName, lastName, new Date(birthYear, birthMonth, birthDate));
         contactService.addContact(contact);
-        return contact.getId();
+        ContactDTO contactDTO = new ContactDTO(contact.getId(),
+                contact.getFirstName(), contact.getLastName(),
+                contact.getBirthDate());
+        return contactDTO;
     }
 
-    @RequestMapping(value = "/userEnter", method = RequestMethod.GET)
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
     public @ResponseBody ContactDTO doesUserExist(
             @RequestParam(value = "firstName", required = true) String firstName,
             @RequestParam(value = "lastName", required = true) String lastName,

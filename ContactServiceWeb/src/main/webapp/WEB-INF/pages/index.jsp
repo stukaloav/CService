@@ -27,8 +27,8 @@
                     <h5 id="user-name" style="color: #fff"></h5>
                 </div>
                 <div class="span2">
-                    <button class="btn invisible" id="btn-enter">enter</button>
-                    <button class="btn invisible" id="btn-exit">exit</button>
+                    <button class="btn invisible" id="btn-userEnter">enter</button>
+                    <button class="btn btn-exit invisible" id="btn-userExit">exit</button>
                 </div>
             </div>
         </div>
@@ -36,8 +36,8 @@
             <div class="span3" id="sidebar">
                 <div class="row" id="sidebar-btns">
                     <ul class="nav nav-pills nav-stacked">
-                        <li id="getAllContacts" class="btn-method"><a href="#">getAllContacts</a></li>
-                        <li id="addContact" class="btn-method"><a href="#">addContact</a></li>
+                        <li id="getAllContacts" class="btn btn-method"><a href="#">getAllContacts</a></li>
+                        <li id="addContact" class="btn btn-method"><a href="#">addContact</a></li>
                         <li><a href="#">Сообщения</a></li>
                     </ul>
                 </div>
@@ -66,6 +66,11 @@
                     </form>
                     <div class="row" id="div-userEnter-submit">
                         <button class="btn" id="btn-userEnterSubmit" style="margin-left: 200px;">Submit</button>
+                        <button class="btn btn-exit" id="btn-exit-submit">exit</button>
+                    </div>
+                    <div class="row invisible" id="div-add-newUserOnEnter">
+                        <button class="btn" id="btn-add-newUserOnEnter" style="margin-left: 200px; background: green">Add</button>
+                        <button class="btn btn-exit" id="btn-exit-newUserOnEnter" style="margin-left: 200px; background: red">Exit</button>
                     </div>
                 </div>
                 <div class="div-info invisible table-responsive" id="div-table-allContacts">
@@ -106,6 +111,7 @@
                         </form>
                     <div class="row" id="div-addContact-submit">
                         <button class="btn" id="btn-addContactSubmit" style="margin-left: 200px;">Submit</button>
+                        <button class="btn btn-exit" id="btn-addContactExit" style="margin-left: 200px;">Exit</button>
                     </div>
                 </div>
 
