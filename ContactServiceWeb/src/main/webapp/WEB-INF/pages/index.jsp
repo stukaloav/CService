@@ -38,11 +38,79 @@
                     <ul class="nav nav-pills nav-stacked">
                         <li id="getAllContacts" class="btn btn-method"><a href="#">getAllContacts</a></li>
                         <li id="addContact" class="btn btn-method"><a href="#">addContact</a></li>
-                        <li><a href="#">Сообщения</a></li>
+                        <li id="message"><a href="#">Сообщения</a></li>
                     </ul>
                 </div>
             </div>
             <div class="span9" id="info" style="margin-left: 280px">
+
+                <div class="div-info" id="div-details">
+                    <div class="span5" id="div-userDetails">
+                        <ul id="myTab" class="nav nav-tabs">
+                            <li class="active"><a href="#div-contact-info" data-toggle="tab">Info</a></li>
+                            <li class=""><a href="#div-contact-hobbies" data-toggle="tab">Hobbies</a></li>
+                            <li class=""><a href="#div-contact-places" data-toggle="tab">Places</a></li>
+                            <li class=""><a href="#div-contact-friends" data-toggle="tab">Friends</a></li>
+                        </ul>
+                    <div id="myTabContent" class="tab-content">
+                        <div class="tab-pane fade active in" id="div-contact-info">
+                            <div class="div-info" id="div-contact-picture">
+                                <img src="resources/images/shape.jpg" class="img-polaroid">
+                            </div>
+                            <div class="div-info table-responsive" id="div-table-contact-info">
+                                <table class="table table-striped table-bordered" id="table-contact-info">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Birth Date</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="div-contact-hobbies">
+                            <table class="table table-striped table-bordered" id="table-contact-hobbies">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>title</th>
+                                        <th>description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="div-contact-places">
+                            <table class="table table-striped table-bordered" id="table-contact-places">
+                                <thead>
+                                    <th>#</th>
+                                    <th>title</th>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="div-contact-friends">
+                            <p>Food truck fixie locavore, accusamus mcsweeney&#8217;s marfa nulla single-origin coffee squid.
+                                Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four
+                                loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip
+                                jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.
+                                Keytar helvetica VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes
+                                anderson 8-bit, sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester
+                                stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.</p>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="span3" id="div-userMessages">
+                        <h3>Messages</h3>
+                        <textarea rows="15" style="width: 290px;" id="textarea-conversation"></textarea>
+                        <textarea rows="3" style="width: 290px;" id="textarea-currentMessage"></textarea>
+                    </div>
+                </div>
+
                 <div class="div-info invisible" id="div-form-enter">
                     <form class="form-horizontal" style="margin-top: 50px;">
                         <div class="control-group">

@@ -19,6 +19,7 @@ $(document).ready(function(){
     }
 
 
+
     //get all contacts
     $("#getAllContacts").click(function () {
         $(".btn").removeClass("active");
@@ -26,8 +27,8 @@ $(document).ready(function(){
         $("#table-allContacts").find("tbody>tr").remove();
         $.get("/contacts", {}, function (data){
             $.each(data, function(index, value) {
-                $("#table-allContacts > tbody:last").append("<tr class='tr-allContacts'><td>"
-                +index+"</td><td>"+value.firstName+"</td><td>"+
+                $("#table-allContacts > tbody:last").append("<tr class='tr-allContacts' id='"+
+                value.id+"'><td>"+index+"</td><td>"+value.firstName+"</td><td>"+
                 value.lastName +"</td><td>"+ value.birthDate +"</td></tr>");
             });
             $(".div-info").addClass("invisible");
@@ -36,10 +37,13 @@ $(document).ready(function(){
         });
     });
 
-    //why this doesn't work????
-    $(".tr-allContacts").on("click", function(){
-       alert("yes");
+    //jump on contact details from table-allContacts by $(this).attr('id');
+    $('#table-allContacts').on('click', '.tr-allContacts', function(){
+        $(".div-info").addClass("invisible");
+        $("#div-details").removeClass("invisible");
     });
+
+
 
     //adding new contact
     $("#addContact").click(function(){
