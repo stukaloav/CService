@@ -58,6 +58,7 @@ $(document).ready(function(){
         $("#div-details").removeClass("invisible");
     });
 
+    //fill the contact-places table
     $('#table-allContacts').on('click', '.tr-allContacts', function(){
         $("#table-contact-places > tbody > tr").remove();
         $.get("/getPlaces", {contactId:contactId}, function(data){
@@ -68,6 +69,7 @@ $(document).ready(function(){
         });
     });
 
+    //fill the contact-hobbies table
     $('#table-allContacts').on('click', '.tr-allContacts', function(){
         $("#table-contact-hobbies > tbody > tr").remove();
         $.get("/getHobbies", {contactId:contactId}, function(data){
@@ -78,6 +80,17 @@ $(document).ready(function(){
         });
     });
 
+    //fill the contact-friends table
+    $('#table-allContacts').on('click', '.tr-allContacts', function(){
+        $("#table-contact-friends > tbody > tr").remove();
+        $.get("/getFriends", {contactId:contactId}, function(data){
+            $.each(data, function(index, value) {
+                $("#table-contact-friends > tbody:last").append("<tr class='tr-allContacts' id='"+
+                value.id+"'><td>"+index+"</td><td>"+value.firstName+"</td><td>"+
+                value.lastName +"</td><td>"+ value.birthDate +"</td></tr>");
+            });
+        });
+    });
 
 
 
@@ -221,6 +234,16 @@ $(document).ready(function(){
     $("#div-userDetails").on("click", '#btn-contact-places', function(){
         $(".div-details-satellite").addClass("invisible");
         $("#div-userPlacesMap").removeClass("invisible");
+    });
+
+    //action change on btn-contact-hobbies
+    $("#div-userDetails").on("click", '#btn-contact-hobbies', function(){
+        $(".div-details-satellite").addClass("invisible");
+    });
+
+    //action change on btn-contact-friends
+    $("#div-userDetails").on("click", '#btn-contact-friends', function(){
+        $(".div-details-satellite").addClass("invisible");
     });
 
 

@@ -50,9 +50,9 @@
                     <div class="span5" id="div-userDetails">
                         <ul id="myTab" class="nav nav-tabs">
                             <li class="active"><a href="#div-contact-info" data-toggle="tab" id="btn-contact-info">Info</a></li>
-                            <li class=""><a href="#div-contact-hobbies" data-toggle="tab">Hobbies</a></li>
+                            <li class=""><a href="#div-contact-hobbies" data-toggle="tab" id="btn-contact-hobbies">Hobbies</a></li>
                             <li class=""><a href="#div-contact-places" data-toggle="tab" id="btn-contact-places">Places</a></li>
-                            <li class=""><a href="#div-contact-friends" data-toggle="tab">Friends</a></li>
+                            <li class=""><a href="#div-contact-friends" data-toggle="tab" id="btn-contact-friends">Friends</a></li>
                         </ul>
                     <div id="myTabContent" class="tab-content">
                         <div class="tab-pane fade active in" id="div-contact-info">
@@ -98,13 +98,18 @@
                             </table>
                         </div>
                         <div class="tab-pane fade" id="div-contact-friends">
-                            <p>Food truck fixie locavore, accusamus mcsweeney&#8217;s marfa nulla single-origin coffee squid.
-                                Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four
-                                loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip
-                                jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.
-                                Keytar helvetica VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes
-                                anderson 8-bit, sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester
-                                stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.</p>
+                            <table class="table table-striped table-bordered" id="table-contact-friends">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Birth Date</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                     </div>

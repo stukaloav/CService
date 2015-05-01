@@ -141,4 +141,24 @@ public class ControllerMain {
             return hobbyDTOs;
         }
     }
+
+    @RequestMapping(value = "/getFriends", method = RequestMethod.GET)
+    public @ResponseBody Set<ContactDTO> getFriends(
+            @RequestParam(value = "contactId", required = true) long contactId){
+        Contact contact = contactService.getContactById(contactId);
+        Set<Contact> friends = contactService.getFriendsContacts(contact);
+        Set<ContactDTO> contactDTOs = new HashSet<>();
+        if(friends == null){
+            return null;
+        }else {
+            for (Contact friend: friends){
+                contactDTOs.add(new ContactDTO(
+                        friend.getId(),
+                        friend.getFirstName(),
+                        friend.getLastName(),
+                        friend.getBirthDate()));
+            }
+            return contactDTOs;
+        }
+    }
 }

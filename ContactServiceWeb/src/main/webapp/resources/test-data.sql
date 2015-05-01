@@ -18,3 +18,5 @@ insert into contact_places (contact_id, place_id) values (1, 2);
 insert into contact_places (contact_id, place_id) values (2, 2);
 
 insert into contact_hobbies (contact_id, hobby_id) values (1, 1);
+
+insert into friendship (first_contact_id, second_contact_id) values (1, 2);

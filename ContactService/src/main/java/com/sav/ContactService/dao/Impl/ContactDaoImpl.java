@@ -56,9 +56,10 @@ public class ContactDaoImpl implements ContactDao {
         if (first == null || second == null){
             throw new IllegalArgumentException("argument should not be null");
         }
+
+        first.getFriends().add(second);
         sessionFactory.getCurrentSession().saveOrUpdate(first);
         sessionFactory.getCurrentSession().saveOrUpdate(second);
-        first.getFriends().add(second);
     }
     @Override
     public List<Friendship> getAllFriends(){
@@ -66,16 +67,11 @@ public class ContactDaoImpl implements ContactDao {
                 createQuery("from Friendship").list();
     }
     @Override
-    public List<Contact> getFriendsFromContact(Contact contact){
+    public Set<Contact> getFriendsFromContact(Contact contact){
         if (contact == null){
             throw new IllegalArgumentException("contact should not be null");
         }
-        Query query = sessionFactory.getCurrentSession().
-                createQuery("from Friends f where " +
-                        "f.firstFriend = ? or f.secondFriend = ?");
-        query.setParameter(0, contact);
-        query.setParameter(1, contact);
-        return query.list();
+        return contact.getFriends();
     }
     @Override
     public Set<Hobby> getHobbiesFromContact(Contact contact) {

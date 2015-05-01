@@ -38,14 +38,14 @@ public class Contact implements Serializable{
             , inverseJoinColumns={@JoinColumn(name = "PLACE_ID")})
     private Set<Place> places;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "FRIENDSHIP"
             , joinColumns = {@JoinColumn(name = "FIRST_CONTACT_ID")}
             , inverseJoinColumns = {@JoinColumn(name = "SECOND_CONTACT_ID")})
-    private List<Contact> friends;
+    private Set<Contact> friends;
 
     @ManyToMany(mappedBy = "friends")
-    private List<Contact> inverseFriends;
+    private Set<Contact> inverseFriends;
 
     @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY)
     private List<Message> sentMessages;
@@ -70,16 +70,16 @@ public class Contact implements Serializable{
     public void setHobbies(Set<Hobby> hobbies) {
         this.hobbies = hobbies;
     }
-    public List<Contact> getFriends() {
+    public Set<Contact> getFriends() {
         return friends;
     }
-    public void setFriends(List<Contact> friends) {
+    public void setFriends(Set<Contact> friends) {
         this.friends = friends;
     }
-    public List<Contact> getInverseFriends() {
+    public Set<Contact> getInverseFriends() {
         return inverseFriends;
     }
-    public void setInverseFriends(List<Contact> inverseFriends) {
+    public void setInverseFriends(Set<Contact> inverseFriends) {
         this.inverseFriends = inverseFriends;
     }
     public long getId() {

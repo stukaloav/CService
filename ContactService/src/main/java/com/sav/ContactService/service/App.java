@@ -34,6 +34,10 @@ public class App {
         System.out.println(contactService.getPlacesFromContact(contact1));
         System.out.println(contactService.getHobbiesFromContact(contact1));
 
+        System.out.println(contactService.getFriendsContacts(contact1));
+        contactService.addFriendship(contact1, contact);
+        System.out.println(contactService.getFriendsContacts(contact1));
+
 
 
 
