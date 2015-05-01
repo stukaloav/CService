@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -23,7 +24,7 @@ public class Hobby implements Serializable{
     private String description;
 
     @ManyToMany(mappedBy="hobbies")
-    private List<Contact> contacts;
+    private Set<Contact> contacts;
 
     public Hobby() {
     }
@@ -33,10 +34,10 @@ public class Hobby implements Serializable{
         this.description = description;
     }
 
-    public List<Contact> getContacts() {
+    public Set<Contact> getContacts() {
         return contacts;
     }
-    public void setContacts(List<Contact> contacts) {
+    public void setContacts(Set<Contact> contacts) {
         this.contacts = contacts;
     }
     public long getId() {

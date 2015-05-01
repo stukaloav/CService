@@ -78,7 +78,7 @@ public class ContactDaoImpl implements ContactDao {
         return query.list();
     }
     @Override
-    public List<Hobby> getHobbiesFromContact(Contact contact) {
+    public Set<Hobby> getHobbiesFromContact(Contact contact) {
         if (contact == null){
             throw new IllegalArgumentException("argument should not be null");
         }
@@ -86,7 +86,7 @@ public class ContactDaoImpl implements ContactDao {
     }
 
     @Override
-    public List<Place> getPlacesFromContact(Contact contact) {
+    public Set<Place> getPlacesFromContact(Contact contact) {
         if (contact == null){
             throw new IllegalArgumentException("argument should not be null");
         }

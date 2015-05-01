@@ -32,6 +32,7 @@ public class App {
 
         Contact contact1 = contactService.getContactById(1);
         System.out.println(contactService.getPlacesFromContact(contact1));
+        System.out.println(contactService.getHobbiesFromContact(contact1));
 
 
 

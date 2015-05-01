@@ -22,7 +22,7 @@ public interface ContactService {
     @Transactional
     void deleteContact(Contact contact);
     @Transactional
-    List<Hobby> getHobbiesFromContact(Contact contact);
+    Set<Hobby> getHobbiesFromContact(Contact contact);
     @Transactional
     void addFriendship(Contact first, Contact second);
     @Transactional
@@ -30,7 +30,7 @@ public interface ContactService {
     @Transactional
     List<Contact> getFriendsContacts(Contact contact);
     @Transactional
-    List<Place> getPlacesFromContact(Contact contact);
+    Set<Place> getPlacesFromContact(Contact contact);
     @Transactional
     void addPlaceToContact(Contact contact, Place place);
 

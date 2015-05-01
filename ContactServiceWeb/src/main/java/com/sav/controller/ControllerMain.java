@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class ControllerMain {
@@ -111,11 +109,11 @@ public class ControllerMain {
     }
 
     @RequestMapping(value = "/getPlaces", method = RequestMethod.GET)
-    public @ResponseBody List<PlaceDTO> getPlaces(
+    public @ResponseBody Set<PlaceDTO> getPlaces(
             @RequestParam(value = "contactId", required = true) long contactId){
         Contact contact = contactService.getContactById(contactId);
-        List<Place> places = contactService.getPlacesFromContact(contact);
-        List<PlaceDTO> placeDTOs = new ArrayList<>();
+        Set<Place> places = contactService.getPlacesFromContact(contact);
+        Set<PlaceDTO> placeDTOs = new HashSet<>();
         if(places == null){
             return null;
         }else {

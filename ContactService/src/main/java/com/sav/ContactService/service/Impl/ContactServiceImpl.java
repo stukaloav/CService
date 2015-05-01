@@ -57,7 +57,7 @@ public class ContactServiceImpl implements ContactService {
         contactDao.deleteContact(contact);
     }
     @Override
-    public List<Hobby> getHobbiesFromContact(Contact contact) {
+    public Set<Hobby> getHobbiesFromContact(Contact contact) {
         return contactDao.getHobbiesFromContact(contact);
     }
     @Override
@@ -82,7 +82,7 @@ public class ContactServiceImpl implements ContactService {
     }
     @Override
     @Transactional
-    public List<Place> getPlacesFromContact(Contact contact) {
+    public Set<Place> getPlacesFromContact(Contact contact) {
         return contactDao.getPlacesFromContact(contact);
     }
     @Override

@@ -26,17 +26,17 @@ public class Contact implements Serializable{
     @Column(name="BIRTH_DATE")
     private Date birthDate;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     @JoinTable(name="CONTACT_HOBBIES"
             , joinColumns={@JoinColumn(name = "CONTACT_ID")}
             , inverseJoinColumns={@JoinColumn(name = "HOBBY_ID")})
-    private List<Hobby> hobbies;
+    private Set<Hobby> hobbies;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     @JoinTable(name="CONTACT_PLACES"
             , joinColumns={@JoinColumn(name = "CONTACT_ID")}
             , inverseJoinColumns={@JoinColumn(name = "PLACE_ID")})
-    private List<Place> places;
+    private Set<Place> places;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "FRIENDSHIP"
@@ -61,13 +61,13 @@ public class Contact implements Serializable{
         this.birthDate = birthDate;
     }
 
-    public List<Hobby> getHobbies() {
+    public Set<Hobby> getHobbies() {
         if (hobbies == null){
-            hobbies = new ArrayList<>();
+            hobbies = new HashSet<>();
         }
         return hobbies;
     }
-    public void setHobbies(List<Hobby> hobbies) {
+    public void setHobbies(Set<Hobby> hobbies) {
         this.hobbies = hobbies;
     }
     public List<Contact> getFriends() {
@@ -118,13 +118,13 @@ public class Contact implements Serializable{
     public void setReceivedMessages(List<Message> receivedMessages) {
         this.receivedMessages = receivedMessages;
     }
-    public List<Place> getPlaces() {
+    public Set<Place> getPlaces() {
         if (places == null){
-            places = new ArrayList<>();
+            places = new HashSet<>();
         }
         return places;
     }
-    public void setPlaces(List<Place> places) {
+    public void setPlaces(Set<Place> places) {
         this.places = places;
     }
 

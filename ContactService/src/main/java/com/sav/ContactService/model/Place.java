@@ -3,6 +3,7 @@ package com.sav.ContactService.model;
 import javax.persistence.*;
 
 import java.util.List;
+import java.util.Set;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -25,7 +26,7 @@ public class Place {
     private double latitude;
 
     @ManyToMany(mappedBy="places")
-    private List<Contact> contacts;
+    private Set<Contact> contacts;
 
 
     public Place() {
@@ -61,10 +62,10 @@ public class Place {
     public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
-    public List<Contact> getContacts() {
+    public Set<Contact> getContacts() {
         return contacts;
     }
-    public void setContacts(List<Contact> contacts) {
+    public void setContacts(Set<Contact> contacts) {
         this.contacts = contacts;
     }
 

@@ -19,8 +19,8 @@ public interface ContactDao {
     List<Friendship> getAllFriends();
     List<Contact> getFriendsFromContact(Contact contact);
     List<Contact> getAllContactsSamePlace(String placeTitle);
-    List<Hobby> getHobbiesFromContact(Contact contact);
-    List<Place> getPlacesFromContact(Contact contact);
+    Set<Hobby> getHobbiesFromContact(Contact contact);
+    Set<Place> getPlacesFromContact(Contact contact);
     void addPlaceToContact(Contact contact, Place place);
     void sendMessage(Contact sender, Contact receiver, String content,
                      Date messageDate);
