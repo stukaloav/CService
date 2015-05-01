@@ -32,6 +32,12 @@ public class Contact implements Serializable{
             , inverseJoinColumns={@JoinColumn(name = "HOBBY_ID")})
     private List<Hobby> hobbies;
 
+    @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    @JoinTable(name="CONTACT_PLACES"
+            , joinColumns={@JoinColumn(name = "CONTACT_ID")}
+            , inverseJoinColumns={@JoinColumn(name = "PLACE_ID")})
+    private List<Place> places;
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "FRIENDSHIP"
             , joinColumns = {@JoinColumn(name = "FIRST_CONTACT_ID")}
@@ -111,6 +117,15 @@ public class Contact implements Serializable{
     }
     public void setReceivedMessages(List<Message> receivedMessages) {
         this.receivedMessages = receivedMessages;
+    }
+    public List<Place> getPlaces() {
+        if (places == null){
+            places = new ArrayList<>();
+        }
+        return places;
+    }
+    public void setPlaces(List<Place> places) {
+        this.places = places;
     }
 
     @Override

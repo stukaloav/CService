@@ -29,6 +29,10 @@ public interface ContactService {
     List<Friendship> getAllFriendPairs();
     @Transactional
     List<Contact> getFriendsContacts(Contact contact);
+    @Transactional
+    List<Place> getPlacesFromContact(Contact contact);
+    @Transactional
+    void addPlaceToContact(Contact contact, Place place);
 
     //Methods that deal with HobbyDao
     @Transactional
@@ -49,6 +53,7 @@ public interface ContactService {
     void addPlace(Place place);
     @Transactional
     List<Place> getAllPlaces();
+
 
     //Methods that deal with MessageDao
     @Transactional

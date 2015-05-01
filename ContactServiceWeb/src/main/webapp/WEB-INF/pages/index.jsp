@@ -4,6 +4,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
         <title>JSP Page</title>
         <script type="text/javascript" src="resources/js/jquery-2.1.1.js"></script>
         <script type="text/javascript" src="resources/js/jquery.cookie.js"></script>
@@ -11,6 +12,7 @@
         <link rel="stylesheet" type="text/css" href="resources/css/my-style.css">
         <script type="text/javascript" src="resources/js/bootstrap.js"></script>
         <script type="text/javascript" src="resources/js/bootstrap-datepicker.js"></script>
+        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
         <link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="resources/css/bootstrap-responsive.css">
         <link rel="stylesheet" type="text/css" href="resources/css/datepicker.css">
@@ -47,21 +49,20 @@
                 <div class="div-info" id="div-details">
                     <div class="span5" id="div-userDetails">
                         <ul id="myTab" class="nav nav-tabs">
-                            <li class="active"><a href="#div-contact-info" data-toggle="tab">Info</a></li>
+                            <li class="active"><a href="#div-contact-info" data-toggle="tab" id="btn-contact-info">Info</a></li>
                             <li class=""><a href="#div-contact-hobbies" data-toggle="tab">Hobbies</a></li>
-                            <li class=""><a href="#div-contact-places" data-toggle="tab">Places</a></li>
+                            <li class=""><a href="#div-contact-places" data-toggle="tab" id="btn-contact-places">Places</a></li>
                             <li class=""><a href="#div-contact-friends" data-toggle="tab">Friends</a></li>
                         </ul>
                     <div id="myTabContent" class="tab-content">
                         <div class="tab-pane fade active in" id="div-contact-info">
-                            <div class="div-info" id="div-contact-picture">
+                            <div class="div-contactInfo" id="div-contact-picture">
                                 <img src="resources/images/shape.jpg" class="img-polaroid">
                             </div>
-                            <div class="div-info table-responsive" id="div-table-contact-info">
+                            <div class="div-contactInfo table-responsive" id="div-table-contact-info">
                                 <table class="table table-striped table-bordered" id="table-contact-info">
                                     <thead>
                                     <tr>
-                                        <th>#</th>
                                         <th>First Name</th>
                                         <th>Last Name</th>
                                         <th>Birth Date</th>
@@ -86,11 +87,14 @@
                             </table>
                         </div>
                         <div class="tab-pane fade" id="div-contact-places">
+
                             <table class="table table-striped table-bordered" id="table-contact-places">
                                 <thead>
                                     <th>#</th>
                                     <th>title</th>
                                 </thead>
+                                <tbody>
+                                </tbody>
                             </table>
                         </div>
                         <div class="tab-pane fade" id="div-contact-friends">
@@ -104,10 +108,14 @@
                         </div>
                     </div>
                     </div>
-                    <div class="span3" id="div-userMessages">
+                    <div class="span3 div-details-satellite" id="div-userMessages">
                         <h3>Messages</h3>
                         <textarea rows="15" style="width: 290px;" id="textarea-conversation"></textarea>
                         <textarea rows="3" style="width: 290px;" id="textarea-currentMessage"></textarea>
+                    </div>
+                    <div class="span3 div-details-satellite invisible" id="div-userPlacesMap">
+                        <h3>Map</h3>
+                        <div id="map_canvas" style="width:300px; height:300px"></div>
                     </div>
                 </div>
 

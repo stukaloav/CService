@@ -80,7 +80,15 @@ public class ContactServiceImpl implements ContactService {
     public List<Contact> getFriendsContacts(Contact contact){
         return contactDao.getFriendsFromContact(contact);
     }
-
+    @Override
+    @Transactional
+    public List<Place> getPlacesFromContact(Contact contact) {
+        return contactDao.getPlacesFromContact(contact);
+    }
+    @Override
+    public void addPlaceToContact(Contact contact, Place place) {
+        contactDao.addPlaceToContact(contact, place);
+    }
 
     //Methods that deal with HobbyDao
     @Override

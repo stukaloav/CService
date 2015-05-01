@@ -2,6 +2,7 @@ package com.sav.ContactService.service;
 
 import com.sav.ContactService.model.Contact;
 import com.sav.ContactService.model.Hobby;
+import com.sav.ContactService.model.Place;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.Date;
@@ -24,28 +25,39 @@ public class App {
         contactService.addHobbyToContact(contact, hobby);
         System.out.println(contactService.getHobbiesFromContact(contact));
 
-        Contact contact1 = contactService.getContactById(1l);
-        Contact contact2 = contactService.getContactById(2l);
+        contactService.addPlaceToContact(contact, new Place("Toronto", 0.1, 0.2));
+        contactService.addPlaceToContact(contact, new Place("Paris", 0.1, 0.2));
+        contactService.addPlaceToContact(contact, new Place("London", 0.1, 0.2));
+        contactService.addPlaceToContact(contact, new Place("Kair", 0.1, 0.2));
+
+        Contact contact1 = contactService.getContactById(1);
+        System.out.println(contactService.getPlacesFromContact(contact1));
 
 
-        System.out.println(contactService.getAllMessages());
 
-        System.out.println(contactService.getConversation(contact1, contact2));
 
-        contactService.storeMessage(contact1, contact2, "hello! How are you?", new Date(25, 2, 5));
-        contactService.storeMessage(contact2, contact1, "I am fine, thanks, and you?", new Date(25, 2, 5));
-        contactService.storeMessage(contact1, contact2, "I am fine too, thank you. Would you go to cinema with me?", new Date(25, 2, 5));
-        contactService.storeMessage(contact2, contact1, "Thank you, but I can not", new Date(25, 2, 5));
-        contactService.storeMessage(contact1, contact2, "What a pity! Why?", new Date(25, 2, 5));
-        contactService.storeMessage(contact2, contact1, "I am too busy", new Date(25, 2, 5));
-        contactService.storeMessage(contact1, contact2, "What are you doing?", new Date(25, 2, 5));
-        contactService.storeMessage(contact2, contact1, "I am learning java!", new Date(25, 2, 5));
-
-        System.out.println(contactService.getConversation(contact1, contact2));
-
-        System.out.println(contactService.getAllMessagesFromContact(contact1));
-
-        System.out.println(contactService.getAllContacts());
+//        Contact contact1 = contactService.getContactById(1l);
+//        Contact contact2 = contactService.getContactById(2l);
+//
+//
+//        System.out.println(contactService.getAllMessages());
+//
+//        System.out.println(contactService.getConversation(contact1, contact2));
+//
+//        contactService.storeMessage(contact1, contact2, "hello! How are you?", new Date(25, 2, 5));
+//        contactService.storeMessage(contact2, contact1, "I am fine, thanks, and you?", new Date(25, 2, 5));
+//        contactService.storeMessage(contact1, contact2, "I am fine too, thank you. Would you go to cinema with me?", new Date(25, 2, 5));
+//        contactService.storeMessage(contact2, contact1, "Thank you, but I can not", new Date(25, 2, 5));
+//        contactService.storeMessage(contact1, contact2, "What a pity! Why?", new Date(25, 2, 5));
+//        contactService.storeMessage(contact2, contact1, "I am too busy", new Date(25, 2, 5));
+//        contactService.storeMessage(contact1, contact2, "What are you doing?", new Date(25, 2, 5));
+//        contactService.storeMessage(contact2, contact1, "I am learning java!", new Date(25, 2, 5));
+//
+//        System.out.println(contactService.getConversation(contact1, contact2));
+//
+//        System.out.println(contactService.getAllMessagesFromContact(contact1));
+//
+//        System.out.println(contactService.getAllContacts());
 
     }
 }

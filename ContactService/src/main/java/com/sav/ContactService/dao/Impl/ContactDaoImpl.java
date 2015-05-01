@@ -3,6 +3,7 @@ package com.sav.ContactService.dao.Impl;
 import com.sav.ContactService.dao.ContactDao;
 import com.sav.ContactService.dao.HobbyDao;
 import com.sav.ContactService.model.*;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,6 +84,21 @@ public class ContactDaoImpl implements ContactDao {
         }
         return contact.getHobbies();
     }
+
+    @Override
+    public List<Place> getPlacesFromContact(Contact contact) {
+        if (contact == null){
+            throw new IllegalArgumentException("argument should not be null");
+        }
+        return contact.getPlaces();
+    }
+
+    @Override
+    public void addPlaceToContact(Contact contact, Place place) {
+        contact.getPlaces().add(place);
+        sessionFactory.getCurrentSession().saveOrUpdate(contact);
+    }
+
     @Override
     public List<Contact> getAllContactsSamePlace(String placeTitle){
         if (placeTitle == null){

@@ -5,7 +5,9 @@ import com.sav.util.JsonDateSerial;
 import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class ContactDTO {
     private long id;
@@ -13,15 +15,8 @@ public class ContactDTO {
     private String lastName;
     private Date birthDate;
 
-
     public ContactDTO(long id, String firstName, String lastName, Date birthDate) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthDate = birthDate;
-    }
-
-    public ContactDTO(String firstName, String lastName, Date birthDate) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
@@ -50,6 +45,8 @@ public class ContactDTO {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+
 
     @JsonSerialize(using=JsonDateSerial.class, as = Date.class)
     public Date getBirthDate() {

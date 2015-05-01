@@ -7,3 +7,5 @@ insert into hobby (id, title, description) values (1, 'basketball', 'the best ga
 insert into place (id, title, longitude, latitude) values (1, 'Dnipropetrovsk', 0.23, 0.3);
 
 insert into message (id, message_date, sender_id, receiver_id,content) values (1, '2015-04-01', 1, 2, 'abc');
+
+insert into conact_places (contact_id, place_id) values (1, 1);

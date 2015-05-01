@@ -1,8 +1,10 @@
 package com.sav.controller;
 
+import com.sav.ContactService.model.Place;
 import com.sav.ContactService.service.ContactService;
 import com.sav.ContactService.model.Contact;
 import com.sav.DTO.ContactDTO;
+import com.sav.DTO.PlaceDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -89,5 +91,38 @@ public class ControllerMain {
             }
         }
         return null;
+    }
+
+    @RequestMapping(value = "/getContactById", method = RequestMethod.GET)
+    public @ResponseBody ContactDTO getContactById(
+            @RequestParam(value = "contactId", required = true) long contactId){
+        ContactDTO contactDTO;
+        Contact contact = contactService.getContactById(contactId);
+        if (contact == null){
+            contactDTO = null;
+        }else {
+            contactDTO = new ContactDTO(
+                    contact.getId(),
+                    contact.getFirstName(),
+                    contact.getLastName(),
+                    contact.getBirthDate());
+        }
+        return contactDTO;
+    }
+
+    @RequestMapping(value = "/getPlaces", method = RequestMethod.GET)
+    public @ResponseBody List<PlaceDTO> getPlaces(
+            @RequestParam(value = "contactId", required = true) long contactId){
+        Contact contact = contactService.getContactById(contactId);
+        List<Place> places = contactService.getPlacesFromContact(contact);
+        List<PlaceDTO> placeDTOs = new ArrayList<>();
+        if(places == null){
+            return null;
+        }else {
+            for (Place place: places){
+                placeDTOs.add(new PlaceDTO(place.getTitle(), place.getLongitude(), place.getLatitude()));
+            }
+            return placeDTOs;
+        }
     }
 }

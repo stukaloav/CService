@@ -1,9 +1,6 @@
 package com.sav.ContactService.dao;
 
-import com.sav.ContactService.model.Contact;
-import com.sav.ContactService.model.Friendship;
-import com.sav.ContactService.model.Hobby;
-import com.sav.ContactService.model.Message;
+import com.sav.ContactService.model.*;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
@@ -23,6 +20,8 @@ public interface ContactDao {
     List<Contact> getFriendsFromContact(Contact contact);
     List<Contact> getAllContactsSamePlace(String placeTitle);
     List<Hobby> getHobbiesFromContact(Contact contact);
+    List<Place> getPlacesFromContact(Contact contact);
+    void addPlaceToContact(Contact contact, Place place);
     void sendMessage(Contact sender, Contact receiver, String content,
                      Date messageDate);
 }

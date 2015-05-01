@@ -2,6 +2,8 @@ package com.sav.ContactService.model;
 
 import javax.persistence.*;
 
+import java.util.List;
+
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
@@ -21,6 +23,19 @@ public class Place {
 
     @Column(name = "LATITUDE")
     private double latitude;
+
+    @ManyToMany(mappedBy="places")
+    private List<Contact> contacts;
+
+
+    public Place() {
+    }
+
+    public Place(String title, double longitude, double latitude) {
+        this.title = title;
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
 
     public long getId() {
         return id;
@@ -45,6 +60,12 @@ public class Place {
     }
     public void setLatitude(double latitude) {
         this.latitude = latitude;
+    }
+    public List<Contact> getContacts() {
+        return contacts;
+    }
+    public void setContacts(List<Contact> contacts) {
+        this.contacts = contacts;
     }
 
     @Override
