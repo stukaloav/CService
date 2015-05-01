@@ -1,9 +1,11 @@
 package com.sav.controller;
 
+import com.sav.ContactService.model.Hobby;
 import com.sav.ContactService.model.Place;
 import com.sav.ContactService.service.ContactService;
 import com.sav.ContactService.model.Contact;
 import com.sav.DTO.ContactDTO;
+import com.sav.DTO.HobbyDTO;
 import com.sav.DTO.PlaceDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -121,6 +123,22 @@ public class ControllerMain {
                 placeDTOs.add(new PlaceDTO(place.getTitle(), place.getLongitude(), place.getLatitude()));
             }
             return placeDTOs;
+        }
+    }
+
+    @RequestMapping(value = "/getHobbies", method = RequestMethod.GET)
+    public @ResponseBody Set<HobbyDTO> getHobbies(
+            @RequestParam(value = "contactId", required = true) long contactId){
+        Contact contact = contactService.getContactById(contactId);
+        Set<Hobby> hobbies = contactService.getHobbiesFromContact(contact);
+        Set<HobbyDTO> hobbyDTOs = new HashSet<>();
+        if(hobbies == null){
+            return null;
+        }else {
+            for (Hobby hobby: hobbies){
+                hobbyDTOs.add(new HobbyDTO(hobby.getTitle(), hobby.getDescription()));
+            }
+            return hobbyDTOs;
         }
     }
 }

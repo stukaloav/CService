@@ -68,6 +68,15 @@ $(document).ready(function(){
         });
     });
 
+    $('#table-allContacts').on('click', '.tr-allContacts', function(){
+        $("#table-contact-hobbies > tbody > tr").remove();
+        $.get("/getHobbies", {contactId:contactId}, function(data){
+            $.each(data, function(index, value){
+                $("#table-contact-hobbies > tbody:last").append('<tr><td>'+index+
+                '</td><td>'+value.title+'</td><td>'+value.description+'</td></tr>');
+            });
+        });
+    });
 
 
 
@@ -208,6 +217,7 @@ $(document).ready(function(){
         $("#div-userMessages").removeClass("invisible");
     });
 
+    //action change on btn-contact-places
     $("#div-userDetails").on("click", '#btn-contact-places', function(){
         $(".div-details-satellite").addClass("invisible");
         $("#div-userPlacesMap").removeClass("invisible");
