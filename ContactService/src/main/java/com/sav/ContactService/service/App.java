@@ -13,31 +13,19 @@ public class App {
                 new ClassPathXmlApplicationContext("app-context.xml");
 
         ContactService contactService = context.getBean(ContactService.class);
-        contactService.createContact("Sasha", "Stukalo", new Date(86, 1, 1));
-        contactService.createContact("Luba", "Fedorchak", new Date(86, 1, 1));
-        contactService.createContact("Jonatan", "Swift", new Date(86, 1, 1));
-        contactService.createContact("Lora", "Ditrich", new Date(86, 1, 1));
-        contactService.addHobby("football", "favourite team is Dnipro");
-        contactService.addPlace("Lviv", 0.21, 0.15);
-        Contact contact = new Contact("Jane", "Patric", new Date(23, 1, 4));
-        Hobby hobby = new Hobby("movies", "Detective");
-        contactService.addPlace("Paris", 0.2, 0.3);
-        contactService.addHobbyToContact(contact, hobby);
-        System.out.println(contactService.getHobbiesFromContact(contact));
 
-        contactService.addPlaceToContact(contact, new Place("Toronto", 0.1, 0.2));
-        contactService.addPlaceToContact(contact, new Place("Paris", 0.1, 0.2));
-        contactService.addPlaceToContact(contact, new Place("London", 0.1, 0.2));
-        contactService.addPlaceToContact(contact, new Place("Kair", 0.1, 0.2));
-
+//
         Contact contact1 = contactService.getContactById(1);
-        System.out.println(contactService.getPlacesFromContact(contact1));
-        System.out.println(contactService.getHobbiesFromContact(contact1));
-
-        System.out.println(contactService.getFriendsContacts(contact1));
-        contactService.addFriendship(contact1, contact);
-        System.out.println(contactService.getFriendsContacts(contact1));
-
+        Contact contact2 = contactService.getContactById(2);
+//        Contact contact3 = contactService.getContactById(3);
+//        Contact contact4 = contactService.getContactById(4);
+//        Contact contact5 = contactService.getContactById(5);
+//        Contact contact6 = contactService.getContactById(6);
+//        Contact contact7 = contactService.getContactById(7);
+//        Contact contact8 = contactService.getContactById(8);
+//        Contact contact9 = contactService.getContactById(9);
+//
+//        System.out.println(contactService.getFriendsFromContact(contact1));
 
 
 
@@ -49,18 +37,18 @@ public class App {
 //
 //        System.out.println(contactService.getConversation(contact1, contact2));
 //
-//        contactService.storeMessage(contact1, contact2, "hello! How are you?", new Date(25, 2, 5));
-//        contactService.storeMessage(contact2, contact1, "I am fine, thanks, and you?", new Date(25, 2, 5));
-//        contactService.storeMessage(contact1, contact2, "I am fine too, thank you. Would you go to cinema with me?", new Date(25, 2, 5));
-//        contactService.storeMessage(contact2, contact1, "Thank you, but I can not", new Date(25, 2, 5));
-//        contactService.storeMessage(contact1, contact2, "What a pity! Why?", new Date(25, 2, 5));
-//        contactService.storeMessage(contact2, contact1, "I am too busy", new Date(25, 2, 5));
-//        contactService.storeMessage(contact1, contact2, "What are you doing?", new Date(25, 2, 5));
-//        contactService.storeMessage(contact2, contact1, "I am learning java!", new Date(25, 2, 5));
-//
-//        System.out.println(contactService.getConversation(contact1, contact2));
-//
-//        System.out.println(contactService.getAllMessagesFromContact(contact1));
+        contactService.storeMessage(contact1, contact2, "hello! How are you?", new Date(25, 2, 5));
+        contactService.storeMessage(contact2, contact1, "I am fine, thanks, and you?", new Date(25, 2, 5));
+        contactService.storeMessage(contact1, contact2, "I am fine too, thank you. Would you go to cinema with me?", new Date(25, 2, 5));
+        contactService.storeMessage(contact2, contact1, "Thank you, but I can not", new Date(25, 2, 5));
+        contactService.storeMessage(contact1, contact2, "What a pity! Why?", new Date(25, 2, 5));
+        contactService.storeMessage(contact2, contact1, "I am too busy", new Date(25, 2, 5));
+        contactService.storeMessage(contact1, contact2, "What are you doing?", new Date(25, 2, 5));
+        contactService.storeMessage(contact2, contact1, "I am learning java!", new Date(25, 2, 5));
+
+        System.out.println(contactService.getConversation(contact1, contact2));
+
+        System.out.println(contactService.getAllMessagesFromContact(contact1));
 //
 //        System.out.println(contactService.getAllContacts());
 

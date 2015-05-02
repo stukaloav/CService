@@ -77,7 +77,7 @@ public class ContactServiceImpl implements ContactService {
     }
     @Override
     @Transactional
-    public Set<Contact> getFriendsContacts(Contact contact){
+    public Set<Contact> getFriendsFromContact(Contact contact){
         return contactDao.getFriendsFromContact(contact);
     }
     @Override

@@ -46,7 +46,7 @@
             </div>
             <div class="span9" id="info" style="margin-left: 280px">
 
-                <div class="div-info" id="div-details">
+                <div class="div-info invisible" id="div-details">
                     <div class="span5" id="div-userDetails">
                         <ul id="myTab" class="nav nav-tabs">
                             <li class="active"><a href="#div-contact-info" data-toggle="tab" id="btn-contact-info">Info</a></li>
@@ -124,7 +124,7 @@
                     </div>
                 </div>
 
-                <div class="div-info invisible" id="div-form-enter">
+                <div class="div-info" id="div-form-enter">
                     <form class="form-horizontal" style="margin-top: 50px;">
                         <div class="control-group">
                             <label class="control-label">First Name</label>
@@ -155,7 +155,7 @@
                     </div>
                 </div>
                 <div class="div-info invisible table-responsive" id="div-table-allContacts">
-                    <table class="table table-striped table-bordered" id="table-allContacts">
+                    <table class="table table-bordered" id="table-allContacts">
                         <thead>
                         <tr>
                             <th>#</th>

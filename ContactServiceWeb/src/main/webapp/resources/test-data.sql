@@ -1,22 +1,52 @@
 insert into contact (id, first_name, last_name, birth_date) values (1, 'John', 'Smith', '2015-04-01');
-insert into contact (id, first_name, last_name, birth_date) values (2, 'Mark', 'Loren', '2015-04-01');
+insert into contact (id, first_name, last_name, birth_date) values (2, 'Bruce', 'Willis', '2015-04-01');
 insert into contact (id, first_name, last_name, birth_date) values (3, 'Liam', 'Nissen', '2015-04-01');
+insert into contact (id, first_name, last_name, birth_date) values (4, 'Morgan', 'Freeman', '2015-04-01');
+insert into contact (id, first_name, last_name, birth_date) values (5, 'John', 'Travolta', '2015-04-01');
+insert into contact (id, first_name, last_name, birth_date) values (6, 'Al', 'Pachino', '2015-04-01');
+insert into contact (id, first_name, last_name, birth_date) values (7, 'Colin', 'Farel', '2015-04-01');
+insert into contact (id, first_name, last_name, birth_date) values (8, 'Lesly', 'Nilsen', '2015-04-01');
+insert into contact (id, first_name, last_name, birth_date) values (9, 'Will', 'Smith', '2015-04-01');
+insert into contact (id, first_name, last_name, birth_date) values (10, 'Mick', 'Jugger', '2015-04-01');
 
 insert into hobby (id, title, description) values (1, 'basketball', 'the best game in the world');
+insert into hobby (id, title, description) values (2, 'football', 'one of the most popular game');
+insert into hobby (id, title, description) values (3, 'baseball', 'the most popular game in USA');
+insert into hobby (id, title, description) values (4, 'tennis', 'interesting game for egoistic nature persons');
+insert into hobby (id, title, description) values (5, 'swimming', 'useful for health');
+
 
 insert into place (id, title, longitude, latitude) values (1, 'Dnipropetrovsk', 0.23, 0.3);
-
 insert into place (id, title, longitude, latitude) values (2, 'New York', 0.23, 0.3);
-
+insert into place (id, title, longitude, latitude) values (3, 'Baltimore', 0.3, 0.36);
+insert into place (id, title, longitude, latitude) values (4, 'Roma', 0.283, 0.356);
+insert into place (id, title, longitude, latitude) values (5, 'Prague', 0.238, 0.456);
+insert into place (id, title, longitude, latitude) values (6, 'Toronto', 0.283, 0.895);
 
 insert into message (id, message_date, sender_id, receiver_id,content) values (1, '1986-02-28', 1, 2, 'abc');
 
 insert into contact_places (contact_id, place_id) values (1, 1);
-
 insert into contact_places (contact_id, place_id) values (1, 2);
-
 insert into contact_places (contact_id, place_id) values (2, 2);
 
 insert into contact_hobbies (contact_id, hobby_id) values (1, 1);
+insert into contact_hobbies (contact_id, hobby_id) values (2, 2);
+insert into contact_hobbies (contact_id, hobby_id) values (3, 3);
+insert into contact_hobbies (contact_id, hobby_id) values (4, 4);
+insert into contact_hobbies (contact_id, hobby_id) values (5, 5);
+insert into contact_hobbies (contact_id, hobby_id) values (6, 1);
+insert into contact_hobbies (contact_id, hobby_id) values (7, 2);
+insert into contact_hobbies (contact_id, hobby_id) values (8, 3);
+insert into contact_hobbies (contact_id, hobby_id) values (9, 4);
+insert into contact_hobbies (contact_id, hobby_id) values (10, 5);
+
 
 insert into friendship (first_contact_id, second_contact_id) values (1, 2);
+insert into friendship (first_contact_id, second_contact_id) values (2, 3);
+insert into friendship (first_contact_id, second_contact_id) values (1, 3);
+insert into friendship (first_contact_id, second_contact_id) values (3, 5);
+insert into friendship (first_contact_id, second_contact_id) values (5, 7);
+insert into friendship (first_contact_id, second_contact_id) values (3, 8);
+insert into friendship (first_contact_id, second_contact_id) values (4, 10);
+insert into friendship (first_contact_id, second_contact_id) values (5, 9);
+insert into friendship (first_contact_id, second_contact_id) values (2, 8);

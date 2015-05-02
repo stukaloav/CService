@@ -8,6 +8,7 @@ $(document).ready(function(){
     //datepicker on birthdate in user authorisation dialog
     $("#userBirthDate").datepicker();
 
+    var contactId;
 
     //action on start to check user_name
     if(($.cookie("userFirstName") === "")||
@@ -19,6 +20,52 @@ $(document).ready(function(){
         $("#user-name").text("" + $.cookie("userFirstName") + " " + $.cookie("userLastName"));
         $("#btn-userEnter").addClass("invisible");
         $("#btn-userExit").removeClass("invisible");
+        contactId = $.cookie('userId');
+        //fill table-contact-info
+        $(".div-info").addClass("invisible");
+        $.get("/getContactById", {contactId: contactId}, function(data){
+            if(data !== "" || data != undefined){
+                $("#table-contact-info > tbody > tr").remove();
+                $("#table-contact-info > tbody:last").append(
+                    '<tr><td>' + data.firstName + '</td><td>' + data.lastName + '</td><td>' +
+                    data.birthDate + '</td><tr>');
+                $.each(data.places)
+            }else {
+                alert("something wrong in /getContactById");
+            }
+        });
+
+        //fill table-contact-places
+        $("#table-contact-places > tbody > tr").remove();
+        $.get("/getPlaces", {contactId:contactId}, function(data){
+            $.each(data, function(index, value){
+                $("#table-contact-places > tbody:last").append('<tr><td>'+index+
+                '</td><td>'+value.title+'</td></tr>');
+            });
+        });
+
+        //fill table-contact-hobbies
+        $("#table-contact-hobbies > tbody > tr").remove();
+        $.get("/getHobbies", {contactId:contactId}, function(data){
+            $.each(data, function(index, value){
+                $("#table-contact-hobbies > tbody:last").append('<tr><td>'+index+
+                '</td><td>'+value.title+'</td><td>'+value.description+'</td></tr>');
+            });
+        });
+
+        //fill table-contact-friends
+        $("#table-contact-friends > tbody > tr").remove();
+        $.get("/getFriends", {contactId:contactId}, function(data){
+            $.each(data, function(index, value) {
+                $("#table-contact-friends > tbody:last").append("<tr class='tr-allContacts' id='"+
+                value.id+"'><td>"+index+"</td><td>"+value.firstName+"</td><td>"+
+                value.lastName +"</td><td>"+ value.birthDate +"</td></tr>");
+            });
+        });
+
+
+        $("#div-details").removeClass("invisible");
+
     }
 
 
@@ -28,19 +75,26 @@ $(document).ready(function(){
         $("#getAllContacts").addClass("active");
         $("#table-allContacts").find("tbody>tr").remove();
         $.get("/contacts", {}, function (data){
-            $.each(data, function(index, value) {
-                $("#table-allContacts > tbody:last").append("<tr class='tr-allContacts' id='"+
-                value.id+"'><td>"+index+"</td><td>"+value.firstName+"</td><td>"+
-                value.lastName +"</td><td>"+ value.birthDate +"</td></tr>");
-            });
+            if(($.cookie("userFirstName") === "")||
+                ($.cookie("userFirstName") == undefined)){
+                    $.each(data, function(index, value) {
+                        $("#table-allContacts > tbody:last").append("<tr><td>"+index+"</td><td>"+value.firstName+"</td><td>"+
+                        value.lastName +"</td><td>"+ value.birthDate +"</td></tr>");
+                    });
+            }else {
+                $.each(data, function(index, value) {
+                    $("#table-allContacts > tbody:last").append("<tr class='tr-allContacts' id='"+
+                    value.id+"'><td>"+index+"</td><td>"+value.firstName+"</td><td>"+
+                    value.lastName +"</td><td>"+ value.birthDate +"</td></tr>");});
+            }
         });
+
         $(".div-info").addClass("invisible");
         $("#div-table-allContacts").removeClass("invisible");
     });
 
 
     //jump on contact details from table-allContacts by $(this).attr('id');
-    var contactId;
     $('#table-allContacts').on('click', '.tr-allContacts', function(){
         $(".div-info").addClass("invisible");
         contactId = $(this).attr('id');
@@ -91,6 +145,14 @@ $(document).ready(function(){
             });
         });
     });
+
+    //fill the #div-userMessages in .div-details-satellite
+    //$('#table-allContacts').on('click', '.tr-allContacts', function(){
+    //    $.get("/getConversation", {senderId:1, receiverId:contactId}, function(data){
+    //        $.each()
+    //    })
+    //})
+
 
 
 
@@ -176,9 +238,9 @@ $(document).ready(function(){
                     birthDate: date, birthMonth: month, birthYear: year},
                 function(data){
                     if(data !== "" && data != undefined){
+                        $.cookie("userId", data.id);
                         $.cookie("userFirstName", data.firstName);
                         $.cookie("userLastName", data.lastName);
-                        $.cookie("userId", data.id);
                         location.reload();
                     }else {
                         $("#div-userEnter-submit").addClass("invisible");

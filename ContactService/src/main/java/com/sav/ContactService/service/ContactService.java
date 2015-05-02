@@ -28,7 +28,7 @@ public interface ContactService {
     @Transactional
     List<Friendship> getAllFriendPairs();
     @Transactional
-    Set<Contact> getFriendsContacts(Contact contact);
+    Set<Contact> getFriendsFromContact(Contact contact);
     @Transactional
     Set<Place> getPlacesFromContact(Contact contact);
     @Transactional

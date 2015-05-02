@@ -1,11 +1,13 @@
 package com.sav.controller;
 
 import com.sav.ContactService.model.Hobby;
+import com.sav.ContactService.model.Message;
 import com.sav.ContactService.model.Place;
 import com.sav.ContactService.service.ContactService;
 import com.sav.ContactService.model.Contact;
 import com.sav.DTO.ContactDTO;
 import com.sav.DTO.HobbyDTO;
+import com.sav.DTO.MessageDTO;
 import com.sav.DTO.PlaceDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -146,7 +148,7 @@ public class ControllerMain {
     public @ResponseBody Set<ContactDTO> getFriends(
             @RequestParam(value = "contactId", required = true) long contactId){
         Contact contact = contactService.getContactById(contactId);
-        Set<Contact> friends = contactService.getFriendsContacts(contact);
+        Set<Contact> friends = contactService.getFriendsFromContact(contact);
         Set<ContactDTO> contactDTOs = new HashSet<>();
         if(friends == null){
             return null;
@@ -161,4 +163,23 @@ public class ControllerMain {
             return contactDTOs;
         }
     }
+
+    @RequestMapping(value = "/getConversation", method = RequestMethod.GET)
+    public @ResponseBody List<MessageDTO> getConversation(
+            @RequestParam(value = "senderId", required = true) long senderId,
+            @RequestParam(value = "receiverId", required = true) long receiverId){
+        List<MessageDTO> conversationDTO = new ArrayList<>();
+        Contact sender = contactService.getContactById(senderId);
+        Contact receiver = contactService.getContactById(receiverId);
+        List<Message> conversation = contactService.getConversation(sender, receiver);
+        if (conversation == null){
+            return null;
+        }
+        for (Message message: conversation){
+            conversationDTO.add(new MessageDTO(message.getId(),
+                    message.getMessageDate(), message.getContent()));
+        }
+        return conversationDTO;
+    }
+
 }

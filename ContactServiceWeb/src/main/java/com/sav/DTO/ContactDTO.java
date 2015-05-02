@@ -57,5 +57,6 @@ public class ContactDTO {
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
-    
+
+
 }

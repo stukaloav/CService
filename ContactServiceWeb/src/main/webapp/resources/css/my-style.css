@@ -66,4 +66,10 @@ body {
 }
 
 .tr-allContacts {
+    cursor: pointer;
+
+}
+
+.tr-allContacts:hover {
+    background: red;
 }

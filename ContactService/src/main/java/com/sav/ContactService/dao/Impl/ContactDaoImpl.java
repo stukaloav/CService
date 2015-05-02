@@ -71,7 +71,24 @@ public class ContactDaoImpl implements ContactDao {
         if (contact == null){
             throw new IllegalArgumentException("contact should not be null");
         }
-        return contact.getFriends();
+        Query query = sessionFactory.getCurrentSession().
+                createQuery("from Friendship f where " + "f.firstContactId = ? or f.secondContactId = ?");
+        query.setParameter(0, contact.getId());
+        query.setParameter(1, contact.getId());
+        List<Friendship> friendshipList = query.list();
+        Set<Long> friendsIdSet = new HashSet<>();
+        for (Friendship friendship: friendshipList){
+            if(friendship.getFirstContactId() == contact.getId()){
+                friendsIdSet.add(friendship.getSecondContactId());
+            }else {
+                friendsIdSet.add(friendship.getFirstContactId());
+            }
+        }
+        Set<Contact> friends = new HashSet<>();
+        for (Long friendsId: friendsIdSet){
+            friends.add(getContactById(friendsId));
+        }
+        return friends;
     }
     @Override
     public Set<Hobby> getHobbiesFromContact(Contact contact) {
