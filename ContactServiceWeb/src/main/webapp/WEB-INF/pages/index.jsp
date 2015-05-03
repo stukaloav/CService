@@ -113,9 +113,11 @@
                         </div>
                     </div>
                     </div>
-                    <div class="span3 div-details-satellite" id="div-userMessages">
+                    <div class="span3 div-details-satellite invisible" id="div-userMessages">
                         <h3>Messages</h3>
-                        <textarea rows="15" style="width: 290px;" id="textarea-conversation"></textarea>
+                        <p id="p-conversation" style="background:#FFC0C0;width:300px;height:300px;padding:10px;overflow:auto;">
+                            <p>conversation</p>
+                        </p>
                         <textarea rows="3" style="width: 290px;" id="textarea-currentMessage"></textarea>
                     </div>
                     <div class="span3 div-details-satellite invisible" id="div-userPlacesMap">

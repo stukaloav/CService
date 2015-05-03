@@ -23,7 +23,9 @@ insert into place (id, title, longitude, latitude) values (4, 'Roma', 0.283, 0.3
 insert into place (id, title, longitude, latitude) values (5, 'Prague', 0.238, 0.456);
 insert into place (id, title, longitude, latitude) values (6, 'Toronto', 0.283, 0.895);
 
-insert into message (id, message_date, sender_id, receiver_id,content) values (1, '1986-02-28', 1, 2, 'abc');
+insert into message (id, message_date, sender_id, receiver_id,content) values (1, '1986-02-27', 1, 2, 'Hello! How are You?');
+insert into message (id, message_date, sender_id, receiver_id,content) values (2, '1986-02-28', 2, 1, 'I am fine, thanks)');
+
 
 insert into contact_places (contact_id, place_id) values (1, 1);
 insert into contact_places (contact_id, place_id) values (1, 2);

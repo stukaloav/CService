@@ -112,6 +112,24 @@ $(document).ready(function(){
         $("#div-details").removeClass("invisible");
     });
 
+    //fill messages
+    $('#table-allContacts').on('click', '.tr-allContacts', function(){
+        if(contactId != $.cookie('userId')){
+            $("#p-conversation > p").remove();
+            $.get("/getConversation", {senderId: $.cookie('userId'), receiverId:contactId}, function(data){
+                $.each(data, function(index, value){
+                    $("#p-conversation").append(
+                        '<p>'+value.messageDate+' from '+value.senderFirstName+' to '+value.receiverFirstName+':<br/>'+
+                        value.content+'</p>');
+                });
+            });
+            $('#div-userMessages').removeClass('invisible');
+
+        }else {
+            $('#div-userMessages').addClass('invisible');
+        }
+    });
+
     //fill the contact-places table
     $('#table-allContacts').on('click', '.tr-allContacts', function(){
         $("#table-contact-places > tbody > tr").remove();
@@ -145,13 +163,6 @@ $(document).ready(function(){
             });
         });
     });
-
-    //fill the #div-userMessages in .div-details-satellite
-    //$('#table-allContacts').on('click', '.tr-allContacts', function(){
-    //    $.get("/getConversation", {senderId:1, receiverId:contactId}, function(data){
-    //        $.each()
-    //    })
-    //})
 
 
 

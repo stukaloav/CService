@@ -176,8 +176,14 @@ public class ControllerMain {
             return null;
         }
         for (Message message: conversation){
-            conversationDTO.add(new MessageDTO(message.getId(),
-                    message.getMessageDate(), message.getContent()));
+            conversationDTO.add(new MessageDTO(
+                    message.getId(),
+                    message.getMessageDate(),
+                    message.getContent(),
+                    message.getSender().getFirstName(),
+                    message.getSender().getLastName(),
+                    message.getReceiver().getFirstName(),
+                    message.getReceiver().getLastName()));
         }
         return conversationDTO;
     }
