@@ -119,6 +119,7 @@
                             <p>conversation</p>
                         </p>
                         <textarea rows="3" style="width: 290px;" id="textarea-currentMessage"></textarea>
+                        <button class="btn" id="btn-sendMessage">Send</button>
                     </div>
                     <div class="span3 div-details-satellite invisible" id="div-userPlacesMap">
                         <h3>Map</h3>

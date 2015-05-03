@@ -188,4 +188,30 @@ public class ControllerMain {
         return conversationDTO;
     }
 
+    @RequestMapping(value = "/sendMessage", method = RequestMethod.GET)
+    public @ResponseBody List<MessageDTO> getConversation(
+            @RequestParam(value = "content", required = true) String content,
+            @RequestParam(value = "messageDate", required = true) Date messageDate,
+            @RequestParam(value = "senderId", required = true) long senderId,
+            @RequestParam(value = "receiverId", required = true) long receiverId){
+        Contact sender = contactService.getContactById(senderId);
+        Contact receiver = contactService.getContactById(receiverId);
+        contactService.storeMessage(sender, receiver, content, messageDate);
+        List<MessageDTO> conversationDTO = new ArrayList<>();
+        List<Message> conversation = contactService.getConversation(sender, receiver);
+        if (conversation == null){
+            return null;
+        }
+        for (Message message: conversation){
+            conversationDTO.add(new MessageDTO(
+                    message.getId(),
+                    message.getMessageDate(),
+                    message.getContent(),
+                    message.getSender().getFirstName(),
+                    message.getSender().getLastName(),
+                    message.getReceiver().getFirstName(),
+                    message.getReceiver().getLastName()));
+        }
+        return conversationDTO;
+    }
 }

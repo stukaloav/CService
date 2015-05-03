@@ -130,6 +130,29 @@ $(document).ready(function(){
         }
     });
 
+    $('#btn-sendMessage').click(function(){
+        var currentMessage = $("#textarea-currentMessage").val();
+        $("#textarea-currentMessage").val("");
+        var messageDate = new Date();
+        if(currentMessage == "" || currentMessage === undefined){
+            alert("Empty message! Please type your message to send");
+        }else{
+            $("#p-conversation > p").remove();
+            $.get("/sendMessage", { content: currentMessage,
+                                    messageDate: messageDate,
+                                    senderId: $.cookie('userId'),
+                                    receiverId: contactId },
+                function(data){
+                    $.each(data, function(index, value){
+                        $("#p-conversation").append(
+                            '<p>'+value.messageDate+' from '+value.senderFirstName+' to '+value.receiverFirstName+':<br/>'+
+                            value.content+'</p>');
+                    });
+                });
+
+        }
+    });
+
     //fill the contact-places table
     $('#table-allContacts').on('click', '.tr-allContacts', function(){
         $("#table-contact-places > tbody > tr").remove();
@@ -361,8 +384,5 @@ $(document).ready(function(){
                 zIndex: 3});
 
         });
-
-
-
 
 });
