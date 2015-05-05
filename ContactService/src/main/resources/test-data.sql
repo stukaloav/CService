@@ -16,12 +16,12 @@ insert into hobby (id, title, description) values (4, 'tennis', 'interesting gam
 insert into hobby (id, title, description) values (5, 'swimming', 'useful for health');
 
 
-insert into place (id, title, longitude, latitude) values (1, 'Dnipropetrovsk', 0.23, 0.3);
-insert into place (id, title, longitude, latitude) values (2, 'New York', 0.23, 0.3);
-insert into place (id, title, longitude, latitude) values (3, 'Baltimore', 0.3, 0.36);
-insert into place (id, title, longitude, latitude) values (4, 'Roma', 0.283, 0.356);
-insert into place (id, title, longitude, latitude) values (5, 'Prague', 0.238, 0.456);
-insert into place (id, title, longitude, latitude) values (6, 'Toronto', 0.283, 0.895);
+insert into place (id, title, longitude, latitude) values (1, 'Dnipropetrovsk', 48.464717, 35.04618299999993);
+insert into place (id, title, longitude, latitude) values (2, 'New York', 40.7141667, -74.0063889);
+insert into place (id, title, longitude, latitude) values (3, 'Baltimore', 39.2902778, -76.6125);
+insert into place (id, title, longitude, latitude) values (4, 'Rome', 41.9, 12.4833333);
+insert into place (id, title, longitude, latitude) values (5, 'Prague', 50.0878114, 14.420459800000003);
+insert into place (id, title, longitude, latitude) values (6, 'Toronto', 43.67023, -79.38676);
 
 insert into message (id, message_date, sender_id, receiver_id,content) values (1, '1986-02-27', 1, 2, 'Hello! How are You?');
 insert into message (id, message_date, sender_id, receiver_id,content) values (2, '1986-02-28', 2, 1, 'I am fine, thanks)');

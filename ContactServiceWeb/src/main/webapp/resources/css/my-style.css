@@ -59,7 +59,7 @@ body {
     padding-bottom: 0;
 }
 
-#info {
+#inform {
     background: #fff;
     margin-left: 0;
     border: 1px solid yellow;
@@ -72,4 +72,29 @@ body {
 
 .tr-allContacts:hover {
     background: red;
+}
+
+.tr-contactPlaces{
+    cursor: pointer;
+}
+
+.tr-contactPlaces:hover{
+    background: green;
+}
+
+.btn-exit{
+    cursor: pointer;
+}
+
+#mapCanvas {
+    width: 500px;
+    height: 400px;
+    float: left;
+}
+#infoPanel {
+    float: left;
+    margin-left: 10px;
+}
+#infoPanel div {
+    margin-bottom: 5px;
 }

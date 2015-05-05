@@ -10,6 +10,11 @@ $(document).ready(function(){
 
     var contactId;
 
+    var map;
+    var placeLatitude = 40.7141667;
+    var placeLongitude = -74.0063889;
+    var placeTitle = 'NewYork';
+
     //action on start to check user_name
     if(($.cookie("userFirstName") === "")||
         ($.cookie("userFirstName") == undefined)){
@@ -18,6 +23,7 @@ $(document).ready(function(){
         $("#btn-userEnter").removeClass("invisible");
     }else{
         $("#user-name").text("" + $.cookie("userFirstName") + " " + $.cookie("userLastName"));
+        $('#user-name').addClass('btn-exit');
         $("#btn-userEnter").addClass("invisible");
         $("#btn-userExit").removeClass("invisible");
         contactId = $.cookie('userId');
@@ -39,10 +45,19 @@ $(document).ready(function(){
         $("#table-contact-places > tbody > tr").remove();
         $.get("/getPlaces", {contactId:contactId}, function(data){
             $.each(data, function(index, value){
-                $("#table-contact-places > tbody:last").append('<tr><td>'+index+
-                '</td><td>'+value.title+'</td></tr>');
+                $("#table-contact-places > tbody:last").append(
+                    '<tr class="tr-contactPlaces" id="'+
+                    value.latitude+'/'+value.longitude+'/'+
+                    value.title+'"><td>'+index+'</td><td>'+
+                    value.title+'</td></tr>');
             });
         });
+
+        if(contactId != $.cookie('userId')){
+            $('#btn-addPlace').addClass('invisible');
+        }else{
+            $('#btn-addPlace').removeClass('invisible');
+        }
 
         //fill table-contact-hobbies
         $("#table-contact-hobbies > tbody > tr").remove();
@@ -78,14 +93,17 @@ $(document).ready(function(){
             if(($.cookie("userFirstName") === "")||
                 ($.cookie("userFirstName") == undefined)){
                     $.each(data, function(index, value) {
-                        $("#table-allContacts > tbody:last").append("<tr><td>"+index+"</td><td>"+value.firstName+"</td><td>"+
-                        value.lastName +"</td><td>"+ value.birthDate +"</td></tr>");
+                        $("#table-allContacts > tbody:last").append("<tr><td>" + index + "</td><td>" + value.firstName + "</td><td>" +
+                        value.lastName + "</td><td>" + value.birthDate + "</td></tr>");
                     });
             }else {
                 $.each(data, function(index, value) {
-                    $("#table-allContacts > tbody:last").append("<tr class='tr-allContacts' id='"+
-                    value.id+"'><td>"+index+"</td><td>"+value.firstName+"</td><td>"+
-                    value.lastName +"</td><td>"+ value.birthDate +"</td></tr>");});
+                    if(value.id != $.cookie('userId')){
+                        $("#table-allContacts > tbody:last").append("<tr class='tr-allContacts' id='"+
+                        value.id+"'><td>"+index+"</td><td>"+value.firstName+"</td><td>"+
+                        value.lastName +"</td><td>"+ value.birthDate +"</td></tr>");
+                    }
+                });
             }
         });
 
@@ -123,8 +141,6 @@ $(document).ready(function(){
                         value.content+'</p>');
                 });
             });
-            $('#div-userMessages').removeClass('invisible');
-
         }else {
             $('#div-userMessages').addClass('invisible');
         }
@@ -158,13 +174,58 @@ $(document).ready(function(){
         $("#table-contact-places > tbody > tr").remove();
         $.get("/getPlaces", {contactId:contactId}, function(data){
             $.each(data, function(index, value){
-                $("#table-contact-places > tbody:last").append('<tr><td>'+index+
-                '</td><td>'+value.title+'</td></tr>');
+                $("#table-contact-places > tbody:last").append(
+                    '<tr class="tr-contactPlaces" id="'+
+                    value.latitude+'/'+value.longitude+'/'+
+                    value.title+'"><td>'+index+'</td><td>'+
+                    value.title+'</td></tr>');
             });
         });
+        if(contactId != $.cookie('userId')){
+            $('#btn-addPlace').addClass('invisible');
+        }else{
+            $('#btn-addPlace').removeClass('invisible');
+        }
     });
 
-    //fill the contact-hobbies table
+    $('#table-contact-places').on('click', '.tr-contactPlaces', function(){
+        var placeDetail = $(this).attr('id').split("/");
+        placeLatitude = placeDetail[1];
+        placeLongitude = placeDetail[0];
+        placeTitle = placeDetail[2];
+        var latlng = new google.maps.LatLng(placeLatitude, placeLongitude);
+        var settings = {
+            zoom: 10,
+            center: latlng};
+
+        map = new google.maps.Map(document.getElementById("map_canvas"), settings);
+
+        var contentString = '<div id="content">'+
+            '<div id="siteNotice">'+
+            '</div>'+
+            '<h1 id="firstHeading" class="firstHeading">'+placeTitle+'</h1>'+
+            '</div>';
+        var infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+
+        var companyImage = new google.maps.MarkerImage('resources/images/logo.png',
+            new google.maps.Size(100,50),
+            new google.maps.Point(0,0),
+            new google.maps.Point(50,50)
+        );
+
+        var companyPos = new google.maps.LatLng(placeLatitude, placeLongitude);
+
+        var companyMarker = new google.maps.Marker({
+            position: companyPos,
+            map: map,
+            icon: companyImage,
+            title:placeTitle,
+            zIndex: 3});
+    });
+
+        //fill the contact-hobbies table
     $('#table-allContacts').on('click', '.tr-allContacts', function(){
         $("#table-contact-hobbies > tbody > tr").remove();
         $.get("/getHobbies", {contactId:contactId}, function(data){
@@ -174,6 +235,7 @@ $(document).ready(function(){
             });
         });
     });
+
 
     //fill the contact-friends table
     $('#table-allContacts').on('click', '.tr-allContacts', function(){
@@ -348,21 +410,17 @@ $(document).ready(function(){
 
         //actions for details-places
     $("#div-userDetails").on("click", '#btn-contact-places', function initialize() {
-            var latlng = new google.maps.LatLng(57.0442, 9.9116);
+            var latlng = new google.maps.LatLng(placeLatitude, placeLongitude);
             var settings = {
-                zoom: 15,
-                center: latlng,
-                mapTypeControl: true,
-                mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU},
-                navigationControl: true,
-                navigationControlOptions: {style: google.maps.NavigationControlStyle.SMALL},
-                mapTypeId: google.maps.MapTypeId.ROADMAP};
+                zoom: 10,
+                center: latlng};
 
-            var map = new google.maps.Map(document.getElementById("map_canvas"), settings);
-            var contentString = '<div id="content">'+
+            map = new google.maps.Map(document.getElementById("map_canvas"), settings);
+
+        var contentString = '<div id="content">'+
                 '<div id="siteNotice">'+
                 '</div>'+
-                '<h1 id="firstHeading" class="firstHeading">Høgenhaug</h1>'+
+                '<h1 id="firstHeading" class="firstHeading">'+placeTitle+'</h1>'+
                 '</div>';
             var infowindow = new google.maps.InfoWindow({
                 content: contentString
@@ -374,15 +432,48 @@ $(document).ready(function(){
                 new google.maps.Point(50,50)
             );
 
-            var companyPos = new google.maps.LatLng(57.0442, 9.9116);
+            var companyPos = new google.maps.LatLng(placeLatitude, placeLongitude);
 
             var companyMarker = new google.maps.Marker({
                 position: companyPos,
                 map: map,
                 icon: companyImage,
-                title:"Høgenhaug",
+                title:placeTitle,
                 zIndex: 3});
 
         });
+
+    $('#btn-addPlace').click(function initialize(){
+        //$('.div-details-satellite').addClass('invisible');
+        //$("#div-details").addClass("invisible");
+        var latLng = new google.maps.LatLng(placeLatitude, placeLongitude);
+
+        var marker = new google.maps.Marker({
+            position: latLng,
+            title: 'Point A',
+            map: map,
+            draggable: true
+        });
+
+        $('#div-details-addPlace').removeClass('invisible');
+
+        updateMarkerPosition(latLng);
+        geocodePosition(latLng);
+
+        // Add dragging event listeners.
+        google.maps.event.addListener(marker, 'dragstart', function() {
+            updateMarkerAddress('Dragging...');
+        });
+
+        google.maps.event.addListener(marker, 'drag', function() {
+            updateMarkerStatus('Dragging...');
+            updateMarkerPosition(marker.getPosition());
+        });
+
+        google.maps.event.addListener(marker, 'dragend', function() {
+            updateMarkerStatus('Drag ended');
+            geocodePosition(marker.getPosition());
+        });
+    });
 
 });

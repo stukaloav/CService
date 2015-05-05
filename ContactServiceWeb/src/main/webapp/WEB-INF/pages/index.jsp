@@ -6,16 +6,17 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
         <title>JSP Page</title>
+        <link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="resources/css/bootstrap-responsive.css">
+        <link rel="stylesheet" type="text/css" href="resources/css/my-style.css">
         <script type="text/javascript" src="resources/js/jquery-2.1.1.js"></script>
         <script type="text/javascript" src="resources/js/jquery.cookie.js"></script>
         <script type="text/javascript" src="resources/js/my-script.js"></script>
-        <link rel="stylesheet" type="text/css" href="resources/css/my-style.css">
         <script type="text/javascript" src="resources/js/bootstrap.js"></script>
         <script type="text/javascript" src="resources/js/bootstrap-datepicker.js"></script>
-        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-        <link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css">
-        <link rel="stylesheet" type="text/css" href="resources/css/bootstrap-responsive.css">
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBYBCOWn5HLUBSxqK4PSOf0mCRm-mIl-Mg&sensor=false"></script>
         <link rel="stylesheet" type="text/css" href="resources/css/datepicker.css">
+        <script type="text/javascript" src="resources/js/geocoder.js"></script>
 
 
     </head>
@@ -44,7 +45,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="span9" id="info" style="margin-left: 280px">
+            <div class="span9" id="inform" style="margin-left: 280px">
 
                 <div class="div-info invisible" id="div-details">
                     <div class="span5" id="div-userDetails">
@@ -74,7 +75,7 @@
                             </div>
                         </div>
                         <div class="tab-pane fade" id="div-contact-hobbies">
-                            <table class="table table-striped table-bordered" id="table-contact-hobbies">
+                            <table class="table table-bordered" id="table-contact-hobbies">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -88,7 +89,7 @@
                         </div>
                         <div class="tab-pane fade" id="div-contact-places">
 
-                            <table class="table table-striped table-bordered" id="table-contact-places">
+                            <table class="table table-bordered" id="table-contact-places">
                                 <thead>
                                     <th>#</th>
                                     <th>title</th>
@@ -96,9 +97,10 @@
                                 <tbody>
                                 </tbody>
                             </table>
+                            <button class="btn" id="btn-addPlace">addNewPlace</button>
                         </div>
                         <div class="tab-pane fade" id="div-contact-friends">
-                            <table class="table table-striped table-bordered" id="table-contact-friends">
+                            <table class="table table-bordered" id="table-contact-friends">
                                 <thead>
                                 <tr>
                                     <th>#</th>
@@ -125,6 +127,16 @@
                         <h3>Map</h3>
                         <div id="map_canvas" style="width:300px; height:300px"></div>
                     </div>
+                    <div class="invisible" id="div-details-addPlace">
+                        <div id="infoPanel">
+                            <b>Marker status:</b>
+                            <div id="markerStatus"><i>Click and drag the marker.</i></div>
+                            <b>Current position:</b>
+                            <div id="info"></div>
+                            <b>Closest matching address:</b>
+                            <div id="address"></div>
+                        </div>
+                </div>
                 </div>
 
                 <div class="div-info" id="div-form-enter">
