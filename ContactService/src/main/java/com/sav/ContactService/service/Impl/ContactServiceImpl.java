@@ -72,6 +72,11 @@ public class ContactServiceImpl implements ContactService {
     }
     @Override
     @Transactional
+    public void removeFriendship(Contact first, Contact second) {
+        contactDao.removeFriendship(first, second);
+    }
+    @Override
+    @Transactional
     public List<Friendship> getAllFriendPairs(){
         return contactDao.getAllFriends();
     }
@@ -170,4 +175,5 @@ public class ContactServiceImpl implements ContactService {
     public List<Message> getAllMessagesFromContact(Contact contact) {
         return messageDao.getAllMessagesFromContact(contact);
     }
+
 }

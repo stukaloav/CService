@@ -16,6 +16,7 @@ public interface ContactDao {
     Contact getContactById(long id);
 
     void addFriendship(Contact first, Contact second);
+    void removeFriendship(Contact first, Contact second);
     List<Friendship> getAllFriends();
     Set<Contact> getFriendsFromContact(Contact contact);
     List<Contact> getAllContactsSamePlace(String placeTitle);

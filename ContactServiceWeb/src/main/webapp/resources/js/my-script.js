@@ -10,6 +10,8 @@ $(document).ready(function(){
 
     var contactId;
 
+    var userFriends = new Array();
+
     var map;
     var placeLatitude = 40.7141667;
     var placeLongitude = -74.0063889;
@@ -35,7 +37,6 @@ $(document).ready(function(){
                 $("#table-contact-info > tbody:last").append(
                     '<tr><td>' + data.firstName + '</td><td>' + data.lastName + '</td><td>' +
                     data.birthDate + '</td><tr>');
-                $.each(data.places)
             }else {
                 alert("something wrong in /getContactById");
             }
@@ -75,6 +76,7 @@ $(document).ready(function(){
                 $("#table-contact-friends > tbody:last").append("<tr class='tr-allContacts' id='"+
                 value.id+"'><td>"+index+"</td><td>"+value.firstName+"</td><td>"+
                 value.lastName +"</td><td>"+ value.birthDate +"</td></tr>");
+                userFriends.push(""+value.id);
             });
         });
 
@@ -122,12 +124,49 @@ $(document).ready(function(){
                 $("#table-contact-info > tbody:last").append(
                     '<tr><td>' + data.firstName + '</td><td>' + data.lastName + '</td><td>' +
                     data.birthDate + '</td><tr>');
-                $.each(data.places)
             }else {
                 alert("something wrong in /getContactById");
             }
         });
+        if($.inArray(""+contactId, userFriends) > -1){
+            $('#btn-addFriendship').addClass('invisible');
+            $('#btn-removeFriendship').removeClass('invisible');
+        }else {
+            $('#btn-addFriendship').removeClass('invisible');
+            $('#btn-removeFriendship').addClass('invisible');
+        }
         $("#div-details").removeClass("invisible");
+        if($("#li-contact-info").hasClass('active')){
+            $('#div-userMessages').removeClass('invisible');
+        }
+    });
+
+    //action to add friendship
+    $('#btn-addFriendship').click(function(){
+        $("#table-contact-friends > tbody > tr").remove();
+        $.get("/addFriendship", {userId: $.cookie('userId'), contactId: contactId}, function(data){
+            $.each(data, function(index, value) {
+                $("#table-contact-friends > tbody:last").append("<tr class='tr-allContacts' id='"+
+                value.id+"'><td>"+index+"</td><td>"+value.firstName+"</td><td>"+
+                value.lastName +"</td><td>"+ value.birthDate +"</td></tr>");
+            });
+        });
+        $('#btn-addFriendship').addClass('invisible');
+        $('#btn-removeFriendship').removeClass('invisible');
+    });
+
+    //action to remove friendship
+    $('#btn-removeFriendship').click(function(){
+        $.get("/removeFriendship", {userId: $.cookie('userId'), contactId: contactId}, function(data){
+            $("#table-contact-friends > tbody > tr").remove();
+            $.each(data, function(index, value) {
+                $("#table-contact-friends > tbody:last").append("<tr class='tr-allContacts' id='"+
+                value.id+"'><td>"+index+"</td><td>"+value.firstName+"</td><td>"+
+                value.lastName +"</td><td>"+ value.birthDate +"</td></tr>");
+            });
+        });
+        $('#btn-removeFriendship').addClass('invisible');
+        $('#btn-addFriendship').removeClass('invisible');
     });
 
     //fill messages
@@ -146,6 +185,7 @@ $(document).ready(function(){
         }
     });
 
+    //action to send message
     $('#btn-sendMessage').click(function(){
         var currentMessage = $("#textarea-currentMessage").val();
         $("#textarea-currentMessage").val("");
@@ -188,7 +228,9 @@ $(document).ready(function(){
         }
     });
 
+    //action for contact place-table
     $('#table-contact-places').on('click', '.tr-contactPlaces', function(){
+        $('#div-details-addPlace').addClass('invisible');
         var placeDetail = $(this).attr('id').split("/");
         placeLatitude = placeDetail[1];
         placeLongitude = placeDetail[0];
@@ -385,13 +427,16 @@ $(document).ready(function(){
     //actions for details-info
     $("#div-userDetails").on("click", '#btn-contact-info', function(){
         $(".div-details-satellite").addClass("invisible");
-        $("#div-userMessages").removeClass("invisible");
+        if(contactId != $.cookie('userId')){
+            $("#div-userMessages").removeClass("invisible");
+        }
     });
 
     //action change on btn-contact-places
     $("#div-userDetails").on("click", '#btn-contact-places', function(){
         $(".div-details-satellite").addClass("invisible");
         $("#div-userPlacesMap").removeClass("invisible");
+        $('#btn-addPlace').removeClass('invisible');
     });
 
     //action change on btn-contact-hobbies
@@ -443,9 +488,9 @@ $(document).ready(function(){
 
         });
 
+    //action for add-place btn and show add-place detail, create marker on map
     $('#btn-addPlace').click(function initialize(){
-        //$('.div-details-satellite').addClass('invisible');
-        //$("#div-details").addClass("invisible");
+        $('#btn-addPlace').addClass('invisible');
         var latLng = new google.maps.LatLng(placeLatitude, placeLongitude);
 
         var marker = new google.maps.Marker({
@@ -473,6 +518,24 @@ $(document).ready(function(){
         google.maps.event.addListener(marker, 'dragend', function() {
             updateMarkerStatus('Drag ended');
             geocodePosition(marker.getPosition());
+        });
+    });
+
+    //action submit add place btn, adding and fill table
+    $('#btn-submit-addPlace').click(function() {
+        var newLng = $('#info').text().split(',')[0];
+        var newLat = $('#info').text().split(',')[1];
+        var newTitle = $('#address').text();
+        $.get("/addPlace", {contactId: contactId, latitude: newLat,
+            longitude: newLng, title: newTitle}, function (data){
+            $("#table-contact-places > tbody > tr").remove();
+                $.each(data, function (index, value) {
+                    $("#table-contact-places > tbody:last").append(
+                        '<tr class="tr-contactPlaces" id="' +
+                        value.latitude + '/' + value.longitude + '/' +
+                        value.title + '"><td>' + index + '</td><td>' +
+                        value.title + '</td></tr>');
+                });
         });
     });
 

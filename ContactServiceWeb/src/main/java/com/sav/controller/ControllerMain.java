@@ -214,4 +214,59 @@ public class ControllerMain {
         }
         return conversationDTO;
     }
+
+    @RequestMapping(value = "/addPlace", method = RequestMethod.GET)
+    public @ResponseBody Set<PlaceDTO> addPlaceToContact(
+            @RequestParam (value = "contactId", required = true) long contactId,
+            @RequestParam (value = "latitude", required = true) double latitude,
+            @RequestParam (value = "longitude", required = true) double longitude,
+            @RequestParam (value = "title", required = true) String title){
+        Contact contact = contactService.getContactById(contactId);
+        Place place = new Place(title, longitude, latitude);
+        contactService.addPlaceToContact(contact, place);
+        Set<Place> places = contactService.getPlacesFromContact(contact);
+        Set<PlaceDTO> placeDTOs = new HashSet<>();
+        if(places == null){
+            return null;
+        }else {
+            for (Place item: places){
+                placeDTOs.add(new PlaceDTO(item.getTitle(), item.getLongitude(), item.getLatitude()));
+            }
+            return placeDTOs;
+        }
+    }
+
+    @RequestMapping(value = "/addFriendship", method = RequestMethod.GET)
+    public @ResponseBody Set<ContactDTO> addFriendship(
+            @RequestParam (value = "userId", required = true) long userId,
+            @RequestParam (value = "contactId", required = true) long contactId){
+        Set<ContactDTO> contactDTOs = new HashSet<>();
+        Contact user = contactService.getContactById(userId);
+        Contact friend = contactService.getContactById(contactId);
+        contactService.addFriendship(user, friend);
+        Set<Contact> friends = contactService.getFriendsFromContact(friend);
+        for (Contact contact: friends){
+            contactDTOs.add(new ContactDTO(
+                    contact.getId(), contact.getFirstName(),
+                    contact.getLastName(), contact.getBirthDate()));
+        }
+        return contactDTOs;
+    }
+
+    @RequestMapping(value = "/removeFriendship", method = RequestMethod.GET)
+    public @ResponseBody Set<ContactDTO> removeFriendship(
+            @RequestParam (value = "userId", required = true) long userId,
+            @RequestParam (value = "contactId", required = true) long contactId){
+        Set<ContactDTO> contactDTOs = new HashSet<>();
+        Contact user = contactService.getContactById(userId);
+        Contact friend = contactService.getContactById(contactId);
+        contactService.removeFriendship(user, friend);
+        Set<Contact> friends = contactService.getFriendsFromContact(friend);
+        for (Contact contact: friends){
+            contactDTOs.add(new ContactDTO(
+                    contact.getId(), contact.getFirstName(),
+                    contact.getLastName(), contact.getBirthDate()));
+        }
+        return contactDTOs;
+    }
 }

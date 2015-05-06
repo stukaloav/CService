@@ -50,7 +50,7 @@
                 <div class="div-info invisible" id="div-details">
                     <div class="span5" id="div-userDetails">
                         <ul id="myTab" class="nav nav-tabs">
-                            <li class="active"><a href="#div-contact-info" data-toggle="tab" id="btn-contact-info">Info</a></li>
+                            <li class="active" id="li-contact-info"><a href="#div-contact-info" data-toggle="tab" id="btn-contact-info">Info</a></li>
                             <li class=""><a href="#div-contact-hobbies" data-toggle="tab" id="btn-contact-hobbies">Hobbies</a></li>
                             <li class=""><a href="#div-contact-places" data-toggle="tab" id="btn-contact-places">Places</a></li>
                             <li class=""><a href="#div-contact-friends" data-toggle="tab" id="btn-contact-friends">Friends</a></li>
@@ -73,6 +73,10 @@
                                     </tbody>
                                 </table>
                             </div>
+                            <div class="div-contactInfo" id="div-btn-friendship">
+                                <button class="btn invisible" id="btn-addFriendship" style="background: greenyellow">addFriendship</button>
+                                <button class="btn invisible" id="btn-removeFriendship" style="background: indianred">removeFriendship</button>
+                            </div>
                         </div>
                         <div class="tab-pane fade" id="div-contact-hobbies">
                             <table class="table table-bordered" id="table-contact-hobbies">
@@ -88,7 +92,6 @@
                             </table>
                         </div>
                         <div class="tab-pane fade" id="div-contact-places">
-
                             <table class="table table-bordered" id="table-contact-places">
                                 <thead>
                                     <th>#</th>
@@ -127,7 +130,7 @@
                         <h3>Map</h3>
                         <div id="map_canvas" style="width:300px; height:300px"></div>
                     </div>
-                    <div class="invisible" id="div-details-addPlace">
+                    <div class="div-details-satellite invisible" id="div-details-addPlace">
                         <div id="infoPanel">
                             <b>Marker status:</b>
                             <div id="markerStatus"><i>Click and drag the marker.</i></div>
@@ -135,9 +138,11 @@
                             <div id="info"></div>
                             <b>Closest matching address:</b>
                             <div id="address"></div>
+                            <button class="btn" id="btn-submit-addPlace">Submit</button>
                         </div>
+                    </div>
                 </div>
-                </div>
+
 
                 <div class="div-info" id="div-form-enter">
                     <form class="form-horizontal" style="margin-top: 50px;">
@@ -210,7 +215,6 @@
                         <button class="btn btn-exit" id="btn-addContactExit" style="margin-left: 200px;">Exit</button>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

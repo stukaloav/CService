@@ -26,6 +26,8 @@ public interface ContactService {
     @Transactional
     void addFriendship(Contact first, Contact second);
     @Transactional
+    void removeFriendship(Contact first, Contact second);
+    @Transactional
     List<Friendship> getAllFriendPairs();
     @Transactional
     Set<Contact> getFriendsFromContact(Contact contact);

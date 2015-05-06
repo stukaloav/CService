@@ -138,4 +138,16 @@ public class ContactDaoImpl implements ContactDao {
         sessionFactory.getCurrentSession().saveOrUpdate(message);
     }
 
+    @Override
+    public void removeFriendship(Contact first, Contact second) {
+        if (first.equals(second)){
+            throw new IllegalArgumentException("first should not be equal to second");
+        }
+        if (first == null || second == null){
+            throw new IllegalArgumentException("argument should not be null");
+        }
+        first.getFriends().remove(second);
+        sessionFactory.getCurrentSession().saveOrUpdate(first);
+        sessionFactory.getCurrentSession().saveOrUpdate(second);
+    }
 }
