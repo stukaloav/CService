@@ -2,16 +2,33 @@ package com.sav.DTO;
 
 public class PlaceDTO {
 
+    private long id;
+
     private String title;
 
     private double longitude;
 
     private double latitude;
 
+    public PlaceDTO(long id, String title, double longitude, double latitude) {
+        this.id = id;
+        this.title = title;
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
+
     public PlaceDTO(String title, double longitude, double latitude) {
         this.title = title;
         this.longitude = longitude;
         this.latitude = latitude;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getTitle() {

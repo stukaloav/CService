@@ -57,8 +57,10 @@ public class HobbyDaoImpl implements HobbyDao {
                 createQuery("from Hobby").list();
     }
     @Override
-    public Hobby getHobbyById(long id) {
-        return (Hobby) sessionFactory.getCurrentSession().get(Hobby.class, id);
+    public Hobby getHobbyById(Long id) {
+        Query query = sessionFactory.getCurrentSession().createQuery("from Hobby h where h.id = ?");
+        query.setParameter(0, id);
+        return (Hobby)query.uniqueResult();
     }
     @Override
     public void deleteHobbyByTitle(String title){

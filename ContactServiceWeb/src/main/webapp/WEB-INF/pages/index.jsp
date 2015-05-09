@@ -38,21 +38,58 @@
         <div class="row" id="content">
             <div class="span3" id="sidebar">
                 <div class="row" id="sidebar-btns">
-                    <ul class="nav nav-pills nav-stacked">
-                        <li id="getAllContacts" class="btn btn-method"><a href="#">getAllContacts</a></li>
-                        <li id="addContact" class="btn btn-method"><a href="#">addContact</a></li>
-                        <li id="message"><a href="#">Сообщения</a></li>
-                    </ul>
+                        <button id="getAllContacts" class="btn btn-method">getAllContacts</button>
+                        <button id="getAllHobbies" class="btn btn-method">getAllHobbies</button>
+                        <button id="getAllPlaces" class="btn btn-method">getAllPlaces</button>
                 </div>
             </div>
             <div class="span9" id="inform" style="margin-left: 280px">
 
                 <div class="div-info invisible" id="div-details">
+
+
+                    <div class="span5 div-details-satellite invisible" id="div-place-details">
+                        <h4 id="place-detail-title">Place-detail-title</h4>
+                        <button class="btn invisible" style="background: greenyellow" id="btn-addThisPlace">addThisPlace</button>
+                        <button class="btn invisible" style="background: indianred;" id="btn-removeThisPlace">removeThisPlace</button>
+                        <table class="table table-bordered" id="table-place-details">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Birth Date</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="span5 div-details-satellite invisible" id="div-hobby-details">
+                        <h4 id="Hobby-detail-title">Hobby-detail-title</h4>
+                        <button class="btn invisible" style="background: greenyellow" id="btn-addThisHobby">addThisHobby</button>
+                        <button class="btn invisible" style="background: indianred;" id="btn-removeThisHobby">removeThisHobby</button>
+                        <table class="table table-bordered" id="table-hobby-details">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Birth Date</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+
+
                     <div class="span5" id="div-userDetails">
                         <ul id="myTab" class="nav nav-tabs">
                             <li class="active" id="li-contact-info"><a href="#div-contact-info" data-toggle="tab" id="btn-contact-info">Info</a></li>
                             <li class=""><a href="#div-contact-hobbies" data-toggle="tab" id="btn-contact-hobbies">Hobbies</a></li>
-                            <li class=""><a href="#div-contact-places" data-toggle="tab" id="btn-contact-places">Places</a></li>
+                            <li class="" id="li-contact-place"><a href="#div-contact-places" data-toggle="tab" id="btn-contact-places">Places</a></li>
                             <li class=""><a href="#div-contact-friends" data-toggle="tab" id="btn-contact-friends">Friends</a></li>
                         </ul>
                     <div id="myTabContent" class="tab-content">
@@ -138,13 +175,20 @@
                             <div id="info"></div>
                             <b>Closest matching address:</b>
                             <div id="address"></div>
-                            <button class="btn" id="btn-submit-addPlace">Submit</button>
+                            <button class="btn" id="btn-submit-addPlace" style="background: greenyellow">Submit</button>
                         </div>
                     </div>
+
+
+
+
+
+
+
+
+
                 </div>
-
-
-                <div class="div-info" id="div-form-enter">
+                <div class="div-info invisible" id="div-form-enter">
                     <form class="form-horizontal" style="margin-top: 50px;">
                         <div class="control-group">
                             <label class="control-label">First Name</label>
@@ -170,11 +214,12 @@
                         <button class="btn btn-exit" id="btn-exit-submit">exit</button>
                     </div>
                     <div class="row invisible" id="div-add-newUserOnEnter">
-                        <button class="btn" id="btn-add-newUserOnEnter" style="margin-left: 200px; background: green">Add</button>
-                        <button class="btn btn-exit" id="btn-exit-newUserOnEnter" style="margin-left: 200px; background: red">Exit</button>
+                        <button class="btn" id="btn-add-newUserOnEnter" style="margin-left: 200px; background: greenyellow">Add</button>
+                        <button class="btn btn-exit" id="btn-exit-newUserOnEnter" style="margin-left: 200px; background: #ff5a30">Exit</button>
                     </div>
                 </div>
-                <div class="div-info invisible table-responsive" id="div-table-allContacts">
+                <div class="div-info div-table-all invisible table-responsive" id="div-table-allContacts">
+                    <h4>All contacts</h4>
                     <table class="table table-bordered" id="table-allContacts">
                         <thead>
                         <tr>
@@ -182,6 +227,35 @@
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Birth Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="div-info div-table-all invisible table-responsive" id="div-table-allHobbies">
+                    <h4>All hobbies</h4>
+                    <table class="table table-bordered" id="table-allHobbies">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="div-info div-table-all invisible table-responsive" id="div-table-allPlaces">
+                    <h4>All places</h4>
+                    <table class="table table-bordered" id="table-allPlaces">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Title</th>
                         </tr>
                         </thead>
                         <tbody>

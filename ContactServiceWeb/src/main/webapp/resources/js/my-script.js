@@ -9,13 +9,16 @@ $(document).ready(function(){
     $("#userBirthDate").datepicker();
 
     var contactId;
+    var placeId;
+    var hobbyId;
 
     var userFriends = new Array();
+    var userPlaces = new Array();
 
     var map;
-    var placeLatitude = 40.7141667;
-    var placeLongitude = -74.0063889;
-    var placeTitle = 'NewYork';
+    var placeLatitude = 0;
+    var placeLongitude = 0;
+    var placeTitle = '';
 
     //action on start to check user_name
     if(($.cookie("userFirstName") === "")||
@@ -23,6 +26,7 @@ $(document).ready(function(){
         $("#user-name").text("unknown");
         $("#btn-userExit").addClass("invisible");
         $("#btn-userEnter").removeClass("invisible");
+        $('#div-form-enter').removeClass('invisible');
     }else{
         $("#user-name").text("" + $.cookie("userFirstName") + " " + $.cookie("userLastName"));
         $('#user-name').addClass('btn-exit');
@@ -89,7 +93,6 @@ $(document).ready(function(){
     //get all contacts
     $("#getAllContacts").click(function () {
         $(".btn").removeClass("active");
-        $("#getAllContacts").addClass("active");
         $("#table-allContacts").find("tbody>tr").remove();
         $.get("/contacts", {}, function (data){
             if(($.cookie("userFirstName") === "")||
@@ -108,7 +111,6 @@ $(document).ready(function(){
                 });
             }
         });
-
         $(".div-info").addClass("invisible");
         $("#div-table-allContacts").removeClass("invisible");
     });
@@ -135,9 +137,17 @@ $(document).ready(function(){
             $('#btn-addFriendship').removeClass('invisible');
             $('#btn-removeFriendship').addClass('invisible');
         }
+        if(contactId == $.cookie('userId')){
+            $('#btn-removeFriendship').addClass('invisible');
+            $('#btn-addFriendship').addClass('invisible');
+        }
+        $('.div-details-satellite').addClass('invisible');
+        $("#div-userDetails").removeClass("invisible");
         $("#div-details").removeClass("invisible");
-        if($("#li-contact-info").hasClass('active')){
+        if($("#li-contact-info").hasClass('active') && contactId != $.cookie('userId')){
             $('#div-userMessages').removeClass('invisible');
+        }else if($("#li-contact-place").hasClass('active')){
+            $('#div-userPlacesMap').removeClass('invisible');
         }
     });
 
@@ -539,4 +549,286 @@ $(document).ready(function(){
         });
     });
 
+    //get all hobbies
+    $("#getAllHobbies").click(function () {
+        $(".btn").removeClass("active");
+        $("#table-allHobbies").find("tbody>tr").remove();
+        $.get("/hobbies", {}, function (data){
+            if(($.cookie("userFirstName") === "")||
+                ($.cookie("userFirstName") == undefined)){
+                $.each(data, function(index, value) {
+                    $("#table-allHobbies > tbody:last").append("<tr><td>" + index + "</td><td>" + value.title + "</td><td>" +
+                    value.description + "</td></tr>");
+                });
+            }else {
+                $.each(data, function(index, value) {
+                    $("#table-allHobbies > tbody:last").append("<tr class='tr-allHobbies' id='"+
+                    value.id+"'><td>"+index+"</td><td>"+value.title+"</td><td>"+
+                    value.description+"</td></tr>");
+                });
+            }
+        });
+        $(".div-info").addClass("invisible");
+        $("#div-table-allHobbies").removeClass("invisible");
+    });
+
+    //get all places
+    $("#getAllPlaces").click(function () {
+        $(".btn").removeClass("active");
+        $("#table-allPlaces").find("tbody>tr").remove();
+        $.get("/places", {}, function (data){
+            if(($.cookie("userFirstName") === "")||
+                ($.cookie("userFirstName") == undefined)){
+                $.each(data, function(index, value) {
+                    $("#table-allPlaces > tbody:last").append("<tr><td>" + index + "</td><td>" + value.title + "</td></tr>");
+                });
+            }else {
+                $.each(data, function(index, value) {
+                    $("#table-allPlaces > tbody:last").append("<tr class='tr-allPlaces' id='"+
+                    value.id+"' latitude='"+value.latitude+"' longitude='"+
+                    value.longitude+"' title='"+value.title+"'><td>"+
+                    index+"</td><td>"+value.title+"</td></tr>");
+                });
+            }
+        });
+        $(".div-info").addClass("invisible");
+        $("#div-table-allPlaces").removeClass("invisible");
+    });
+
+    //jump to place-details-table
+    $('#table-allPlaces').on('click', '.tr-allPlaces', function(){
+        placeId = $(this).attr('id');
+        $('.div-info').addClass('invisible');
+        $("#div-userDetails").addClass("invisible");
+        $('#btn-addThisPlace').removeClass('invisible');
+        $('#btn-removeThisPlace').addClass('invisible');
+        $("#table-place-details > tbody > tr").remove();
+        $.get("/contactsSamePlace", {placeId: placeId}, function(data){
+                $.each(data, function(index, value) {
+                    $("#table-place-details > tbody:last").append("<tr class='tr-table-place-details' id='"+
+                    value.id+"'><td>"+index+"</td><td>"+value.firstName+"</td><td>"+
+                    value.lastName +"</td><td>"+ value.birthDate +"</td></tr>");
+                    if(value.id == $.cookie('userId')){
+                        $('#btn-addThisPlace').addClass('invisible');
+                        $('#btn-removeThisPlace').removeClass('invisible');
+                    }
+                });
+        });
+        $('#div-userMessages').addClass('invisible');
+        $('#div-details-addPlace').addClass('invisible');
+        $('#div-place-details').removeClass('invisible');
+
+        placeLatitude = $(this).attr('latitude');
+        placeLongitude = $(this).attr('longitude');
+
+        $('#div-hobby-details').addClass('invisible');
+        $("#div-details").removeClass("invisible");
+        $('#div-userPlacesMap').removeClass('invisible');
+    });
+
+    $('#table-allPlaces').on('click', '.tr-allPlaces', function initialize() {
+        placeTitle = $(this).attr('title');
+        placeLatitude = $(this).attr('latitude');
+        placeLongitude = $(this).attr('longitude');
+        var latlng = new google.maps.LatLng(placeLongitude, placeLatitude);
+        var settings = {
+            zoom: 10,
+            center: latlng};
+
+        map = new google.maps.Map(document.getElementById("map_canvas"), settings);
+
+        var contentString = '<div id="content">'+
+            '<div id="siteNotice">'+
+            '</div>'+
+            '<h1 id="firstHeading" class="firstHeading">'+placeTitle+'</h1>'+
+            '</div>';
+        var infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+
+        var companyImage = new google.maps.MarkerImage('resources/images/logo.png',
+            new google.maps.Size(100,50),
+            new google.maps.Point(0,0),
+            new google.maps.Point(50,50)
+        );
+
+        var companyPos = new google.maps.LatLng(placeLongitude, placeLatitude);
+
+        var companyMarker = new google.maps.Marker({
+            position: companyPos,
+            map: map,
+            icon: companyImage,
+            title:placeTitle,
+            zIndex: 3});
+
+    });
+
+    $('#btn-addThisPlace').on('click', function(){
+        $('#btn-addThisPlace').removeClass('invisible');
+        $('#btn-removeThisPlace').addClass('invisible');
+        $.get("/addPlaceToContact", {contactId: $.cookie('userId'), placeId: placeId}, function(answer){
+            $("#table-place-details > tbody > tr").remove();
+            $.each(answer, function(index, value) {
+                $("#table-place-details > tbody:last").append("<tr class='tr-table-place-details' id='"+
+                value.id+"'><td>"+index+"</td><td>"+value.firstName+"</td><td>"+
+                value.lastName +"</td><td>"+ value.birthDate +"</td></tr>");
+                if(value.id == $.cookie('userId')){
+                    $('#btn-addThisPlace').addClass('invisible');
+                    $('#btn-removeThisPlace').removeClass('invisible');
+                }
+            });
+        });
+    });
+
+    $('#btn-removeThisPlace').on('click', function(){
+        $('#btn-addThisPlace').removeClass('invisible');
+        $('#btn-removeThisPlace').addClass('invisible');
+        $.get("/removePlaceFromContact", {contactId: $.cookie('userId'), placeId: placeId}, function(answer){
+            $("#table-place-details > tbody > tr").remove();
+            $.each(answer, function(index, value) {
+                $("#table-place-details > tbody:last").append("<tr class='tr-table-place-details' id='"+
+                value.id+"'><td>"+index+"</td><td>"+value.firstName+"</td><td>"+
+                value.lastName +"</td><td>"+ value.birthDate +"</td></tr>");
+                if(value.id == $.cookie('userId')){
+                    $('#btn-addThisPlace').addClass('invisible');
+                    $('#btn-removeThisPlace').removeClass('invisible');
+                }
+            });
+        });
+    });
+
+    //jump on contact detail from table-place-details
+    $("#table-place-details").on('click', ".tr-table-place-details", function(){
+        $(".div-info").addClass("invisible");
+        contactId = $(this).attr('id');
+        $.get("/getContactById", {contactId: contactId}, function(data){
+            if(data !== "" || data != undefined){
+                $("#table-contact-info > tbody > tr").remove();
+                $("#table-contact-info > tbody:last").append(
+                    '<tr><td>' + data.firstName + '</td><td>' + data.lastName + '</td><td>' +
+                    data.birthDate + '</td><tr>');
+            }else {
+                alert("something wrong in /getContactById");
+            }
+        });
+        if($.inArray(""+contactId, userFriends) > -1){
+            $('#btn-addFriendship').addClass('invisible');
+            $('#btn-removeFriendship').removeClass('invisible');
+        }else {
+            $('#btn-addFriendship').removeClass('invisible');
+            $('#btn-removeFriendship').addClass('invisible');
+        }
+        if(contactId == $.cookie('userId')){
+            $('#btn-removeFriendship').addClass('invisible');
+            $('#btn-addFriendship').addClass('invisible');
+        }
+        $('.div-details-satellite').addClass('invisible');
+        $('#div-hobby-details').addClass('invisible');
+        $("#div-userDetails").removeClass("invisible");
+        $("#div-details").removeClass("invisible");
+        if($("#li-contact-info").hasClass('active')&& contactId != $.cookie('userId')){
+            $('#div-userMessages').removeClass('invisible');
+        }else if($("#li-contact-place").hasClass('active')){
+            $('#div-userPlacesMap').removeClass('invisible');
+        }
+    });
+
+
+    //jump to hobby-details-table
+    $('#table-allHobbies').on('click', '.tr-allHobbies', function(){
+        hobbyId = $(this).attr('id');
+        $('.div-info').addClass('invisible');
+        $("#div-userDetails").addClass("invisible");
+        $('#btn-addThisHobby').removeClass('invisible');
+        $('#btn-removeThisHobby').addClass('invisible');
+        $("#table-hobby-details > tbody > tr").remove();
+        $.get("/contactsSameHobby", {hobbyId: hobbyId}, function(data){
+            $.each(data, function(index, value) {
+                $("#table-hobby-details > tbody:last").append("<tr class='tr-table-hobby-details' id='"+
+                value.id+"'><td>"+index+"</td><td>"+value.firstName+"</td><td>"+
+                value.lastName +"</td><td>"+ value.birthDate +"</td></tr>");
+                if(value.id == $.cookie('userId')){
+                    $('#btn-addThisHobby').addClass('invisible');
+                    $('#btn-removeThisHobby').removeClass('invisible');
+                }
+            });
+        });
+        $('#div-userMessages').addClass('invisible');
+        $('#div-details-addPlace').addClass('invisible');
+        $('#div-place-details').addClass('invisible');
+        $('#div-userPlacesMap').addClass('invisible');
+        $("#div-details").removeClass("invisible");
+        $('#div-hobby-details').removeClass('invisible');
+    });
+
+    //action to add hobby to contact
+    $('#btn-addThisHobby').on('click', function(){
+        $('#btn-addThisHobby').removeClass('invisible');
+        $('#btn-removeThisHobby').addClass('invisible');
+        $.get("/addHobbyToContact", {contactId: $.cookie('userId'), hobbyId: hobbyId}, function(answer){
+                $("#table-hobby-details > tbody > tr").remove();
+                $.each(answer, function(index, value) {
+                    $("#table-hobby-details > tbody:last").append("<tr class='tr-table-hobby-details' id='"+
+                    value.id+"'><td>"+index+"</td><td>"+value.firstName+"</td><td>"+
+                    value.lastName +"</td><td>"+ value.birthDate +"</td></tr>");
+                    if(value.id == $.cookie('userId')){
+                        $('#btn-addThisHobby').addClass('invisible');
+                        $('#btn-removeThisHobby').removeClass('invisible');
+                    }
+            });
+        });
+    });
+
+    //action to remove hobby from contact
+    $("#btn-removeThisHobby").on('click', function(){
+        $('#btn-addThisHobby').removeClass('invisible');
+        $('#btn-removeThisHobby').addClass('invisible');
+        $.get("/removeHobbyFromContact", {contactId: $.cookie('userId'), hobbyId: hobbyId}, function(answer){
+            $("#table-hobby-details > tbody > tr").remove();
+            $.each(answer, function(index, value) {
+                $("#table-hobby-details > tbody:last").append("<tr class='tr-table-hobby-details' id='"+
+                value.id+"'><td>"+index+"</td><td>"+value.firstName+"</td><td>"+
+                value.lastName +"</td><td>"+ value.birthDate +"</td></tr>");
+                if(value.id == $.cookie('userId')){
+                    $('#btn-addThisHobby').addClass('invisible');
+                    $('#btn-removeThisHobby').removeClass('invisible');
+                }
+            });
+        });
+    });
+
+    $("#table-hobby-details").on('click', ".tr-table-hobby-details", function(){
+        $(".div-info").addClass("invisible");
+        contactId = $(this).attr('id');
+        $.get("/getContactById", {contactId: contactId}, function(data){
+            if(data !== "" || data != undefined){
+                $("#table-contact-info > tbody > tr").remove();
+                $("#table-contact-info > tbody:last").append(
+                    '<tr><td>' + data.firstName + '</td><td>' + data.lastName + '</td><td>' +
+                    data.birthDate + '</td><tr>');
+            }else {
+                alert("something wrong in /getContactById");
+            }
+        });
+        if($.inArray(""+contactId, userFriends) > -1){
+            $('#btn-addFriendship').addClass('invisible');
+            $('#btn-removeFriendship').removeClass('invisible');
+        }else {
+            $('#btn-addFriendship').removeClass('invisible');
+            $('#btn-removeFriendship').addClass('invisible');
+        }
+        if(contactId == $.cookie('userId')){
+            $('#btn-removeFriendship').addClass('invisible');
+            $('#btn-addFriendship').addClass('invisible');
+        }
+        $('.div-details-satellite').addClass('invisible');
+        $('#div-hobby-details').addClass('invisible');
+        $("#div-userDetails").removeClass("invisible");
+        $("#div-details").removeClass("invisible");
+        if($("#li-contact-info").hasClass('active')&& contactId != $.cookie('userId')){
+            $('#div-userMessages').removeClass('invisible');
+        }else if($("#li-contact-place").hasClass('active')){
+            $('#div-userPlacesMap').removeClass('invisible');
+        }
+    });
 });

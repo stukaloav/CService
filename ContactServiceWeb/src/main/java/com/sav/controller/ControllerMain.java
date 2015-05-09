@@ -47,6 +47,52 @@ public class ControllerMain {
         return contactDTOs;
     }
 
+    @RequestMapping(value = "/hobbies", method = RequestMethod.GET)
+    public @ResponseBody List<HobbyDTO> getAllHobbies(){
+        List<Hobby> hobbyList = contactService.getAllHobbies();
+        List<HobbyDTO> hobbyDTOs = new ArrayList<>();
+        for (Hobby hobby: hobbyList){
+            hobbyDTOs.add(new HobbyDTO(hobby.getId(), hobby.getTitle(),
+                    hobby.getDescription()));
+        }
+        return hobbyDTOs;
+    }
+
+    @RequestMapping(value = "/contactsSameHobby", method = RequestMethod.GET)
+    public @ResponseBody Set<ContactDTO> contactsSameHobby(
+            @RequestParam(value = "hobbyId", required = true) long hobbyId){
+        Set<ContactDTO> contactDTOs = new HashSet<>();
+        Set<Contact> contacts = contactService.getAllContactsSameHobby(hobbyId);
+        for(Contact contact: contacts){
+            contactDTOs.add(new ContactDTO(contact.getId(), contact.getFirstName(),
+                    contact.getLastName(), contact.getBirthDate()));
+        }
+        return contactDTOs;
+    }
+
+    @RequestMapping(value = "/places", method = RequestMethod.GET)
+    public @ResponseBody List<PlaceDTO> getAllPlaces(){
+        List<Place> placeList = contactService.getAllPlaces();
+        List<PlaceDTO> placeDTOs = new ArrayList<>();
+        for (Place place: placeList){
+            placeDTOs.add(new PlaceDTO(place.getId(), place.getTitle(),
+                    place.getLongitude(), place.getLatitude()));
+        }
+        return placeDTOs;
+    }
+
+    @RequestMapping(value = "/contactsSamePlace", method = RequestMethod.GET)
+    public @ResponseBody Set<ContactDTO> contactsSamePlace(
+            @RequestParam(value = "placeId", required = true) long placeId){
+        Set<ContactDTO> contactDTOs = new HashSet<>();
+        Set<Contact> contacts = contactService.getAllContactsSamePlace(placeId);
+        for(Contact contact: contacts){
+            contactDTOs.add(new ContactDTO(contact.getId(), contact.getFirstName(),
+                    contact.getLastName(), contact.getBirthDate()));
+        }
+        return contactDTOs;
+    }
+
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public @ResponseBody ContactDTO addContact(
                             @RequestParam(value = "firstName", required = true) String firstName,
@@ -216,7 +262,7 @@ public class ControllerMain {
     }
 
     @RequestMapping(value = "/addPlace", method = RequestMethod.GET)
-    public @ResponseBody Set<PlaceDTO> addPlaceToContact(
+    public @ResponseBody Set<PlaceDTO> addNewPlaceToContact(
             @RequestParam (value = "contactId", required = true) long contactId,
             @RequestParam (value = "latitude", required = true) double latitude,
             @RequestParam (value = "longitude", required = true) double longitude,
@@ -234,6 +280,70 @@ public class ControllerMain {
             }
             return placeDTOs;
         }
+    }
+
+    @RequestMapping(value = "/addPlaceToContact", method = RequestMethod.GET)
+    public @ResponseBody Set<ContactDTO> addPlaceToContact(
+            @RequestParam (value = "contactId", required = true) long contactId,
+            @RequestParam (value = "placeId", required = true) long placeId){
+        Contact contact = contactService.getContactById(contactId);
+        Place place = contactService.getPlaceById(placeId);
+        contactService.addPlaceToContact(contact, place);
+        Set<ContactDTO> contactDTOs = new HashSet<>();
+        Set<Contact> contacts = contactService.getAllContactsSamePlace(placeId);
+        for(Contact item: contacts){
+            contactDTOs.add(new ContactDTO(item.getId(), item.getFirstName(),
+                    item.getLastName(), item.getBirthDate()));
+        }
+        return contactDTOs;
+    }
+
+    @RequestMapping(value = "/addHobbyToContact", method = RequestMethod.GET)
+    public @ResponseBody Set<ContactDTO> addHobbyToContact(
+            @RequestParam (value = "contactId", required = true) long contactId,
+            @RequestParam (value = "hobbyId", required = true) long hobbyId){
+        Contact contact = contactService.getContactById(contactId);
+        Hobby hobby = contactService.getHobbyById(hobbyId);
+        contactService.addHobbyToContact(contact, hobby);
+        Set<ContactDTO> contactDTOs = new HashSet<>();
+        Set<Contact> contacts = contactService.getAllContactsSameHobby(hobbyId);
+        for(Contact item: contacts){
+            contactDTOs.add(new ContactDTO(item.getId(), item.getFirstName(),
+                    item.getLastName(), item.getBirthDate()));
+        }
+        return contactDTOs;
+    }
+
+    @RequestMapping(value = "/removeHobbyFromContact", method = RequestMethod.GET)
+    public @ResponseBody Set<ContactDTO> removeHobbyFromContact(
+            @RequestParam (value = "contactId", required = true) long contactId,
+            @RequestParam (value = "hobbyId", required = true) long hobbyId){
+        Contact contact = contactService.getContactById(contactId);
+        Hobby hobby = contactService.getHobbyById(hobbyId);
+        contactService.removeHobbyFromContact(contact, hobby);
+        Set<ContactDTO> contactDTOs = new HashSet<>();
+        Set<Contact> contacts = contactService.getAllContactsSameHobby(hobbyId);
+        for(Contact item: contacts){
+            contactDTOs.add(new ContactDTO(item.getId(), item.getFirstName(),
+                    item.getLastName(), item.getBirthDate()));
+        }
+        return contactDTOs;
+    }
+
+    @RequestMapping(value = "/removePlaceFromContact", method = RequestMethod.GET)
+    public @ResponseBody Set<ContactDTO> removePlaceFromContact(
+            @RequestParam (value = "contactId", required = true) long contactId,
+            @RequestParam (value = "placeId", required = true) long placeId){
+        Contact contact = contactService.getContactById(contactId);
+        Place place = contactService.getPlaceById(placeId);
+        contactService.removePlaceFromContact(contact, place);
+        Set<ContactDTO> contactDTOs = new HashSet<>();
+        Set<Contact> contacts = contactService.getAllContactsSamePlace(placeId);
+        for(Contact item: contacts){
+            contactDTOs.add(new ContactDTO(item.getId(), item.getFirstName(),
+                    item.getLastName(), item.getBirthDate()));
+        }
+        return contactDTOs;
     }
 
     @RequestMapping(value = "/addFriendship", method = RequestMethod.GET)

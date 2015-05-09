@@ -49,6 +49,28 @@ public class App {
         System.out.println(contactService.getConversation(contact1, contact2));
 
         System.out.println(contactService.getAllMessagesFromContact(contact1));
+
+        System.out.println(contactService.getAllContactsSamePlace(2l));
+        Place place1 = contactService.getPlaceById(1l);
+        System.out.println(place1);
+        contactService.addPlaceToContact(contact1, place1);
+        contactService.removePlaceFromContact(contact1, place1);
+
+        System.out.println(contactService.getAllHobbies());
+        System.out.println(contactService.getHobbyById(1l));
+        Hobby hobby1 = contactService.getHobbyById(1l);
+        Hobby hobby2 = contactService.getHobbyById(2l);
+        contactService.addHobbyToContact(contact1, hobby1);
+        System.out.println(contactService.getHobbiesFromContact(contact1));
+        contactService.addHobbyToContact(contact1, hobby2);
+        System.out.println(contactService.getHobbiesFromContact(contact1));
+        contactService.addHobbyToContact(contact1, contactService.getHobbyById(3l));
+        System.out.println(contactService.getHobbiesFromContact(contact1));
+        contactService.removeHobbyFromContact(contact1, hobby1);
+        contactService.removeHobbyFromContact(contact1, hobby2);
+        System.out.println(contactService.getHobbiesFromContact(contact1));
+        System.out.println(contactService.getAllContactsSameHobby(2l));
+//        System.out.println(contact1.getPlaces());
 //
 //        System.out.println(contactService.getAllContacts());
 

@@ -9,6 +9,11 @@ import java.util.Set;
 
 public interface ContactService {
     //Methods that deal with ContactDao
+
+    @Transactional
+    Set<Contact> getAllContactsSameHobby(Long hobbyId);
+    @Transactional
+    Set<Contact> getAllContactsSamePlace(Long placeId);
     @Transactional
     void createContact(String firstName, String lastName, Date birthDate);
     @Transactional
@@ -47,6 +52,10 @@ public interface ContactService {
     void addHobby(Hobby hobby);
     @Transactional
     void deleteHobbyByTitle(String title);
+    @Transactional
+    Hobby getHobbyById(Long Id);
+    @Transactional
+    void removeHobbyFromContact(Contact contact, Hobby hobby);
 
     //Methods that deal with PlaceDao
     @Transactional
@@ -55,7 +64,10 @@ public interface ContactService {
     void addPlace(Place place);
     @Transactional
     List<Place> getAllPlaces();
-
+    @Transactional
+    Place getPlaceById(long id);
+    @Transactional
+    void removePlaceFromContact(Contact contact, Place place);
 
     //Methods that deal with MessageDao
     @Transactional

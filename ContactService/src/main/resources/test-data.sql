@@ -17,11 +17,10 @@ insert into hobby (id, title, description) values (5, 'swimming', 'useful for he
 
 
 insert into place (id, title, longitude, latitude) values (1, 'Dnipropetrovsk', 48.464717, 35.04618299999993);
-insert into place (id, title, longitude, latitude) values (2, 'New York', 40.7141667, -74.0063889);
-insert into place (id, title, longitude, latitude) values (3, 'Baltimore', 39.2902778, -76.6125);
-insert into place (id, title, longitude, latitude) values (4, 'Rome', 41.9, 12.4833333);
-insert into place (id, title, longitude, latitude) values (5, 'Prague', 50.0878114, 14.420459800000003);
-insert into place (id, title, longitude, latitude) values (6, 'Toronto', 43.67023, -79.38676);
+insert into place (id, title, longitude, latitude) values (2, 'Baltimore', 39.2902778, -76.6125);
+insert into place (id, title, longitude, latitude) values (3, 'Rome', 41.9, 12.4833333);
+insert into place (id, title, longitude, latitude) values (4, 'Prague', 50.0878114, 14.420459800000003);
+insert into place (id, title, longitude, latitude) values (5, 'Toronto', 43.67023, -79.38676);
 
 insert into message (id, message_date, sender_id, receiver_id,content) values (1, '1986-02-27', 1, 2, 'Hello! How are You?');
 insert into message (id, message_date, sender_id, receiver_id,content) values (2, '1986-02-28', 2, 1, 'I am fine, thanks)');
@@ -30,6 +29,9 @@ insert into message (id, message_date, sender_id, receiver_id,content) values (2
 insert into contact_places (contact_id, place_id) values (1, 1);
 insert into contact_places (contact_id, place_id) values (1, 2);
 insert into contact_places (contact_id, place_id) values (2, 2);
+insert into contact_places (contact_id, place_id) values (3, 2);
+insert into contact_places (contact_id, place_id) values (4, 2);
+
 
 insert into contact_hobbies (contact_id, hobby_id) values (1, 1);
 insert into contact_hobbies (contact_id, hobby_id) values (2, 2);

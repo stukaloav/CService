@@ -40,7 +40,7 @@ public class ContactDaoImpl implements ContactDao {
     @Override
     public void addHobbyToContact(Contact contact, Hobby hobby){
         contact.getHobbies().add(hobby);
-        sessionFactory.getCurrentSession().saveOrUpdate(contact);
+            sessionFactory.getCurrentSession().merge(contact);
     }
     @Override
     public Contact getContactById(long id){
@@ -58,8 +58,8 @@ public class ContactDaoImpl implements ContactDao {
         }
 
         first.getFriends().add(second);
-        sessionFactory.getCurrentSession().saveOrUpdate(first);
-        sessionFactory.getCurrentSession().saveOrUpdate(second);
+        sessionFactory.getCurrentSession().merge(first);
+        sessionFactory.getCurrentSession().merge(second);
     }
     @Override
     public List<Friendship> getAllFriends(){
@@ -109,28 +109,48 @@ public class ContactDaoImpl implements ContactDao {
     @Override
     public void addPlaceToContact(Contact contact, Place place) {
         contact.getPlaces().add(place);
-        sessionFactory.getCurrentSession().saveOrUpdate(contact);
+        sessionFactory.getCurrentSession().merge(contact);
     }
 
     @Override
-    public List<Contact> getAllContactsSamePlace(String placeTitle){
-        if (placeTitle == null){
+    public Set<Contact> getAllContactsSamePlace(Long placeId){
+        if (placeId == null){
             throw new IllegalArgumentException("argument should not be null");
         }
-        List<ContactPlaces> contactPlacesesList =
-                sessionFactory.getCurrentSession().
-                        createQuery("from ContactPlaces").list();
-        if (contactPlacesesList.isEmpty()){
-            return null;
+        Set<Contact> contactSamePlace = new HashSet<>();
+        Query query = sessionFactory.getCurrentSession().createQuery("from ContactPlaces cp where cp.placeId = ?");
+        query.setParameter(0, placeId);
+        List<ContactPlaces> contactPlacesList = query.list();
+        for (ContactPlaces contactPlaces: contactPlacesList){
+            contactSamePlace.add(getContactById(contactPlaces.getContactId()));
         }
-        List<Contact> contactsSamePlace = new ArrayList<>();
-        for (ContactPlaces contactPlaces: contactPlacesesList){
-            long contactId = contactPlaces.getContactId();
-            Contact contact = getContactById(contactId);
-            contactsSamePlace.add(contact);
-        }
-        return contactsSamePlace;
+        return contactSamePlace;
     }
+
+    @Override
+    public Set<Contact> getAllContactsSameHobby(Long hobbyId) {
+        if (hobbyId == null){
+            throw new IllegalArgumentException("argument should not be null");
+        }
+        Set<Contact> contactSameHobby = new HashSet<>();
+        Query query = sessionFactory.getCurrentSession().createQuery("from ContactHobbies cp where cp.hobbyId = ?");
+        query.setParameter(0, hobbyId);
+        List<ContactHobbies> contactHobbiesList = query.list();
+        for (ContactHobbies contactHobbies: contactHobbiesList){
+            contactSameHobby.add(getContactById(contactHobbies.getContactId()));
+        }
+        return contactSameHobby;
+    }
+
+    @Override
+    public void removeHobbyFromContact(Contact contact, Long hobbyId) {
+        Hobby hobby = (Hobby)sessionFactory.getCurrentSession().
+                createQuery("from Hobby h where h.id = ?").
+                setParameter(0, hobbyId).uniqueResult();
+        contact.getHobbies().remove(hobby);
+        sessionFactory.getCurrentSession().merge(contact);
+    }
+
     @Override
     public void sendMessage(Contact sender, Contact receiver,
                             String content, Date messageDate) {
@@ -147,7 +167,7 @@ public class ContactDaoImpl implements ContactDao {
             throw new IllegalArgumentException("argument should not be null");
         }
         first.getFriends().remove(second);
-        sessionFactory.getCurrentSession().saveOrUpdate(first);
-        sessionFactory.getCurrentSession().saveOrUpdate(second);
+        sessionFactory.getCurrentSession().merge(first);
+        sessionFactory.getCurrentSession().merge(second);
     }
 }

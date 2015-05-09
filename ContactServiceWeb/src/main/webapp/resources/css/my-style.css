@@ -12,6 +12,8 @@
 }
 
 .btn-method{
+    width: 100%;
+    height: 50px;
 }
 
 body {
@@ -40,7 +42,7 @@ body {
 }
 
 #btn-enter.active{
-    background-color: red;
+    background-color: silver;
 }
 
 #content {
@@ -68,22 +70,49 @@ body {
     margin-left: 0;
     border: 1px solid yellow;
 }
-
-.tr-allContacts {
-    cursor: pointer;
-
-}
-
-.tr-allContacts:hover {
-    background: red;
-}
-
 .tr-contactPlaces{
     cursor: pointer;
 }
-
 .tr-contactPlaces:hover{
+    background: lightgrey;
+}
+
+.tr-allContacts {
+    cursor: pointer;
+}
+
+.tr-allContacts:hover {
+    background: rosybrown;
+}
+
+.tr-allHobbies{
+    cursor: pointer;
+}
+.tr-allHobbies:hover{
+    background: gold;
+}
+.tr-table-hobby-details{
+    cursor: pointer;
+}
+.tr-table-hobby-details:hover{
+    background: cadetblue;
+}
+
+
+.tr-allPlaces{
+    cursor: pointer;
+}
+.tr-allPlaces:hover{
     background: green;
+}
+.tr-table-place-details{
+    cursor: pointer;
+}
+.tr-table-place-details:hover{
+    background: violet;
+}
+.tr-contact-places{
+    cursor: pointer;
 }
 
 .btn-exit{

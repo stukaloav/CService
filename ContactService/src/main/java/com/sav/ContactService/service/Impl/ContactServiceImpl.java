@@ -26,6 +26,14 @@ public class ContactServiceImpl implements ContactService {
     private MessageDao messageDao;
 
     //Methods that deal with ContactDao
+
+
+    @Override
+    @Transactional
+    public Set<Contact> getAllContactsSameHobby(Long hobbyId) {
+        return contactDao.getAllContactsSameHobby(hobbyId);
+    }
+
     @Override
     @Transactional
     public void createContact(String firstName, String lastName, Date birthDate) {
@@ -131,6 +139,21 @@ public class ContactServiceImpl implements ContactService {
     public void deleteHobbyByTitle(String title){
         hobbyDao.deleteHobbyByTitle(title);
     }
+    @Override
+    @Transactional
+    public Hobby getHobbyById(Long hobbyId) {
+        return hobbyDao.getHobbyById(hobbyId);
+    }
+    @Override
+    @Transactional
+    public Set<Contact> getAllContactsSamePlace(Long placeId) {
+        return contactDao.getAllContactsSamePlace(placeId);
+    }
+    @Override
+    @Transactional
+    public void removeHobbyFromContact(Contact contact, Hobby hobby) {
+        contactDao.removeHobbyFromContact(contact, hobby.getId());
+    }
 
     //Methods that deal with PlaceDao
     @Override
@@ -151,6 +174,16 @@ public class ContactServiceImpl implements ContactService {
     @Transactional
     public List<Place> getAllPlaces() {
         return placeDao.getAllPlaces();
+    }
+    @Override
+    @Transactional
+    public Place getPlaceById(long id) {
+        return placeDao.getPlaceById(id);
+    }
+    @Override
+    public void removePlaceFromContact(Contact contact, Place place) {
+        Long placeId = place.getId();
+        placeDao.removePlaceFromContact(contact, placeId);
     }
 
     //Methods that deal with MessageDao
