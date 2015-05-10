@@ -97,7 +97,12 @@ body {
 .tr-table-hobby-details:hover{
     background: cadetblue;
 }
-
+.tr-table-hobbies{
+    cursor: pointer;
+}
+.tr-table-hobbies:hover{
+    background: darkseagreen;
+}
 
 .tr-allPlaces{
     cursor: pointer;

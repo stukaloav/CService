@@ -184,7 +184,7 @@ public class ControllerMain {
             return null;
         }else {
             for (Hobby hobby: hobbies){
-                hobbyDTOs.add(new HobbyDTO(hobby.getTitle(), hobby.getDescription()));
+                hobbyDTOs.add(new HobbyDTO(hobby.getId(), hobby.getTitle(), hobby.getDescription()));
             }
             return hobbyDTOs;
         }
