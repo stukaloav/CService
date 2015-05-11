@@ -149,6 +149,11 @@ $(document).ready(function(){
         }else if($("#li-contact-place").hasClass('active')){
             $('#div-userPlacesMap').removeClass('invisible');
         }
+        if(contactId != $.cookie('userId')){
+            $('#btn-addPlace').addClass('invisible');
+        }else{
+            $('#btn-addPlace').removeClass('invisible');
+        }
     });
 
     //action to add friendship
@@ -447,7 +452,11 @@ $(document).ready(function(){
     $("#div-userDetails").on("click", '#btn-contact-places', function(){
         $(".div-details-satellite").addClass("invisible");
         $("#div-userPlacesMap").removeClass("invisible");
-        $('#btn-addPlace').removeClass('invisible');
+        if(contactId != $.cookie('userId')){
+            $('#btn-addPlace').addClass('invisible');
+        }else{
+            $('#btn-addPlace').removeClass('invisible');
+        }
     });
 
     //action change on btn-contact-hobbies
@@ -739,6 +748,11 @@ $(document).ready(function(){
         }else if($("#li-contact-place").hasClass('active')){
             $('#div-userPlacesMap').removeClass('invisible');
         }
+        if(contactId != $.cookie('userId')){
+            $('#btn-addPlace').addClass('invisible');
+        }else{
+            $('#btn-addPlace').removeClass('invisible');
+        }
     });
 
     //jump to hobby-details-table
@@ -841,6 +855,11 @@ $(document).ready(function(){
             $('#div-userMessages').removeClass('invisible');
         }else if($("#li-contact-place").hasClass('active')){
             $('#div-userPlacesMap').removeClass('invisible');
+        }
+        if(contactId != $.cookie('userId')){
+            $('#btn-addPlace').addClass('invisible');
+        }else{
+            $('#btn-addPlace').removeClass('invisible');
         }
     });
 
@@ -1016,6 +1035,7 @@ $(document).ready(function(){
         }
     });
 
+    //action for addHobby-submit
     $('#btn-addHobby-submit').click(function(){
         var newHobbyTitle = $("#newHobbyTitle").val();
         var newHobbyDescription = $("#textarea-hobby-description").val();
@@ -1040,6 +1060,7 @@ $(document).ready(function(){
         }
     });
 
+    //action for addHobby-exit
     $('#btn-addHobby-exit').click(function(){
         $("#newHobbyTitle").val("");
         $("#textarea-hobby-description").val("");

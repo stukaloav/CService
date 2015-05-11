@@ -138,7 +138,7 @@
                                 <tbody>
                                 </tbody>
                             </table>
-                            <button class="btn" id="btn-addPlace">addNewPlace</button>
+                            <button class="btn invisible" id="btn-addPlace">addNewPlace</button>
                         </div>
                         <div class="tab-pane fade" id="div-contact-friends">
                             <table class="table table-bordered" id="table-contact-friends">
