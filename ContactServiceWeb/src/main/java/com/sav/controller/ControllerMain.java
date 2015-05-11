@@ -379,4 +379,24 @@ public class ControllerMain {
         }
         return contactDTOs;
     }
+
+
+    @RequestMapping(value = "/addNewHobby", method = RequestMethod.GET)
+    public @ResponseBody Set<HobbyDTO> addNewHobby(
+            @RequestParam (value = "contactId", required = true) long contactId,
+            @RequestParam (value = "title", required = true) String title,
+            @RequestParam (value = "description", required = true) String description){
+        Contact contact = contactService.getContactById(contactId);
+        contactService.addHobbyToContact(contact, new Hobby(title, description));
+        Set<Hobby> hobbies = contactService.getHobbiesFromContact(contact);
+        Set<HobbyDTO> hobbyDTOs = new HashSet<>();
+        if(hobbies == null){
+            return null;
+        }else {
+            for (Hobby hobby: hobbies){
+                hobbyDTOs.add(new HobbyDTO(hobby.getId(), hobby.getTitle(), hobby.getDescription()));
+            }
+            return hobbyDTOs;
+        }
+    }
 }

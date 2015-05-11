@@ -46,26 +46,37 @@ public class ContactServiceImpl implements ContactService {
     @Override
     @Transactional(readOnly = true)
     public List<Contact> getAllContacts() {
-        Hibernate.initialize(contactDao.getAllContacts());
         return contactDao.getAllContacts();
     }
     @Override
     @Transactional
     public Contact getContactById(long id){
+        if(id < 0){
+            throw new IllegalArgumentException("id should not be negative");
+        }
         return contactDao.getContactById(id);
     }
     @Override
     @Transactional
     public void addContact(Contact contact){
+        if(contact == null){
+            throw new IllegalArgumentException("argument should not be null");
+        }
         contactDao.addContact(contact);
     }
     @Override
     @Transactional
     public void deleteContact(Contact contact){
+        if(contact == null){
+            throw new IllegalArgumentException("argument should not be null");
+        }
         contactDao.deleteContact(contact);
     }
     @Override
     public Set<Hobby> getHobbiesFromContact(Contact contact) {
+        if(contact == null){
+            throw new IllegalArgumentException("argument should not be null");
+        }
         return contactDao.getHobbiesFromContact(contact);
     }
     @Override
@@ -76,11 +87,17 @@ public class ContactServiceImpl implements ContactService {
     @Override
     @Transactional
     public void addFriendship(Contact first, Contact second){
+        if(first == null || second == null){
+            throw new IllegalArgumentException("argument should not be null");
+        }
         contactDao.addFriendship(first, second);
     }
     @Override
     @Transactional
     public void removeFriendship(Contact first, Contact second) {
+        if(first == null || second == null){
+            throw new IllegalArgumentException("argument should not be null");
+        }
         contactDao.removeFriendship(first, second);
     }
     @Override
@@ -91,15 +108,24 @@ public class ContactServiceImpl implements ContactService {
     @Override
     @Transactional
     public Set<Contact> getFriendsFromContact(Contact contact){
+        if(contact == null){
+            throw new IllegalArgumentException("argument should not be null");
+        }
         return contactDao.getFriendsFromContact(contact);
     }
     @Override
     @Transactional
     public Set<Place> getPlacesFromContact(Contact contact) {
+        if(contact == null){
+            throw new IllegalArgumentException("argument should not be null");
+        }
         return contactDao.getPlacesFromContact(contact);
     }
     @Override
     public void addPlaceToContact(Contact contact, Place place) {
+        if(contact == null || place == null){
+            throw new IllegalArgumentException("argument should not be null");
+        }
         contactDao.addPlaceToContact(contact, place);
     }
 

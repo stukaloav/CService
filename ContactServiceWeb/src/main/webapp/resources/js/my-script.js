@@ -41,6 +41,8 @@ $(document).ready(function(){
                 $("#table-contact-info > tbody:last").append(
                     '<tr><td>' + data.firstName + '</td><td>' + data.lastName + '</td><td>' +
                     data.birthDate + '</td><tr>');
+                $('#h-contactId').text("Contact details: "+
+                $.cookie('userFirstName')+" "+ $.cookie('userLastName'));
             }else {
                 alert("something wrong in /getContactById");
             }
@@ -122,6 +124,8 @@ $(document).ready(function(){
                 $("#table-contact-info > tbody:last").append(
                     '<tr><td>' + data.firstName + '</td><td>' + data.lastName + '</td><td>' +
                     data.birthDate + '</td><tr>');
+                $('#h-contactId').text("Contact details: "+
+                data.firstName+" "+ data.lastName);
             }else {
                 alert("something wrong in /getContactById");
             }
@@ -355,6 +359,8 @@ $(document).ready(function(){
         $("#userFirstName").val("");
         $("#userLastName").val("");
         $("#userBirthDate").val("");
+        $("#div-add-newUserOnEnter").addClass("invisible");
+        $("#div-userEnter-submit").removeClass("invisible");
         $("#div-form-enter").removeClass("invisible");
     });
 
@@ -423,6 +429,8 @@ $(document).ready(function(){
 
     //exit action when quit authorising
     $("#btn-exit-newUserOnEnter").on("click", function() {
+        $("#div-userEnter-submit").removeClass("invisible");
+        $("#div-add-newUserOnEnter").addClass("invisible");
         location.reload();
     });
 
@@ -588,6 +596,7 @@ $(document).ready(function(){
     //jump to place-details-table
     $('#table-allPlaces').on('click', '.tr-allPlaces', function(){
         placeId = $(this).attr('id');
+        $('#place-detail-title').text($(this).attr('title'));
         $('.div-info').addClass('invisible');
         $("#div-userDetails").addClass("invisible");
         $('#btn-addThisPlace').removeClass('invisible');
@@ -604,6 +613,7 @@ $(document).ready(function(){
                     }
                 });
         });
+        $('#div-addHobby').addClass('invisible');
         $('#div-userMessages').addClass('invisible');
         $('#div-details-addPlace').addClass('invisible');
         $('#div-place-details').removeClass('invisible');
@@ -700,6 +710,8 @@ $(document).ready(function(){
                 $("#table-contact-info > tbody:last").append(
                     '<tr><td>' + data.firstName + '</td><td>' + data.lastName + '</td><td>' +
                     data.birthDate + '</td><tr>');
+                $('#h-contactId').text("Contact details: "+
+                data.firstName+" "+ data.lastName);
             }else {
                 alert("something wrong in /getContactById");
             }
@@ -745,6 +757,7 @@ $(document).ready(function(){
                 }
             });
         });
+        $('#div-addHobby').addClass('invisible');
         $('#div-userMessages').addClass('invisible');
         $('#div-details-addPlace').addClass('invisible');
         $('#div-place-details').addClass('invisible');
@@ -799,6 +812,8 @@ $(document).ready(function(){
                 $("#table-contact-info > tbody:last").append(
                     '<tr><td>' + data.firstName + '</td><td>' + data.lastName + '</td><td>' +
                     data.birthDate + '</td><tr>');
+                $('#h-contactId').text("Contact details: "+
+                data.firstName+" "+ data.lastName);
             }else {
                 alert("something wrong in /getContactById");
             }
@@ -862,6 +877,8 @@ $(document).ready(function(){
                 $("#table-contact-info > tbody:last").append(
                     '<tr><td>' + data.firstName + '</td><td>' + data.lastName + '</td><td>' +
                     data.birthDate + '</td><tr>');
+                $('#h-contactId').text("Contact details: "+
+                data.firstName+" "+ data.lastName);
             }else {
                 alert("something wrong in /getContactById");
             }
@@ -984,4 +1001,40 @@ $(document).ready(function(){
         });
     });
 
+
+    //action change on btn-contact-hobbies
+    $("#div-userDetails").on("click", '#btn-contact-hobbies', function(){
+        if(contactId == $.cookie('userId')){
+            $(".div-details-satellite").addClass("invisible");
+            $('#div-addHobby').removeClass('invisible');
+        }
+    });
+
+    $('#btn-addHobby-submit').click(function(){
+        var newHobbyTitle = $("#newHobbyTitle").val();
+        var newHobbyDescription = $("#textarea-hobby-description").val();
+        $("#newHobbyTitle").val("");
+        $("#textarea-hobby-description").val("");
+        if (newHobbyTitle === "" || newHobbyTitle == undefined) {
+            alert("Hobby title is undefined");
+        } else if (newHobbyDescription === "" || newHobbyDescription == undefined) {
+            alert("Hobby description is undefined");
+        } else {
+            $.get("/addNewHobby", {contactId: $.cookie('userId'), title: newHobbyTitle, description: newHobbyDescription},
+                function(data){
+                    $("#table-contact-hobbies > tbody > tr").remove();
+                    $.get("/getHobbies", {contactId:contactId}, function(data){
+                        $.each(data, function(index, value){
+                            $("#table-contact-hobbies > tbody:last").append('<tr class="tr-table-hobbies" id="'+value.id+'"><td>'+index+
+                            '</td><td>'+value.title+'</td><td>'+value.description+'</td></tr>');
+                        });
+                    });
+                });
+        }
+    });
+
+    $('#btn-addHobby-exit').click(function(){
+        $("#newHobbyTitle").val("");
+        $("#textarea-hobby-description").val("");
+    });
 });

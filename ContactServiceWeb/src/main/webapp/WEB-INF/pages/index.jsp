@@ -30,8 +30,8 @@
                     <h5 id="user-name" style="color: #fff"></h5>
                 </div>
                 <div class="span2">
-                    <button class="btn invisible" id="btn-userEnter">enter</button>
-                    <button class="btn btn-exit invisible" id="btn-userExit">exit</button>
+                    <button class="btn invisible" id="btn-userEnter" style="margin-top: 10px;">enter</button>
+                    <button class="btn btn-exit invisible" id="btn-userExit" style="margin-top: 10px;">exit</button>
                 </div>
             </div>
         </div>
@@ -86,6 +86,7 @@
 
 
                     <div class="span5" id="div-userDetails">
+                        <h4 id="h-contactId">undefined</h4>
                         <ul id="myTab" class="nav nav-tabs">
                             <li class="active" id="li-contact-info"><a href="#div-contact-info" data-toggle="tab" id="btn-contact-info">Info</a></li>
                             <li class=""><a href="#div-contact-hobbies" data-toggle="tab" id="btn-contact-hobbies">Hobbies</a></li>
@@ -155,6 +156,29 @@
                         </div>
                     </div>
                     </div>
+
+                    <div class="span3 div-details-satellite invisible" id="div-addHobby">
+                        <h3>addHobby</h3>
+                        <form class="form-horizontal" style="margin-top: 5px;">
+                            <div class="control-group" style="width: 250px;">
+                                <label class="control-label" style="width: 250px; text-align: left; cursor: auto">Hobby title</label>
+                                <div class="controls" style="margin-left: 0;">
+                                    <input type="text" id="newHobbyTitle" placeholder="title" style="width: 250px;">
+                                </div>
+                            </div>
+                            <div class="control-group" style="width: 250px;">
+                                <label class="control-label" style="width: 250px; text-align: left; cursor: auto">Hobby description</label>
+                                <div class="controls" style="margin-left: 0;" >
+                                    <textarea rows="3" style="width: 250px;" id="textarea-hobby-description"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="row" id="div-addHobby-submit">
+                            <button class="btn" id="btn-addHobby-submit" style="margin-left: 30px;">Submit</button>
+                            <button class="btn" id="btn-addHobby-exit">exit</button>
+                        </div>
+                    </div>
+
                     <div class="span3 div-details-satellite invisible" id="div-userMessages">
                         <h3>Messages</h3>
                         <p id="p-conversation" style="background:#FFC0C0;width:300px;height:300px;padding:10px;overflow:auto;">
@@ -178,14 +202,6 @@
                             <button class="btn" id="btn-submit-addPlace" style="background: greenyellow">Submit</button>
                         </div>
                     </div>
-
-
-
-
-
-
-
-
 
                 </div>
                 <div class="div-info invisible" id="div-form-enter">

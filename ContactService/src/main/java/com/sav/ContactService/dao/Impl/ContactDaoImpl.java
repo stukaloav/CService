@@ -44,6 +44,9 @@ public class ContactDaoImpl implements ContactDao {
     }
     @Override
     public Contact getContactById(long id){
+        if(id < 0){
+            throw new IllegalArgumentException("id should not be negative");
+        }
         return (Contact) sessionFactory.getCurrentSession().
                 createQuery("from Contact c where c.id=:id").
                 setParameter("id", id).uniqueResult();
