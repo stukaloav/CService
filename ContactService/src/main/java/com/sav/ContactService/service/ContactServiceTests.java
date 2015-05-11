@@ -1,8 +1,7 @@
-package tests;
+package com.sav.ContactService.service;
 
         import com.sav.ContactService.dao.*;
         import com.sav.ContactService.model.*;
-        import com.sav.ContactService.service.ContactService;
         import com.sav.ContactService.service.Impl.ContactServiceImpl;
         import org.junit.Test;
         import org.junit.runner.RunWith;
@@ -208,11 +207,20 @@ public class ContactServiceTests {
         contactService.addPlaceToContact(contact, null);
     }
 
-//    //Methods that deal with HobbyDao
-//    void addHobby(String title, String description);
-//    List<Hobby> getAllHobbies();
-//    Set<String> getAllHobbiesTitle();
-//    void addHobby(Hobby hobby);
+    @Test
+    public void addHobbyTest(){
+        String title = "title";
+        String description = "description";
+        contactService.addHobby(title, description);
+        verify(hobbyDao).addHobby(new Hobby(title, description));
+    }
+
+    @Test
+    public void getAllHobbiesTest(){
+        contactService.getAllHobbies();
+        verify(hobbyDao).getAllHobbies();
+    }
+
 //    void deleteHobbyByTitle(String title);
 //    Hobby getHobbyById(Long Id);
 //    void removeHobbyFromContact(Contact contact, Hobby hobby);
@@ -230,73 +238,4 @@ public class ContactServiceTests {
 //    List<Message> getConversation(Contact sender, Contact receiver);
 //    List<Message> getAllMessages();
 //    List<Message> getAllMessagesFromContact(Contact contact);
-////
-
-
-
-
-//    @Test(expected = IllegalArgumentException.class)
-//    public void createContactTestForNullFirstArgument(){
-//        contactService.createContact(null, "last name");
-//    }
-//    @Test(expected = IllegalArgumentException.class)
-//    public void createContactTestForNullSecondArgument(){
-//        contactService.createContact("first name", null);
-//    }
-//
-//    @Test
-//    public void addHobbyTest(){
-//        contactService.addHobby("title", "description");
-//        verify(hobbyDao).addHobby((Hobby) anyObject());
-//    }
-//    @Test(expected = IllegalArgumentException.class)
-//    public void addHobbyTestForNullFirstArgument(){
-//        contactService.addHobby(null, "description");
-//    }
-//    @Test(expected = IllegalArgumentException.class)
-//    public void addHobbyTestForNullSecondArgument(){
-//        contactService.addHobby("title", null);
-//    }
-//
-//    @Test
-//    public void addPlaceTest(){
-//        contactService.addPlace("title", "description", 0.5, 1.25);
-//        verify(placeDao).addPlace((Place) anyObject());
-//    }
-//    @Test(expected = IllegalArgumentException.class)
-//    public void addPlaceTestForNullFirstArgument(){
-//        contactService.addPlace(null, "description", 0, 0);
-//    }
-//    @Test(expected = IllegalArgumentException.class)
-//    public void addPlaceTestForNullSecondArgument(){
-//        contactService.addPlace("title", null, 0, 0);
-//    }
-//    @Test(expected = IllegalArgumentException.class)
-//    public void addPlaceTestForCorrectMinLongitude(){
-//        contactService.addPlace("title", "description", -1, 0);
-//    }
-//    @Test(expected = IllegalArgumentException.class)
-//    public void addPlaceTestForCorrectMaxLongitude(){
-//        contactService.addPlace("title", "description", 181, 0);
-//    }
-//    @Test(expected = IllegalArgumentException.class)
-//    public void addPlaceTestForCorrectMinLatitude(){
-//        contactService.addPlace("title", "description", 0, -1);
-//    }
-//    @Test(expected = IllegalArgumentException.class)
-//    public void addPlaceTestForCorrectMaxLatitude(){
-//        contactService.addPlace("title", "description", 0, 91);
-//    }
-//
-//    @Test
-//    public void addFriendshipTest(){
-//        contactService.addFriendship((Contact) anyObject(), (Contact) anyObject());
-//        verify(contactDao).addFriendship((Contact) anyObject(), (Contact) anyObject());
-//    }
-//
-//    @Test
-//    public void getContactByNameTest(){
-//        when(contactService.getContactByName("first name", "last name")).thenReturn(null);
-//        contactService.getContactByName("first name", "last name");
-//    }
 }
