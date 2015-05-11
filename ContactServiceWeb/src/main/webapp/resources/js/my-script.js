@@ -282,7 +282,8 @@ $(document).ready(function(){
         $("#table-contact-hobbies > tbody > tr").remove();
         $.get("/getHobbies", {contactId:contactId}, function(data){
             $.each(data, function(index, value){
-                $("#table-contact-hobbies > tbody:last").append('<tr class="tr-table-hobbies" id="'+value.id+'"><td>'+index+
+                $("#table-contact-hobbies > tbody:last").append('<tr class="tr-table-hobbies" id="'
+                +value.id+'" title="'+value.title+'"><td>'+index+
                 '</td><td>'+value.title+'</td><td>'+value.description+'</td></tr>');
             });
         });
@@ -555,13 +556,14 @@ $(document).ready(function(){
             if(($.cookie("userFirstName") === "")||
                 ($.cookie("userFirstName") == undefined)){
                 $.each(data, function(index, value) {
-                    $("#table-allHobbies > tbody:last").append("<tr><td>" + index + "</td><td>" + value.title + "</td><td>" +
+                    $("#table-allHobbies > tbody:last").append("<tr><td>" + index + "</td><td>" +
+                    value.title + "</td><td>" +
                     value.description + "</td></tr>");
                 });
             }else {
                 $.each(data, function(index, value) {
                     $("#table-allHobbies > tbody:last").append("<tr class='tr-allHobbies' id='"+
-                    value.id+"'><td>"+index+"</td><td>"+value.title+"</td><td>"+
+                    value.id+"' title='"+value.title+"'><td>"+index+"</td><td>"+value.title+"</td><td>"+
                     value.description+"</td></tr>");
                 });
             }
@@ -578,7 +580,8 @@ $(document).ready(function(){
             if(($.cookie("userFirstName") === "")||
                 ($.cookie("userFirstName") == undefined)){
                 $.each(data, function(index, value) {
-                    $("#table-allPlaces > tbody:last").append("<tr><td>" + index + "</td><td>" + value.title + "</td></tr>");
+                    $("#table-allPlaces > tbody:last").append("<tr><td>" + index + "</td><td>" +
+                    value.title + "</td></tr>");
                 });
             }else {
                 $.each(data, function(index, value) {
@@ -741,6 +744,7 @@ $(document).ready(function(){
     //jump to hobby-details-table
     $('#table-allHobbies').on('click', '.tr-allHobbies', function(){
         hobbyId = $(this).attr('id');
+        $('#hobby-detail-title').text($(this).attr('title'));
         $('.div-info').addClass('invisible');
         $("#div-userDetails").addClass("invisible");
         $('#btn-addThisHobby').removeClass('invisible');
@@ -843,6 +847,7 @@ $(document).ready(function(){
     //jump to hobby-details from contact-details
     $("#table-contact-hobbies").on("click", ".tr-table-hobbies", function(){
         hobbyId = $(this).attr('id');
+        $('#hobby-detail-title').text($(this).attr('title'));
         $('.div-info').addClass('invisible');
         $("#div-userDetails").addClass("invisible");
         $('#btn-addThisHobby').removeClass('invisible');
@@ -983,7 +988,8 @@ $(document).ready(function(){
         $("#table-contact-hobbies > tbody > tr").remove();
         $.get("/getHobbies", {contactId:contactId}, function(data){
             $.each(data, function(index, value){
-                $("#table-contact-hobbies > tbody:last").append('<tr class="tr-table-hobbies" id="'+value.id+'"><td>'+index+
+                $("#table-contact-hobbies > tbody:last").append('<tr class="tr-table-hobbies" id="'
+                +value.id+'" title="'+value.title+'"><td>'+index+
                 '</td><td>'+value.title+'</td><td>'+value.description+'</td></tr>');
             });
         });
@@ -1025,7 +1031,8 @@ $(document).ready(function(){
                     $("#table-contact-hobbies > tbody > tr").remove();
                     $.get("/getHobbies", {contactId:contactId}, function(data){
                         $.each(data, function(index, value){
-                            $("#table-contact-hobbies > tbody:last").append('<tr class="tr-table-hobbies" id="'+value.id+'"><td>'+index+
+                            $("#table-contact-hobbies > tbody:last").append('<tr class="tr-table-hobbies" id="'+
+                            value.id+'" title="'+value.title+'"><td>'+index+
                             '</td><td>'+value.title+'</td><td>'+value.description+'</td></tr>');
                         });
                     });

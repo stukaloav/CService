@@ -25,7 +25,7 @@
     <div class="container">
         <div class="row" id="header">
             <div class="span12" id="header-div">
-                <div class="span6">header</div>
+                <div class="span6"></div>
                 <div class="span3" id="div-user">
                     <h5 id="user-name" style="color: #fff"></h5>
                 </div>
@@ -67,7 +67,7 @@
                     </div>
 
                     <div class="span5 div-details-satellite invisible" id="div-hobby-details">
-                        <h4 id="Hobby-detail-title">Hobby-detail-title</h4>
+                        <h4 id="hobby-detail-title">Hobby-detail-title</h4>
                         <button class="btn invisible" style="background: greenyellow" id="btn-addThisHobby">addThisHobby</button>
                         <button class="btn invisible" style="background: indianred;" id="btn-removeThisHobby">removeThisHobby</button>
                         <table class="table table-bordered" id="table-hobby-details">
