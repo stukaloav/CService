@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 
 @Component
+@Transactional
 public class ContactServiceImpl implements ContactService {
 
     @Autowired
@@ -26,16 +27,13 @@ public class ContactServiceImpl implements ContactService {
     private MessageDao messageDao;
 
     //Methods that deal with ContactDao
-
-
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Set<Contact> getAllContactsSameHobby(Long hobbyId) {
         return contactDao.getAllContactsSameHobby(hobbyId);
     }
 
     @Override
-    @Transactional
     public void createContact(String firstName, String lastName, Date birthDate) {
         Contact contact = new Contact();
         contact.setFirstName(firstName);
@@ -43,13 +41,15 @@ public class ContactServiceImpl implements ContactService {
         contact.setBirthDate(birthDate);
         contactDao.addContact(contact);
     }
+
     @Override
     @Transactional(readOnly = true)
     public List<Contact> getAllContacts() {
         return contactDao.getAllContacts();
     }
+
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Contact getContactById(long id){
         if(id < 0){
             throw new IllegalArgumentException("id should not be negative");
@@ -57,7 +57,6 @@ public class ContactServiceImpl implements ContactService {
         return contactDao.getContactById(id);
     }
     @Override
-    @Transactional
     public void addContact(Contact contact){
         if(contact == null){
             throw new IllegalArgumentException("argument should not be null");
@@ -65,7 +64,6 @@ public class ContactServiceImpl implements ContactService {
         contactDao.addContact(contact);
     }
     @Override
-    @Transactional
     public void deleteContact(Contact contact){
         if(contact == null){
             throw new IllegalArgumentException("argument should not be null");
@@ -73,6 +71,7 @@ public class ContactServiceImpl implements ContactService {
         contactDao.deleteContact(contact);
     }
     @Override
+    @Transactional(readOnly = true)
     public Set<Hobby> getHobbiesFromContact(Contact contact) {
         if(contact == null){
             throw new IllegalArgumentException("argument should not be null");
@@ -80,33 +79,34 @@ public class ContactServiceImpl implements ContactService {
         return contactDao.getHobbiesFromContact(contact);
     }
     @Override
-    @Transactional
     public void addHobbyToContact(Contact contact, Hobby hobby) {
         contactDao.addHobbyToContact(contact, hobby);
     }
+
     @Override
-    @Transactional
     public void addFriendship(Contact first, Contact second){
         if(first == null || second == null){
             throw new IllegalArgumentException("argument should not be null");
         }
         contactDao.addFriendship(first, second);
     }
+
     @Override
-    @Transactional
     public void removeFriendship(Contact first, Contact second) {
         if(first == null || second == null){
             throw new IllegalArgumentException("argument should not be null");
         }
         contactDao.removeFriendship(first, second);
     }
+
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Friendship> getAllFriendPairs(){
         return contactDao.getAllFriends();
     }
+
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Set<Contact> getFriendsFromContact(Contact contact){
         if(contact == null){
             throw new IllegalArgumentException("argument should not be null");
@@ -114,13 +114,14 @@ public class ContactServiceImpl implements ContactService {
         return contactDao.getFriendsFromContact(contact);
     }
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Set<Place> getPlacesFromContact(Contact contact) {
         if(contact == null){
             throw new IllegalArgumentException("argument should not be null");
         }
         return contactDao.getPlacesFromContact(contact);
     }
+
     @Override
     public void addPlaceToContact(Contact contact, Place place) {
         if(contact == null || place == null){
@@ -131,59 +132,60 @@ public class ContactServiceImpl implements ContactService {
 
     //Methods that deal with HobbyDao
     @Override
-    @Transactional
     public void addHobby(String title, String description) {
         Hobby hobby = new Hobby();
         hobby.setTitle(title);
         hobby.setDescription(description);
         hobbyDao.addHobby(hobby);
     }
+
     @Override
-    @Transactional
     public List<Hobby> getAllHobbies(){
         return hobbyDao.getAllHobbies();}
+
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Set<String> getAllHobbiesTitle(){
         List<Hobby> hobbies = hobbyDao.getAllHobbies();
         if (hobbies.isEmpty()){
             return null;
         }
-        Set<String> hobbyTitles = new HashSet<String>();
+        Set<String> hobbyTitles = new HashSet<>();
         for (Hobby hobby: hobbies){
             hobbyTitles.add(hobby.getTitle());
         }
         return hobbyTitles;
     }
+
     @Override
-    @Transactional
     public void addHobby(Hobby hobby){
         hobbyDao.addHobby(hobby);
     }
+
     @Override
-    @Transactional
     public void deleteHobbyByTitle(String title){
         hobbyDao.deleteHobbyByTitle(title);
     }
+
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Hobby getHobbyById(Long hobbyId) {
         return hobbyDao.getHobbyById(hobbyId);
     }
+
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Set<Contact> getAllContactsSamePlace(Long placeId) {
         return contactDao.getAllContactsSamePlace(placeId);
     }
+
     @Override
-    @Transactional
     public void removeHobbyFromContact(Contact contact, Hobby hobby) {
         contactDao.removeHobbyFromContact(contact, hobby.getId());
     }
 
     //Methods that deal with PlaceDao
     @Override
-    @Transactional
     public void addPlace(String title, double longitude, double latitude) {
         Place place = new Place();
         place.setTitle(title);
@@ -191,21 +193,24 @@ public class ContactServiceImpl implements ContactService {
         place.setLatitude(latitude);
         placeDao.addPlace(place);
     }
+
     @Override
-    @Transactional
     public void addPlace(Place place){
         placeDao.addPlace(place);
     }
+
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Place> getAllPlaces() {
         return placeDao.getAllPlaces();
     }
+
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Place getPlaceById(long id) {
         return placeDao.getPlaceById(id);
     }
+
     @Override
     public void removePlaceFromContact(Contact contact, Place place) {
         Long placeId = place.getId();
@@ -214,23 +219,25 @@ public class ContactServiceImpl implements ContactService {
 
     //Methods that deal with MessageDao
     @Override
-    @Transactional
     public void storeMessage(Contact sender, Contact receiver, String content,
                              Date messageDate) {
         contactDao.sendMessage(sender, receiver, content, messageDate);
     }
+
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Message> getAllMessages() {
         return messageDao.getAllMessages();
     }
+
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Message> getConversation(Contact sender, Contact receiver) {
         return messageDao.getConversation(sender, receiver);
     }
+
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Message> getAllMessagesFromContact(Contact contact) {
         return messageDao.getAllMessagesFromContact(contact);
     }
