@@ -1,4 +1,4 @@
-package com.sav.util;
+package com.sav.ContactService.util;
 
 import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.JsonProcessingException;

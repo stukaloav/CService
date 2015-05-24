@@ -1,9 +1,10 @@
 package com.sav.ContactService.dao.Impl;
 
 import com.sav.ContactService.dao.ContactDao;
-import com.sav.ContactService.dao.HobbyDao;
+import com.sav.ContactService.dto.ContactDTO;
+import com.sav.ContactService.dto.HobbyDTO;
+import com.sav.ContactService.dto.PlaceDTO;
 import com.sav.ContactService.model.*;
-import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,160 +18,330 @@ public class ContactDaoImpl implements ContactDao {
     private SessionFactory sessionFactory;
 
     @Override
-    public void addContact(Contact contact) {
-        if (contact == null){
-            throw new IllegalArgumentException("argument should not be null");
+    public ContactDTO addContact(String firstName, String lastName,
+                                 int birthDate, int birthMonth, int birthYear){
+        List<Contact> allContacts = sessionFactory.getCurrentSession().
+                createQuery("from Contact").list();
+        for(Contact contact: allContacts){
+            if(firstName.equals(contact.getFirstName())&&
+                    lastName.equals(contact.getLastName())&&
+                    (birthDate == contact.getBirthDate().getDate())&&
+                    (birthMonth == contact.getBirthDate().getMonth())&&
+                    (birthYear == contact.getBirthDate().getYear())){
+                return null;
+            }
         }
+        Contact contact = new Contact(firstName, lastName, new Date(birthYear, birthMonth, birthDate));
         sessionFactory.getCurrentSession().
                 saveOrUpdate(contact);
+        ContactDTO contactDTO = new ContactDTO(contact.getId(),
+                contact.getFirstName(), contact.getLastName(),
+                contact.getBirthDate());
+        return contactDTO;
     }
-    @Override
-    public void deleteContact(Contact contact) {
-        if (contact == null){
-            throw new IllegalArgumentException("argument should not be null");
-        }
-            sessionFactory.getCurrentSession().delete(contact);
 
-    }
+
     @Override
-    public List<Contact> getAllContacts() {
-        return sessionFactory.getCurrentSession().
+    public Set<ContactDTO> getAllContactsDTO() {
+        List<Contact> contactList = sessionFactory.getCurrentSession().
                 createQuery("from Contact").list();
-    }
-    @Override
-    public void addHobbyToContact(Contact contact, Hobby hobby){
-        contact.getHobbies().add(hobby);
-            sessionFactory.getCurrentSession().merge(contact);
-    }
-    @Override
-    public Contact getContactById(long id){
-        if(id < 0){
-            throw new IllegalArgumentException("id should not be negative");
+        Set<ContactDTO> contactDTOs = new HashSet<>();
+        for (Contact contact: contactList){
+            contactDTOs.add(new ContactDTO(contact.getId(), contact.getFirstName(),
+                    contact.getLastName(), contact.getBirthDate()));
         }
+        return contactDTOs;
+    }
+
+    @Override
+    public void addHobbyToContact(long contactId, long hobbyId){
+        Contact contact = getContactById(contactId);
+        if(contact == null){
+            return;
+        }
+        Query query = sessionFactory.getCurrentSession().createQuery("from Hobby h where h.id = ?");
+        Hobby hobby = (Hobby) query.setParameter(0, hobbyId).uniqueResult();
+        if(hobby == null){
+            return;
+        }
+        contact.getHobbies().add(hobby);
+        sessionFactory.getCurrentSession().merge(contact);
+    }
+
+    private Contact getContactById(long id){
         return (Contact) sessionFactory.getCurrentSession().
                 createQuery("from Contact c where c.id=:id").
                 setParameter("id", id).uniqueResult();
     }
+
     @Override
-    public void addFriendship(Contact first, Contact second){
-        if (first.equals(second)){
+    public ContactDTO getContactDTOById(long id){
+        Contact contact = getContactById(id);
+        if (contact == null){
+            return null;
+        }else {
+            return new ContactDTO(
+                    contact.getId(),
+                    contact.getFirstName(),
+                    contact.getLastName(),
+                    contact.getBirthDate());
+        }
+    }
+
+    @Override
+    public void addFriendship(long firstId, long secondId){
+        if (firstId == secondId){
             throw new IllegalArgumentException("first should not be equal to second");
         }
-        if (first == null || second == null){
-            throw new IllegalArgumentException("argument should not be null");
+        Contact first = getContactById(firstId);
+        Contact second = getContactById(secondId);
+        if(first == null || second == null){
+            return;
         }
-
         first.getFriends().add(second);
         sessionFactory.getCurrentSession().merge(first);
         sessionFactory.getCurrentSession().merge(second);
     }
+
+
     @Override
-    public List<Friendship> getAllFriends(){
-        return sessionFactory.getCurrentSession().
-                createQuery("from Friendship").list();
-    }
-    @Override
-    public Set<Contact> getFriendsFromContact(Contact contact){
-        if (contact == null){
-            throw new IllegalArgumentException("contact should not be null");
+    public Set<ContactDTO> getFriendsDTOFromContact(long contactId){
+        Contact contact = getContactById(contactId);
+        if(contact == null){
+            return null;
         }
-        Query query = sessionFactory.getCurrentSession().
-                createQuery("from Friendship f where " + "f.firstContactId = ? or f.secondContactId = ?");
-        query.setParameter(0, contact.getId());
-        query.setParameter(1, contact.getId());
-        List<Friendship> friendshipList = query.list();
-        Set<Long> friendsIdSet = new HashSet<>();
-        for (Friendship friendship: friendshipList){
-            if(friendship.getFirstContactId() == contact.getId()){
-                friendsIdSet.add(friendship.getSecondContactId());
-            }else {
-                friendsIdSet.add(friendship.getFirstContactId());
+        Set<Contact> friends = contact.getFriends();
+        Set<Contact> inverseFriends = contact.getInverseFriends();
+        Set<ContactDTO> contactDTOs = new HashSet<>();
+        if(friends != null){
+            for (Contact friend: friends){
+                contactDTOs.add(new ContactDTO(
+                        friend.getId(),
+                        friend.getFirstName(),
+                        friend.getLastName(),
+                        friend.getBirthDate()));
             }
         }
-        Set<Contact> friends = new HashSet<>();
-        for (Long friendsId: friendsIdSet){
-            friends.add(getContactById(friendsId));
+        if(inverseFriends != null){
+            for (Contact inverseFriend: inverseFriends){
+                contactDTOs.add(new ContactDTO(
+                        inverseFriend.getId(),
+                        inverseFriend.getFirstName(),
+                        inverseFriend.getLastName(),
+                        inverseFriend.getBirthDate()));
+            }
         }
-        return friends;
+        return contactDTOs;
     }
+
+
     @Override
-    public Set<Hobby> getHobbiesFromContact(Contact contact) {
+    public Set<HobbyDTO> getHobbiesDTOFromContact(long contactId){
+        Contact contact = getContactById(contactId);
         if (contact == null){
-            throw new IllegalArgumentException("argument should not be null");
+            return null;
         }
-        return contact.getHobbies();
+        Set<Hobby> hobbies = contact.getHobbies();
+        if(hobbies == null){
+            return null;
+        }else {
+            Set<HobbyDTO> hobbyDTOs = new HashSet<>();
+            for (Hobby hobby: hobbies){
+                hobbyDTOs.add(new HobbyDTO(hobby.getId(), hobby.getTitle(), hobby.getDescription()));
+            }
+            return hobbyDTOs;
+        }
     }
 
     @Override
-    public Set<Place> getPlacesFromContact(Contact contact) {
-        if (contact == null){
-            throw new IllegalArgumentException("argument should not be null");
+    public Set<PlaceDTO> getPlacesDTOFromContact(long id){
+        Contact contact = getContactById(id);
+        if(contact == null){
+            return null;
         }
-        return contact.getPlaces();
+        Set<Place> places = contact.getPlaces();
+        Set<PlaceDTO> placeDTOs = new HashSet<>();
+        if(places == null){
+            return null;
+        }else {
+            for (Place place: places){
+                placeDTOs.add(new PlaceDTO(place.getTitle(), place.getLongitude(), place.getLatitude()));
+            }
+            return placeDTOs;
+        }
     }
 
     @Override
-    public void addPlaceToContact(Contact contact, Place place) {
+    public void addPlaceToContact(long contactId, long placeId) {
+        Contact contact = getContactById(contactId);
+        if(contact == null){
+            return;
+        }
+        Query query = sessionFactory.getCurrentSession().createQuery("from Place p where p.id = ?");
+        query.setParameter(0, placeId);
+        Place place = (Place)query.uniqueResult();
+        if(place == null){
+            return;
+        }
         contact.getPlaces().add(place);
         sessionFactory.getCurrentSession().merge(contact);
     }
 
     @Override
-    public Set<Contact> getAllContactsSamePlace(Long placeId){
-        if (placeId == null){
-            throw new IllegalArgumentException("argument should not be null");
+    public Set<PlaceDTO> addNewPlaceToContact(long contactId, double latitude, double longitude, String title){
+        Set<PlaceDTO> placeDTOs = new HashSet<>();
+        Place place = new Place(title, longitude, latitude);
+        Contact contact = getContactById(contactId);
+        if(contact == null){
+            return null;
         }
-        Set<Contact> contactSamePlace = new HashSet<>();
-        Query query = sessionFactory.getCurrentSession().createQuery("from ContactPlaces cp where cp.placeId = ?");
-        query.setParameter(0, placeId);
-        List<ContactPlaces> contactPlacesList = query.list();
-        for (ContactPlaces contactPlaces: contactPlacesList){
-            contactSamePlace.add(getContactById(contactPlaces.getContactId()));
+        contact.getPlaces().add(place);
+        sessionFactory.getCurrentSession().saveOrUpdate(place);
+        sessionFactory.getCurrentSession().merge(contact);
+        Set<Place> places = contact.getPlaces();
+        if (places != null){
+            for (Place item: places){
+                placeDTOs.add(new PlaceDTO(item.getTitle(), item.getLongitude(), item.getLatitude()));
+            }
         }
-        return contactSamePlace;
+        return placeDTOs;
     }
 
     @Override
-    public Set<Contact> getAllContactsSameHobby(Long hobbyId) {
-        if (hobbyId == null){
-            throw new IllegalArgumentException("argument should not be null");
+    public Set<ContactDTO> getAllContactsDTOSamePlace(long placeId){
+        Place place = (Place) sessionFactory.getCurrentSession().
+                createQuery("from Place p where p.id = ?").
+                setParameter(0, placeId).uniqueResult();
+        if(place == null){
+            return null;
         }
-        Set<Contact> contactSameHobby = new HashSet<>();
-        Query query = sessionFactory.getCurrentSession().createQuery("from ContactHobbies cp where cp.hobbyId = ?");
-        query.setParameter(0, hobbyId);
-        List<ContactHobbies> contactHobbiesList = query.list();
-        for (ContactHobbies contactHobbies: contactHobbiesList){
-            contactSameHobby.add(getContactById(contactHobbies.getContactId()));
+        Set<ContactDTO> contactDTOsSamePlace = new HashSet<>();
+        Set<Contact> contactsSamePlace = place.getContacts();
+        if(contactsSamePlace == null){
+            return null;
         }
-        return contactSameHobby;
+        for (Contact contact: contactsSamePlace){
+            contactDTOsSamePlace.add(new ContactDTO(
+                    contact.getId(), contact.getFirstName(),
+                    contact.getLastName(), contact.getBirthDate()));
+        }
+        return contactDTOsSamePlace;
     }
 
     @Override
-    public void removeHobbyFromContact(Contact contact, Long hobbyId) {
+    public Set<ContactDTO> getAllContactsDTOSameHobby(long hobbyId){
+        Hobby hobby = (Hobby) sessionFactory.getCurrentSession().
+                createQuery("from Hobby h where h.id = ?").
+                setParameter(0, hobbyId).uniqueResult();
+        if(hobby == null){
+            return null;
+        }
+        Set<ContactDTO> contactDTOsSameHobby = new HashSet<>();
+        Set<Contact> contactsSameHobby = hobby.getContacts();
+        if(contactsSameHobby == null){
+            return null;
+        }
+        for (Contact contact: contactsSameHobby){
+            contactDTOsSameHobby.add(new ContactDTO(
+                    contact.getId(), contact.getFirstName(),
+                    contact.getLastName(), contact.getBirthDate()));
+        }
+        return contactDTOsSameHobby;
+    }
+
+    @Override
+    public ContactDTO doesUserExist(String firstName, String lastName,
+                                    int birthDate, int birthMonth, int birthYear) {
+        List<Contact> contactList = sessionFactory.
+                getCurrentSession().createQuery("from Contact").list();
+        if(contactList == null){
+            return null;
+        }
+        for (Contact contact: contactList){
+            if(firstName.equals(contact.getFirstName())&&
+                    lastName.equals(contact.getLastName())&&
+                    (birthDate == contact.getBirthDate().getDate())&&
+                    (birthMonth == contact.getBirthDate().getMonth())&&
+                    (birthYear == contact.getBirthDate().getYear())){
+                return new ContactDTO(contact.getId(), contact.getFirstName(),
+                        contact.getLastName(), contact.getBirthDate());
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Set<HobbyDTO> addNewHobbyToContact(long contactId, String title, String description) {
+        Contact contact = getContactById(contactId);
+        Hobby hobby = new Hobby(title, description);
+        if(contact == null){
+            return null;
+        }
+        Set<HobbyDTO> hobbyDTOs = new HashSet<>();
+        sessionFactory.getCurrentSession().merge(contact);
+        Set<Hobby> hobbies = contact.getHobbies();
+        if(hobbies != null){
+            for (Hobby items: hobbies){
+                hobbyDTOs.add(new HobbyDTO(items.getId(), items.getTitle(), items.getDescription()));
+            }
+        }
+        return hobbyDTOs;
+    }
+
+    @Override
+    public void removeHobbyFromContact(long contactId, long hobbyId) {
+        Contact contact = getContactById(contactId);
+        if(contact == null){
+            return;
+        }
         Hobby hobby = (Hobby)sessionFactory.getCurrentSession().
                 createQuery("from Hobby h where h.id = ?").
                 setParameter(0, hobbyId).uniqueResult();
+        if(hobby == null){
+            return;
+        }
         contact.getHobbies().remove(hobby);
         sessionFactory.getCurrentSession().merge(contact);
     }
 
     @Override
-    public void sendMessage(Contact sender, Contact receiver,
+    public void removePlaceFromContact(long contactId, long placeId){
+        Contact contact = getContactById(contactId);
+        if(contact == null){
+            return;
+        }
+        Place place = (Place)sessionFactory.getCurrentSession().
+                createQuery("from Place p where p.id = ?").
+                setParameter(0, placeId).uniqueResult();
+        if(place == null){
+            return;
+        }
+        contact.getPlaces().remove(place);
+        sessionFactory.getCurrentSession().merge(contact);
+    }
+
+    @Override
+    public void sendMessage(long senderId, long receiverId,
                             String content, Date messageDate) {
+        Contact sender = getContactById(senderId);
+        Contact receiver = getContactById(receiverId);
         Message message = new Message(messageDate, sender, receiver, content);
         sessionFactory.getCurrentSession().saveOrUpdate(message);
     }
 
     @Override
-    public void removeFriendship(Contact first, Contact second) {
-        if (first.equals(second)){
+    public void removeFriendship(long firstId, long secondId) {
+        if (firstId == secondId){
             throw new IllegalArgumentException("first should not be equal to second");
         }
+        Contact first = getContactById(firstId);
+        Contact second = getContactById(secondId);
         if (first == null || second == null){
-            throw new IllegalArgumentException("argument should not be null");
+            return;
         }
         first.getFriends().remove(second);
         sessionFactory.getCurrentSession().merge(first);
         sessionFactory.getCurrentSession().merge(second);
     }
+
 }

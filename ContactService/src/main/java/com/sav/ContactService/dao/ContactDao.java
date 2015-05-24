@@ -1,28 +1,54 @@
 package com.sav.ContactService.dao;
 
-import com.sav.ContactService.model.*;
-import org.springframework.transaction.annotation.Transactional;
+import com.sav.ContactService.dto.ContactDTO;
+import com.sav.ContactService.dto.HobbyDTO;
+import com.sav.ContactService.dto.PlaceDTO;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
 public interface ContactDao {
-    void addContact(Contact contact);
-    void deleteContact(Contact contact);
-    List<Contact> getAllContacts();
-    void addHobbyToContact(Contact id, Hobby hobby);
-    Contact getContactById(long id);
-    void addFriendship(Contact first, Contact second);
-    void removeFriendship(Contact first, Contact second);
-    List<Friendship> getAllFriends();
-    Set<Contact> getFriendsFromContact(Contact contact);
-    Set<Contact> getAllContactsSamePlace(Long placeId);
-    Set<Hobby> getHobbiesFromContact(Contact contact);
-    void removeHobbyFromContact(Contact contact, Long hobbyId);
-    Set<Place> getPlacesFromContact(Contact contact);
-    void addPlaceToContact(Contact contact, Place place);
-    void sendMessage(Contact sender, Contact receiver, String content,
-                     Date messageDate);
-    Set<Contact> getAllContactsSameHobby(Long hobbyId);
+
+    ContactDTO addContact(String firstName, String lastName,
+                          int birthDate, int birthMonth, int birthYear);
+
+    Set<ContactDTO> getAllContactsDTO();
+
+    void addHobbyToContact(long contactId, long hobbyId);
+
+    ContactDTO getContactDTOById(long id);
+
+    void addFriendship(long firstId, long secondId);
+
+    void removeFriendship(long firstId, long secondId);
+
+    Set<PlaceDTO> addNewPlaceToContact(long contactId, double latitude,
+                                       double longitude, String title);
+
+    Set<ContactDTO> getAllContactsDTOSamePlace(long placeId);
+
+    Set<ContactDTO> getFriendsDTOFromContact(long contactId);
+
+    Set<HobbyDTO> getHobbiesDTOFromContact(long contactId);
+
+    void removeHobbyFromContact(long contactId, long hobbyId);
+
+    Set<PlaceDTO> getPlacesDTOFromContact(long id);
+
+    void addPlaceToContact(long contactId, long placeId);
+
+    void sendMessage(long sender, long receiver,
+                     String content, Date messageDate);
+
+    Set<ContactDTO> getAllContactsDTOSameHobby(long hobbyId);
+
+    ContactDTO doesUserExist(String firstName, String lastName,
+                             int birthDate, int birthMonth, int birthYear);
+
+    Set<HobbyDTO> addNewHobbyToContact(long contactId, String title,
+                                       String description);
+
+    void removePlaceFromContact(long contactId, long placeId);
+
 }

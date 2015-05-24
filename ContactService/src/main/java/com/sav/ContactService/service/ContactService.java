@@ -1,51 +1,55 @@
 package com.sav.ContactService.service;
 
-import com.sav.ContactService.model.*;
-import org.springframework.transaction.annotation.Transactional;
+import com.sav.ContactService.dto.*;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
 public interface ContactService {
-    //Methods that deal with ContactDao
 
-    Set<Contact> getAllContactsSameHobby(Long hobbyId);
-    Set<Contact> getAllContactsSamePlace(Long placeId);
-    void createContact(String firstName, String lastName, Date birthDate);
-    List<Contact> getAllContacts();
-    void addHobbyToContact(Contact contact, Hobby hobby);
-    Contact getContactById(long id);
-    void addContact(Contact contact);
-    void deleteContact(Contact contact);
-    Set<Hobby> getHobbiesFromContact(Contact contact);
-    void addFriendship(Contact first, Contact second);
-    void removeFriendship(Contact first, Contact second);
-    List<Friendship> getAllFriendPairs();
-    Set<Contact> getFriendsFromContact(Contact contact);
-    Set<Place> getPlacesFromContact(Contact contact);
-    void addPlaceToContact(Contact contact, Place place);
+    Set<PlaceDTO> addNewPlaceToContact(long contactId, double latitude, double longitude, String title);
 
-    //Methods that deal with HobbyDao
-    void addHobby(String title, String description);
-    List<Hobby> getAllHobbies();
-    Set<String> getAllHobbiesTitle();
-    void addHobby(Hobby hobby);
-    void deleteHobbyByTitle(String title);
-    Hobby getHobbyById(Long Id);
-    void removeHobbyFromContact(Contact contact, Hobby hobby);
+    Set<ContactDTO> getAllContactsDTOSameHobby(long hobbyId);
 
-    //Methods that deal with PlaceDao
-    void addPlace(String title, double longitude, double latitude);
-    void addPlace(Place place);
-    List<Place> getAllPlaces();
-    Place getPlaceById(long id);
-    void removePlaceFromContact(Contact contact, Place place);
+    Set<ContactDTO> getAllContactsDTOSamePlace(long placeId);
 
-    //Methods that deal with MessageDao
-    void storeMessage(Contact sender, Contact receiver, String content,
+    Set<ContactDTO> getAllContactsDTO();
+
+    void addHobbyToContact(long contactId, long hobbyId);
+
+    ContactDTO getContactDTOById(long id);
+
+    ContactDTO addContact(String firstName, String lastName, int birthDate, int birthMonth, int birthYear);
+
+    Set<HobbyDTO> getHobbiesDTOFromContact(long contactId);
+
+    void addFriendship(long firstId, long secondId);
+
+    void removeFriendship(long firstId, long secondId);
+
+    Set<ContactDTO> getFriendsDTOFromContact(long contactId);
+
+    Set<PlaceDTO> getPlacesDTOFromContact(long contactId);
+
+    void addPlaceToContact(long contactId, long placeId);
+
+    Set<HobbyDTO> addNewHobbyToContact(long contactId, String title, String description);
+
+    List<HobbyDTO> getAllHobbiesDTO();
+
+    void removeHobbyFromContact(long contactId, long hobbyId);
+
+    List<PlaceDTO> getAllPlacesDTO();
+
+    void removePlaceFromContact(long contactId, long placeId);
+
+    void storeMessage(long senderId, long receiverId, String content,
                       Date messageDate);
-    List<Message> getConversation(Contact sender, Contact receiver);
-    List<Message> getAllMessages();
-    List<Message> getAllMessagesFromContact(Contact contact);
+
+    List<MessageDTO> getConversationDTO(long firstContactId, long secondContactId);
+
+    ContactDTO doesUserExist(String firstName, String lastName, int birthDate,
+                             int birthMonth, int birthYear);
+
 }

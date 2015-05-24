@@ -159,7 +159,7 @@ $(document).ready(function(){
     //action to add friendship
     $('#btn-addFriendship').click(function(){
         $("#table-contact-friends > tbody > tr").remove();
-        $.get("/addFriendship", {userId: $.cookie('userId'), contactId: contactId}, function(data){
+        $.post("/addFriendship", {userId: $.cookie('userId'), contactId: contactId}).done(function(data){
             $.each(data, function(index, value) {
                 $("#table-contact-friends > tbody:last").append("<tr class='tr-allContacts' id='"+
                 value.id+"'><td>"+index+"</td><td>"+value.firstName+"</td><td>"+
@@ -172,7 +172,7 @@ $(document).ready(function(){
 
     //action to remove friendship
     $('#btn-removeFriendship').click(function(){
-        $.get("/removeFriendship", {userId: $.cookie('userId'), contactId: contactId}, function(data){
+        $.post("/removeFriendship", {userId: $.cookie('userId'), contactId: contactId}).done(function(data){
             $("#table-contact-friends > tbody > tr").remove();
             $.each(data, function(index, value) {
                 $("#table-contact-friends > tbody:last").append("<tr class='tr-allContacts' id='"+
@@ -209,10 +209,10 @@ $(document).ready(function(){
             alert("Empty message! Please type your message to send");
         }else{
             $("#p-conversation > p").remove();
-            $.get("/sendMessage", { content: currentMessage,
+            $.post("/sendMessage", { content: currentMessage,
                                     messageDate: messageDate,
                                     senderId: $.cookie('userId'),
-                                    receiverId: contactId },
+                                    receiverId: contactId }).done(
                 function(data){
                     $.each(data, function(index, value){
                         $("#p-conversation").append(
@@ -333,8 +333,8 @@ $(document).ready(function(){
             var month = dateBirthDate.getMonth();
             var date = dateBirthDate.getDate();
             var year = (dateBirthDate.getFullYear() - 1900);
-            $.get("/add", {firstName: firstName, lastName: lastName,
-                birthDate: date, birthMonth: month, birthYear: year},
+            $.post("/add", {firstName: firstName, lastName: lastName,
+                birthDate: date, birthMonth: month, birthYear: year}).done(
                 function(data){
                 if(data === "" || data == undefined){
                     alert("contact is already exists");
@@ -418,8 +418,8 @@ $(document).ready(function(){
             var month = dateBirthDate.getMonth();
             var date = dateBirthDate.getDate();
             var year = (dateBirthDate.getFullYear() - 1900);
-            $.get("/add", {firstName: firstName, lastName: lastName,
-                    birthDate: date, birthMonth: month, birthYear: year},
+            $.post("/add", {firstName: firstName, lastName: lastName,
+                    birthDate: date, birthMonth: month, birthYear: year}).done(
                 function(data){
                     if(data !== "" && data != undefined){
                         $.cookie("userFirstName", data.firstName);
@@ -542,8 +542,8 @@ $(document).ready(function(){
         var newLng = $('#info').text().split(',')[0];
         var newLat = $('#info').text().split(',')[1];
         var newTitle = $('#address').text();
-        $.get("/addPlace", {contactId: contactId, latitude: newLat,
-            longitude: newLng, title: newTitle}, function (data){
+        $.post("/addPlace", {contactId: contactId, latitude: newLat,
+            longitude: newLng, title: newTitle}).done(function (data){
             $("#table-contact-places > tbody > tr").remove();
                 $.each(data, function (index, value) {
                     $("#table-contact-places > tbody:last").append(
@@ -680,7 +680,7 @@ $(document).ready(function(){
     $('#btn-addThisPlace').on('click', function(){
         $('#btn-addThisPlace').removeClass('invisible');
         $('#btn-removeThisPlace').addClass('invisible');
-        $.get("/addPlaceToContact", {contactId: $.cookie('userId'), placeId: placeId}, function(answer){
+        $.post("/addPlaceToContact", {contactId: $.cookie('userId'), placeId: placeId}).done(function(answer){
             $("#table-place-details > tbody > tr").remove();
             $.each(answer, function(index, value) {
                 $("#table-place-details > tbody:last").append("<tr class='tr-table-place-details' id='"+
@@ -698,7 +698,7 @@ $(document).ready(function(){
     $('#btn-removeThisPlace').on('click', function(){
         $('#btn-addThisPlace').removeClass('invisible');
         $('#btn-removeThisPlace').addClass('invisible');
-        $.get("/removePlaceFromContact", {contactId: $.cookie('userId'), placeId: placeId}, function(answer){
+        $.post("/removePlaceFromContact", {contactId: $.cookie('userId'), placeId: placeId}).done(function(answer){
             $("#table-place-details > tbody > tr").remove();
             $.each(answer, function(index, value) {
                 $("#table-place-details > tbody:last").append("<tr class='tr-table-place-details' id='"+
@@ -716,43 +716,48 @@ $(document).ready(function(){
     $("#table-place-details").on('click', ".tr-table-place-details", function(){
         $(".div-info").addClass("invisible");
         contactId = $(this).attr('id');
-        $.get("/getContactById", {contactId: contactId}, function(data){
-            if(data !== "" || data != undefined){
-                $("#table-contact-info > tbody > tr").remove();
-                $("#table-contact-info > tbody:last").append(
-                    '<tr><td>' + data.firstName + '</td><td>' + data.lastName + '</td><td>' +
-                    data.birthDate + '</td><tr>');
-                $('#h-contactId').text("Contact details: "+
-                data.firstName+" "+ data.lastName);
-            }else {
-                alert("something wrong in /getContactById");
-            }
-        });
-        if($.inArray(""+contactId, userFriends) > -1){
-            $('#btn-addFriendship').addClass('invisible');
-            $('#btn-removeFriendship').removeClass('invisible');
-        }else {
-            $('#btn-addFriendship').removeClass('invisible');
-            $('#btn-removeFriendship').addClass('invisible');
-        }
-        if(contactId == $.cookie('userId')){
-            $('#btn-removeFriendship').addClass('invisible');
-            $('#btn-addFriendship').addClass('invisible');
-        }
-        $('.div-details-satellite').addClass('invisible');
-        $('#div-hobby-details').addClass('invisible');
-        $("#div-userDetails").removeClass("invisible");
-        $("#div-details").removeClass("invisible");
-        if($("#li-contact-info").hasClass('active')&& contactId != $.cookie('userId')){
-            $('#div-userMessages').removeClass('invisible');
-        }else if($("#li-contact-place").hasClass('active')){
-            $('#div-userPlacesMap').removeClass('invisible');
-        }
         if(contactId != $.cookie('userId')){
-            $('#btn-addPlace').addClass('invisible');
+            $.get("/getContactById", {contactId: contactId}, function(data){
+                if(data !== "" || data != undefined){
+                    $("#table-contact-info > tbody > tr").remove();
+                    $("#table-contact-info > tbody:last").append(
+                        '<tr><td>' + data.firstName + '</td><td>' + data.lastName + '</td><td>' +
+                        data.birthDate + '</td><tr>');
+                    $('#h-contactId').text("Contact details: "+
+                    data.firstName+" "+ data.lastName);
+                }else {
+                    alert("something wrong in /getContactById");
+                }
+            });
+            if($.inArray(""+contactId, userFriends) > -1){
+                $('#btn-addFriendship').addClass('invisible');
+                $('#btn-removeFriendship').removeClass('invisible');
+            }else {
+                $('#btn-addFriendship').removeClass('invisible');
+                $('#btn-removeFriendship').addClass('invisible');
+            }
+            if(contactId == $.cookie('userId')){
+                $('#btn-removeFriendship').addClass('invisible');
+                $('#btn-addFriendship').addClass('invisible');
+            }
+            $('.div-details-satellite').addClass('invisible');
+            $('#div-hobby-details').addClass('invisible');
+            $("#div-userDetails").removeClass("invisible");
+            $("#div-details").removeClass("invisible");
+            if($("#li-contact-info").hasClass('active')&& contactId != $.cookie('userId')){
+                $('#div-userMessages').removeClass('invisible');
+            }else if($("#li-contact-place").hasClass('active')){
+                $('#div-userPlacesMap').removeClass('invisible');
+            }
+            if(contactId != $.cookie('userId')){
+                $('#btn-addPlace').addClass('invisible');
+            }else{
+                $('#btn-addPlace').removeClass('invisible');
+            }
         }else{
-            $('#btn-addPlace').removeClass('invisible');
+            location.reload();
         }
+
     });
 
     //jump to hobby-details-table
@@ -788,7 +793,7 @@ $(document).ready(function(){
     $('#btn-addThisHobby').on('click', function(){
         $('#btn-addThisHobby').removeClass('invisible');
         $('#btn-removeThisHobby').addClass('invisible');
-        $.get("/addHobbyToContact", {contactId: $.cookie('userId'), hobbyId: hobbyId}, function(answer){
+        $.post("/addHobbyToContact", {contactId: $.cookie('userId'), hobbyId: hobbyId}).done(function(answer){
                 $("#table-hobby-details > tbody > tr").remove();
                 $.each(answer, function(index, value) {
                     $("#table-hobby-details > tbody:last").append("<tr class='tr-table-hobby-details' id='"+
@@ -806,7 +811,7 @@ $(document).ready(function(){
     $("#btn-removeThisHobby").on('click', function(){
         $('#btn-addThisHobby').removeClass('invisible');
         $('#btn-removeThisHobby').addClass('invisible');
-        $.get("/removeHobbyFromContact", {contactId: $.cookie('userId'), hobbyId: hobbyId}, function(answer){
+        $.post("/removeHobbyFromContact", {contactId: $.cookie('userId'), hobbyId: hobbyId}).done(function(answer){
             $("#table-hobby-details > tbody > tr").remove();
             $.each(answer, function(index, value) {
                 $("#table-hobby-details > tbody:last").append("<tr class='tr-table-hobby-details' id='"+
@@ -1046,7 +1051,7 @@ $(document).ready(function(){
         } else if (newHobbyDescription === "" || newHobbyDescription == undefined) {
             alert("Hobby description is undefined");
         } else {
-            $.get("/addNewHobby", {contactId: $.cookie('userId'), title: newHobbyTitle, description: newHobbyDescription},
+            $.post("/addNewHobby", {contactId: $.cookie('userId'), title: newHobbyTitle, description: newHobbyDescription}).done(
                 function(data){
                     $("#table-contact-hobbies > tbody > tr").remove();
                     $.get("/getHobbies", {contactId:contactId}, function(data){

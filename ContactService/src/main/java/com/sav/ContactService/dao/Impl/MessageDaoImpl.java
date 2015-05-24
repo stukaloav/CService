@@ -1,7 +1,7 @@
 package com.sav.ContactService.dao.Impl;
 
 import com.sav.ContactService.dao.MessageDao;
-import com.sav.ContactService.model.Contact;
+import com.sav.ContactService.dto.MessageDTO;
 import com.sav.ContactService.model.Message;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
@@ -18,15 +18,16 @@ public class MessageDaoImpl implements MessageDao{
     private SessionFactory sessionFactory;
 
     @Override
-    public List<Message> getConversation(Contact first, Contact second) {
+    public List<MessageDTO> getConversationDTO(Long firstContactId, Long secondContactId){
+        List<MessageDTO> conversationDTO = new ArrayList<>();
         Query query = sessionFactory.getCurrentSession().
                 createQuery("from Message m where " +
-                        "(m.sender= ? and m.receiver= ?)" +
-                "or (m.sender = ? and m.receiver = ?)");
-        query.setParameter(0, first);
-        query.setParameter(1, second);
-        query.setParameter(2, second);
-        query.setParameter(3, first);
+                        "(m.sender.id= ? and m.receiver.id= ?)" +
+                        "or (m.sender.id = ? and m.receiver.id = ?)");
+        query.setParameter(0, firstContactId);
+        query.setParameter(1, secondContactId);
+        query.setParameter(2, secondContactId);
+        query.setParameter(3, firstContactId);
         List<Message> conversation = query.list();
         conversation.sort(new Comparator<Message>() {
             @Override
@@ -34,21 +35,19 @@ public class MessageDaoImpl implements MessageDao{
                 return o1.getId().compareTo(o2.getId());
             }
         });
-        return conversation;
+        if(conversation != null){
+            for (Message message: conversation){
+                conversationDTO.add(new MessageDTO(
+                        message.getId(),
+                        message.getMessageDate(),
+                        message.getContent(),
+                        message.getSender().getFirstName(),
+                        message.getSender().getLastName(),
+                        message.getReceiver().getFirstName(),
+                        message.getReceiver().getLastName()));
+            }
+        }
+        return conversationDTO;
     }
-    @Override
-    public List<Message> getAllMessages() {
-        Query query = sessionFactory.getCurrentSession().createQuery("from Message");
-        return query.list();
-    }
-    @Override
-    public List<Message> getAllMessagesFromContact(Contact contact){
-        Query query = sessionFactory.getCurrentSession().
-                createQuery("from Message m where " +
-                        "m.sender = ? or m.receiver = ?");
-        query.setParameter(0, contact);
-        query.setParameter(1, contact);
-        return query.list();
 
-    }
 }

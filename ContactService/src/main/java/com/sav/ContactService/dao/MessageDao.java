@@ -1,13 +1,11 @@
 package com.sav.ContactService.dao;
 
-import com.sav.ContactService.model.Contact;
-import com.sav.ContactService.model.Message;
-import org.springframework.transaction.annotation.Transactional;
+import com.sav.ContactService.dto.MessageDTO;
 
 import java.util.List;
 
 public interface MessageDao {
-    public List<Message> getConversation(Contact first, Contact second);
-    public List<Message> getAllMessages();
-    List<Message> getAllMessagesFromContact(Contact receiver);
+
+    List<MessageDTO> getConversationDTO(Long firstContactId, Long secondContactId);
+
 }

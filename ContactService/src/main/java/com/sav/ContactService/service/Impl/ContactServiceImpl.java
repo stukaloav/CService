@@ -1,12 +1,8 @@
 package com.sav.ContactService.service.Impl;
 
-import com.sav.ContactService.dao.ContactDao;
-import com.sav.ContactService.dao.HobbyDao;
-import com.sav.ContactService.dao.MessageDao;
-import com.sav.ContactService.dao.PlaceDao;
-import com.sav.ContactService.model.*;
+import com.sav.ContactService.dao.*;
+import com.sav.ContactService.dto.*;
 import com.sav.ContactService.service.ContactService;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,220 +22,126 @@ public class ContactServiceImpl implements ContactService {
     @Autowired
     private MessageDao messageDao;
 
-    //Methods that deal with ContactDao
     @Override
     @Transactional(readOnly = true)
-    public Set<Contact> getAllContactsSameHobby(Long hobbyId) {
-        return contactDao.getAllContactsSameHobby(hobbyId);
-    }
-
-    @Override
-    public void createContact(String firstName, String lastName, Date birthDate) {
-        Contact contact = new Contact();
-        contact.setFirstName(firstName);
-        contact.setLastName(lastName);
-        contact.setBirthDate(birthDate);
-        contactDao.addContact(contact);
+    public ContactDTO doesUserExist(String firstName, String lastName, int birthDate, int birthMonth, int birthYear) {
+        return contactDao.doesUserExist(firstName, lastName, birthDate, birthMonth, birthYear);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Contact> getAllContacts() {
-        return contactDao.getAllContacts();
+    public Set<ContactDTO> getAllContactsDTOSameHobby(long hobbyId){
+        return contactDao.getAllContactsDTOSameHobby(hobbyId);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Contact getContactById(long id){
+    public Set<ContactDTO> getAllContactsDTO(){
+        return contactDao.getAllContactsDTO();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ContactDTO getContactDTOById(long id){
         if(id < 0){
             throw new IllegalArgumentException("id should not be negative");
         }
-        return contactDao.getContactById(id);
-    }
-    @Override
-    public void addContact(Contact contact){
-        if(contact == null){
-            throw new IllegalArgumentException("argument should not be null");
-        }
-        contactDao.addContact(contact);
-    }
-    @Override
-    public void deleteContact(Contact contact){
-        if(contact == null){
-            throw new IllegalArgumentException("argument should not be null");
-        }
-        contactDao.deleteContact(contact);
-    }
-    @Override
-    @Transactional(readOnly = true)
-    public Set<Hobby> getHobbiesFromContact(Contact contact) {
-        if(contact == null){
-            throw new IllegalArgumentException("argument should not be null");
-        }
-        return contactDao.getHobbiesFromContact(contact);
-    }
-    @Override
-    public void addHobbyToContact(Contact contact, Hobby hobby) {
-        contactDao.addHobbyToContact(contact, hobby);
+        return contactDao.getContactDTOById(id);
     }
 
     @Override
-    public void addFriendship(Contact first, Contact second){
-        if(first == null || second == null){
-            throw new IllegalArgumentException("argument should not be null");
-        }
-        contactDao.addFriendship(first, second);
-    }
-
-    @Override
-    public void removeFriendship(Contact first, Contact second) {
-        if(first == null || second == null){
-            throw new IllegalArgumentException("argument should not be null");
-        }
-        contactDao.removeFriendship(first, second);
+    public ContactDTO addContact(String firstName, String lastName,
+                                 int birthDate, int birthMonth, int birthYear){
+        return contactDao.addContact(firstName, lastName,
+                birthDate, birthMonth, birthYear);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Friendship> getAllFriendPairs(){
-        return contactDao.getAllFriends();
+    public Set<HobbyDTO> getHobbiesDTOFromContact(long contactId){
+        return contactDao.getHobbiesDTOFromContact(contactId);
+    }
+
+    @Override
+    public void addHobbyToContact(long contactId, long hobbyId) {
+        contactDao.addHobbyToContact(contactId, hobbyId);
+    }
+
+    @Override
+    public Set<HobbyDTO> addNewHobbyToContact(long contactId, String title, String description){
+        return contactDao.addNewHobbyToContact(contactId, title, description);
+    }
+
+    @Override
+    public void addFriendship(long firstId, long secondId){
+        contactDao.addFriendship(firstId, secondId);
+    }
+
+    @Override
+    public void removeFriendship(long firstId, long secondId) {
+        contactDao.removeFriendship(firstId, secondId);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Set<Contact> getFriendsFromContact(Contact contact){
-        if(contact == null){
-            throw new IllegalArgumentException("argument should not be null");
-        }
-        return contactDao.getFriendsFromContact(contact);
-    }
-    @Override
-    @Transactional(readOnly = true)
-    public Set<Place> getPlacesFromContact(Contact contact) {
-        if(contact == null){
-            throw new IllegalArgumentException("argument should not be null");
-        }
-        return contactDao.getPlacesFromContact(contact);
-    }
-
-    @Override
-    public void addPlaceToContact(Contact contact, Place place) {
-        if(contact == null || place == null){
-            throw new IllegalArgumentException("argument should not be null");
-        }
-        contactDao.addPlaceToContact(contact, place);
-    }
-
-    //Methods that deal with HobbyDao
-    @Override
-    public void addHobby(String title, String description) {
-        Hobby hobby = new Hobby();
-        hobby.setTitle(title);
-        hobby.setDescription(description);
-        hobbyDao.addHobby(hobby);
-    }
-
-    @Override
-    public List<Hobby> getAllHobbies(){
-        return hobbyDao.getAllHobbies();}
-
-    @Override
-    @Transactional(readOnly = true)
-    public Set<String> getAllHobbiesTitle(){
-        List<Hobby> hobbies = hobbyDao.getAllHobbies();
-        if (hobbies.isEmpty()){
-            return null;
-        }
-        Set<String> hobbyTitles = new HashSet<>();
-        for (Hobby hobby: hobbies){
-            hobbyTitles.add(hobby.getTitle());
-        }
-        return hobbyTitles;
-    }
-
-    @Override
-    public void addHobby(Hobby hobby){
-        hobbyDao.addHobby(hobby);
-    }
-
-    @Override
-    public void deleteHobbyByTitle(String title){
-        hobbyDao.deleteHobbyByTitle(title);
+    public Set<ContactDTO> getFriendsDTOFromContact(long contactId){
+        return contactDao.getFriendsDTOFromContact(contactId);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Hobby getHobbyById(Long hobbyId) {
-        return hobbyDao.getHobbyById(hobbyId);
+    public Set<PlaceDTO> getPlacesDTOFromContact(long contactId){
+        return contactDao.getPlacesDTOFromContact(contactId);
+    }
+
+    @Override
+    public void addPlaceToContact(long contactId, long placeId) {
+        contactDao.addPlaceToContact(contactId, placeId);
+    }
+
+    @Override
+    public Set<PlaceDTO> addNewPlaceToContact(long contactId, double latitude, double longitude, String title) {
+        return contactDao.addNewPlaceToContact(contactId, latitude, longitude, title);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Set<Contact> getAllContactsSamePlace(Long placeId) {
-        return contactDao.getAllContactsSamePlace(placeId);
-    }
-
-    @Override
-    public void removeHobbyFromContact(Contact contact, Hobby hobby) {
-        contactDao.removeHobbyFromContact(contact, hobby.getId());
-    }
-
-    //Methods that deal with PlaceDao
-    @Override
-    public void addPlace(String title, double longitude, double latitude) {
-        Place place = new Place();
-        place.setTitle(title);
-        place.setLongitude(longitude);
-        place.setLatitude(latitude);
-        placeDao.addPlace(place);
-    }
-
-    @Override
-    public void addPlace(Place place){
-        placeDao.addPlace(place);
+    public List<HobbyDTO> getAllHobbiesDTO(){
+        return hobbyDao.getAllHobbiesDTO();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Place> getAllPlaces() {
-        return placeDao.getAllPlaces();
+    public Set<ContactDTO> getAllContactsDTOSamePlace(long placeId){
+        return contactDao.getAllContactsDTOSamePlace(placeId);
+    }
+
+    @Override
+    public void removeHobbyFromContact(long contactId, long hobbyId) {
+        contactDao.removeHobbyFromContact(contactId, hobbyId);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Place getPlaceById(long id) {
-        return placeDao.getPlaceById(id);
+    public List<PlaceDTO> getAllPlacesDTO(){
+        return placeDao.getAllPlacesDTO();
     }
 
     @Override
-    public void removePlaceFromContact(Contact contact, Place place) {
-        Long placeId = place.getId();
-        placeDao.removePlaceFromContact(contact, placeId);
+    public void removePlaceFromContact(long contactId, long placeId) {
+        contactDao.removePlaceFromContact(contactId, placeId);
     }
 
-    //Methods that deal with MessageDao
     @Override
-    public void storeMessage(Contact sender, Contact receiver, String content,
+    public void storeMessage(long senderId, long receiverId, String content,
                              Date messageDate) {
-        contactDao.sendMessage(sender, receiver, content, messageDate);
+        contactDao.sendMessage(senderId, receiverId, content, messageDate);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Message> getAllMessages() {
-        return messageDao.getAllMessages();
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<Message> getConversation(Contact sender, Contact receiver) {
-        return messageDao.getConversation(sender, receiver);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<Message> getAllMessagesFromContact(Contact contact) {
-        return messageDao.getAllMessagesFromContact(contact);
+    public List<MessageDTO> getConversationDTO(long firstContactId, long secondContactId){
+        return messageDao.getConversationDTO(firstContactId, secondContactId);
     }
 
 }

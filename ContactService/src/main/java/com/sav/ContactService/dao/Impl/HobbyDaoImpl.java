@@ -1,6 +1,7 @@
 package com.sav.ContactService.dao.Impl;
 
 import com.sav.ContactService.dao.HobbyDao;
+import com.sav.ContactService.dto.HobbyDTO;
 import com.sav.ContactService.model.Contact;
 import com.sav.ContactService.model.ContactHobbies;
 import com.sav.ContactService.model.Hobby;
@@ -9,6 +10,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -19,63 +21,15 @@ public class HobbyDaoImpl implements HobbyDao {
     private SessionFactory sessionFactory;
 
     @Override
-    public void addHobby(Hobby hobby) {
-        sessionFactory.getCurrentSession().save(hobby);
-    }
-    private Set<Long> getIdOfAllContactsWithHobby() {
-        List<ContactHobbies> contactHobbiesList =
-                sessionFactory.getCurrentSession().
-                        createQuery("from ContactHobbies").list();
-        if (contactHobbiesList == null){
-            return null;
-        }
-        Set<Long> contactsId = new HashSet<Long>();
-        for (ContactHobbies contactHobbies: contactHobbiesList){
-            contactsId.add(contactHobbies.getContactId());
-        }
-        return contactsId;
-    }
-    private Contact getContactById(long id){
-        return (Contact) sessionFactory.getCurrentSession().get(Contact.class, id);
-
-    }
-    @Override
-    public Set<Contact> getAllContactsWithHobby() {
-        Set<Long> contactId = getIdOfAllContactsWithHobby();
-        if (contactId == null){
-            return null;
-        }
-        Set<Contact> contactsWithHobby = new HashSet<Contact>();
-        for (Long id: contactId){
-            contactsWithHobby.add(getContactById(id));
-        }
-        return contactsWithHobby;
-    }
-    @Override
-    public List<Hobby> getAllHobbies() {
-        return sessionFactory.getCurrentSession().
+    public List<HobbyDTO> getAllHobbiesDTO(){
+        List<Hobby> hobbyList = sessionFactory.getCurrentSession().
                 createQuery("from Hobby").list();
-    }
-    @Override
-    public Hobby getHobbyById(Long id) {
-        Query query = sessionFactory.getCurrentSession().createQuery("from Hobby h where h.id = ?");
-        query.setParameter(0, id);
-        return (Hobby)query.uniqueResult();
-    }
-    @Override
-    public void deleteHobbyByTitle(String title){
-        if (title == null){
-            return;
-        }
-        List<Hobby> hobbyList = getAllHobbies();
-        if (hobbyList.isEmpty()){
-            return;
-        }
+        List<HobbyDTO> hobbyDTOs = new ArrayList<>();
         for (Hobby hobby: hobbyList){
-            if (title.equals(hobby.getTitle())){
-                sessionFactory.getCurrentSession().delete(hobby);
-            }
+            hobbyDTOs.add(new HobbyDTO(hobby.getId(), hobby.getTitle(),
+                    hobby.getDescription()));
         }
+        return hobbyDTOs;
     }
 
 }

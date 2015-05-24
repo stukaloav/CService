@@ -1,4 +1,4 @@
-package com.sav.util;
+package com.sav.ContactService.util;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;

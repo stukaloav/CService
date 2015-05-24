@@ -1,6 +1,6 @@
 package com.sav.ContactService.service;
 
-        import com.sav.ContactService.dao.*;
+import com.sav.ContactService.dao.*;
         import com.sav.ContactService.model.*;
         import com.sav.ContactService.service.Impl.ContactServiceImpl;
         import org.junit.Test;
@@ -39,203 +39,129 @@ public class ContactServiceTests {
 
 
     @Test
-    public void createContactTest() {
-        contactService.createContact("first name", "last name", new Date());
-        verify(contactDao).addContact((Contact) anyObject());
+    public void addNewPlaceToContactTest(){
+        contactService.addNewPlaceToContact(1l, 1d, 1d, "title");
+        verify(contactDao).addNewPlaceToContact(1l, 1d, 1d, "title");
     }
 
     @Test
-    public void getAllContactSameHobby(){
-        contactService.getAllContactsSameHobby(1l);
-        verify(contactDao).getAllContactsSameHobby(1l);
+    public void doesUserExistTest(){
+        contactService.doesUserExist("firstName", "lastName", 1, 1, 1);
+        verify(contactDao).doesUserExist("firstName", "lastName", 1, 1, 1);
     }
 
     @Test
-    public void getAllContactsSamePlaceTest(){
-        contactService.getAllContactsSamePlace(1l);
-        verify(contactDao).getAllContactsSamePlace(1l);
+    public void getAllContactsDTOSameHobbyTest(){
+        contactService.getAllContactsDTOSameHobby(1l);
+        verify(contactDao).getAllContactsDTOSameHobby(1l);
     }
 
     @Test
-    public void getAllContactsTest(){
-        contactService.getAllContacts();
-        verify(contactDao).getAllContacts();
+    public void getAllContactsDTOSamePlaceTest(){
+        contactService.getAllContactsDTOSamePlace(1l);
+        verify(contactDao).getAllContactsDTOSamePlace(1l);
+    }
+
+    @Test
+    public void getAllContactsDTOTest(){
+        contactService.getAllContactsDTO();
+        verify(contactDao).getAllContactsDTO();
     }
 
     @Test
     public void addHobbyToContactTest(){
-        Contact contact = new Contact();
-        Hobby hobby = new Hobby();
-        contactService.addHobbyToContact(contact, hobby);
-        verify(contactDao).addHobbyToContact(contact, hobby);
+        contactService.addHobbyToContact(1l, 1l);
+        verify(contactDao).addHobbyToContact(1l, 1l);
     }
 
     @Test
-    public void getContactByIdTest(){
-        contactService.getContactById(1l);
-        verify(contactDao).getContactById(1l);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void getContactByIdMinusOneTest(){
-        contactService.getContactById(-1l);
+    public void getContactDTOByIdTest() {
+        contactService.getContactDTOById(1l);
+        verify(contactDao).getContactDTOById(1l);
     }
 
     @Test
     public void addContactTest(){
-        Contact contact = new Contact();
-        contactService.addContact(contact);
-        verify(contactDao).addContact(contact);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void addContactNullTest(){
-        contactService.addContact(null);
+        contactService.addContact("firstName", "lastName", 1, 1, 1);
+        verify(contactDao).addContact("firstName", "lastName", 1, 1, 1);
     }
 
     @Test
-    public void deleteContactTest(){
-        Contact contact = new Contact();
-        contactService.deleteContact(contact);
-        verify(contactDao).deleteContact(contact);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void deleteContactNullTest(){
-        contactService.deleteContact(null);
-    }
-
-    @Test
-    public void getHobbiesFromContactTest(){
-        Contact contact = new Contact();
-        contactService.getHobbiesFromContact(contact);
-        verify(contactDao).getHobbiesFromContact(contact);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void getHobbiesFromContactNullTest(){
-        contactService.getHobbiesFromContact(null);
+    public void getHobbiesDTOFromContactTest() {
+        contactService.getHobbiesDTOFromContact(1l);
+        verify(contactDao).getHobbiesDTOFromContact(1l);
     }
 
     @Test
     public void addFriendshipTest(){
-        Contact first = new Contact();
-        Contact second = new Contact();
-        contactService.addFriendship(first, second);
-        verify(contactDao).addFriendship(first, second);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void addFriendshipFirstNullTest(){
-        Contact second = new Contact();
-        contactService.addFriendship(null, second);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void addFriendshipSecondNullTest(){
-        Contact first = new Contact();
-        contactService.addFriendship(first, null);
-    }
-
-
-    @Test
-    public void removeFriendshipTest(){
-        Contact first = new Contact();
-        Contact second = new Contact();
-        contactService.removeFriendship(first, second);
-        verify(contactDao).removeFriendship(first, second);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void removeFriendshipFirstNullTest(){
-        Contact second = new Contact();
-        contactService.removeFriendship(null, second);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void removeFriendshipSecondNullTest(){
-        Contact first = new Contact();
-        contactService.removeFriendship(first, null);
+        contactService.addFriendship(1l, 2l);
+        verify(contactDao).addFriendship(1l, 2l);
     }
 
     @Test
-    public void getAllFriendPairs(){
-        contactService.getAllFriendPairs();
-        verify(contactDao).getAllFriends();
+    public void removeFriendshipTest() {
+        contactService.removeFriendship(1l, 2l);
+        verify(contactDao).removeFriendship(1l, 2l);
     }
 
     @Test
-    public void getFriendsFromContactTest(){
-        Contact contact = new Contact();
-        contactService.getFriendsFromContact(contact);
-        verify(contactDao).getFriendsFromContact(contact);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void getFriendsFromContactNullTest(){
-        contactService.getFriendsFromContact(null);
+    public void getFriendsDTOFromContactTest(){
+        contactService.getFriendsDTOFromContact(1l);
+        verify(contactDao).getFriendsDTOFromContact(1l);
     }
 
     @Test
-    public void getPlacesFromContactTest(){
-        Contact contact = new Contact();
-        contactService.getFriendsFromContact(contact);
-        verify(contactDao).getFriendsFromContact(contact);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void getPlacesFromContactNullTest(){
-        contactService.getPlacesFromContact(null);
+    public void getPlacesDTOFromContactTest(){
+        contactService.getPlacesDTOFromContact(1l);
+        verify(contactDao).getPlacesDTOFromContact(1l);
     }
 
     @Test
     public void addPlaceToContactTest(){
-        Contact contact = new Contact();
-        Place place = new Place();
-        contactService.addPlaceToContact(contact, place);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void addPlaceToContactContactNullTest(){
-        Place place = new Place();
-        contactService.addPlaceToContact(null, place);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void addPlaceToContactPlaceNullTest(){
-        Contact contact = new Contact();
-        contactService.addPlaceToContact(contact, null);
+        contactService.addNewPlaceToContact(1l, 1d, 1d, "title");
+        verify(contactDao).addNewPlaceToContact(1l, 1d, 1d, "title");
     }
 
     @Test
-    public void addHobbyTest(){
-        String title = "title";
-        String description = "description";
-        contactService.addHobby(title, description);
-        verify(hobbyDao).addHobby(new Hobby(title, description));
+    public void addNewHobbyToContactTest(){
+        contactService.addNewHobbyToContact(1l, "title", "description");
+        verify(contactDao).addNewHobbyToContact(1l, "title", "description");
     }
 
     @Test
-    public void getAllHobbiesTest(){
-        contactService.getAllHobbies();
-        verify(hobbyDao).getAllHobbies();
+    public void getAllHobbiesDTOTest(){
+        contactService.getAllHobbiesDTO();
+        verify(hobbyDao).getAllHobbiesDTO();
     }
 
-//    void deleteHobbyByTitle(String title);
-//    Hobby getHobbyById(Long Id);
-//    void removeHobbyFromContact(Contact contact, Hobby hobby);
-//
-//    //Methods that deal with PlaceDao
-//    void addPlace(String title, double longitude, double latitude);
-//    void addPlace(Place place);
-//    List<Place> getAllPlaces();
-//    Place getPlaceById(long id);
-//    void removePlaceFromContact(Contact contact, Place place);
-//
-//    //Methods that deal with MessageDao
-//    void storeMessage(Contact sender, Contact receiver, String content,
-//                      Date messageDate);
-//    List<Message> getConversation(Contact sender, Contact receiver);
-//    List<Message> getAllMessages();
-//    List<Message> getAllMessagesFromContact(Contact contact);
+    @Test
+    public void removeHobbyFromContact(){
+        contactService.removeHobbyFromContact(1l, 1l);
+        verify(contactDao).removeHobbyFromContact(1l, 1l);
+    }
+
+    @Test
+    public void getAllPlacesDTOTest(){
+        contactService.getAllPlacesDTO();
+        verify(placeDao).getAllPlacesDTO();
+    }
+
+    @Test
+    public void removePlaceFromContactTest(){
+        contactService.removePlaceFromContact(1l, 1l);
+        verify(contactDao).removePlaceFromContact(1l, 1l);
+    }
+
+    @Test
+    public void storeMessageTest(){
+        contactService.storeMessage(1l, 2l, "content", new Date(1, 1, 1));
+        verify(contactDao).sendMessage(1l, 2l, "content", new Date(1, 1, 1));
+    }
+
+    @Test
+    public void getConversationDTOTest(){
+        contactService.getConversationDTO(1l, 2l);
+        verify(messageDao).getConversationDTO(1l, 2l);
+    }
+
 }
