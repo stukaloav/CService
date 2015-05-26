@@ -16,7 +16,7 @@ public class App {
 
         System.out.println(contactService.getFriendsDTOFromContact(1l));
         contactService.addContact("Sasha", "Stukalo", 5, 10, 115);
-        System.out.println(contactService.getAllContactsDTO());
+        System.out.println(contactService.addNewPlaceToContact(1l, 0.1, 0.2, "City"));
 
     }
 }

@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.sav.ContactService.util.EntityConverter.convertToDTO;
+
 @Repository
 public class PlacesDaoImpl implements PlaceDao {
     @Autowired
@@ -21,8 +23,7 @@ public class PlacesDaoImpl implements PlaceDao {
         List<Place> placeList = sessionFactory.getCurrentSession().
                 createQuery("from Place").list();
         for (Place place: placeList){
-            placeDTOs.add(new PlaceDTO(place.getId(), place.getTitle(),
-                    place.getLongitude(), place.getLatitude()));
+            placeDTOs.add(convertToDTO(place));
         }
         return placeDTOs;
     }

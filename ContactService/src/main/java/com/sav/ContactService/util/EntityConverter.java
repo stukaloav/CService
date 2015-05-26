@@ -21,7 +21,7 @@ public class EntityConverter {
     }
 
     public static PlaceDTO convertToDTO(Place place){
-        return new PlaceDTO(place.getTitle(), place.getLongitude(), place.getLatitude());
+        return new PlaceDTO(place.getId(), place.getTitle(), place.getLongitude(), place.getLatitude());
     }
 
     public static MessageDTO convertToDTO(Message message){

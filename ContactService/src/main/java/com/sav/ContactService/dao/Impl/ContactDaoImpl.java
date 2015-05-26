@@ -12,6 +12,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
+import static com.sav.ContactService.util.EntityConverter.convertToDTO;
+
 @Repository
 public class ContactDaoImpl implements ContactDao {
     @Autowired
@@ -34,10 +36,7 @@ public class ContactDaoImpl implements ContactDao {
         Contact contact = new Contact(firstName, lastName, new Date(birthYear, birthMonth, birthDate));
         sessionFactory.getCurrentSession().
                 saveOrUpdate(contact);
-        ContactDTO contactDTO = new ContactDTO(contact.getId(),
-                contact.getFirstName(), contact.getLastName(),
-                contact.getBirthDate());
-        return contactDTO;
+        return convertToDTO(contact);
     }
 
 
@@ -47,8 +46,7 @@ public class ContactDaoImpl implements ContactDao {
                 createQuery("from Contact").list();
         Set<ContactDTO> contactDTOs = new HashSet<>();
         for (Contact contact: contactList){
-            contactDTOs.add(new ContactDTO(contact.getId(), contact.getFirstName(),
-                    contact.getLastName(), contact.getBirthDate()));
+            contactDTOs.add(convertToDTO(contact));
         }
         return contactDTOs;
     }
@@ -80,11 +78,7 @@ public class ContactDaoImpl implements ContactDao {
         if (contact == null){
             return null;
         }else {
-            return new ContactDTO(
-                    contact.getId(),
-                    contact.getFirstName(),
-                    contact.getLastName(),
-                    contact.getBirthDate());
+            return convertToDTO(contact);
         }
     }
 
@@ -115,20 +109,12 @@ public class ContactDaoImpl implements ContactDao {
         Set<ContactDTO> contactDTOs = new HashSet<>();
         if(friends != null){
             for (Contact friend: friends){
-                contactDTOs.add(new ContactDTO(
-                        friend.getId(),
-                        friend.getFirstName(),
-                        friend.getLastName(),
-                        friend.getBirthDate()));
+                contactDTOs.add(convertToDTO(friend));
             }
         }
         if(inverseFriends != null){
             for (Contact inverseFriend: inverseFriends){
-                contactDTOs.add(new ContactDTO(
-                        inverseFriend.getId(),
-                        inverseFriend.getFirstName(),
-                        inverseFriend.getLastName(),
-                        inverseFriend.getBirthDate()));
+                contactDTOs.add(convertToDTO(inverseFriend));
             }
         }
         return contactDTOs;
@@ -147,7 +133,7 @@ public class ContactDaoImpl implements ContactDao {
         }else {
             Set<HobbyDTO> hobbyDTOs = new HashSet<>();
             for (Hobby hobby: hobbies){
-                hobbyDTOs.add(new HobbyDTO(hobby.getId(), hobby.getTitle(), hobby.getDescription()));
+                hobbyDTOs.add(convertToDTO(hobby));
             }
             return hobbyDTOs;
         }
@@ -165,7 +151,7 @@ public class ContactDaoImpl implements ContactDao {
             return null;
         }else {
             for (Place place: places){
-                placeDTOs.add(new PlaceDTO(place.getTitle(), place.getLongitude(), place.getLatitude()));
+                placeDTOs.add(convertToDTO(place));
             }
             return placeDTOs;
         }
@@ -201,7 +187,7 @@ public class ContactDaoImpl implements ContactDao {
         Set<Place> places = contact.getPlaces();
         if (places != null){
             for (Place item: places){
-                placeDTOs.add(new PlaceDTO(item.getTitle(), item.getLongitude(), item.getLatitude()));
+                placeDTOs.add(convertToDTO(item));
             }
         }
         return placeDTOs;
@@ -215,15 +201,13 @@ public class ContactDaoImpl implements ContactDao {
         if(place == null){
             return null;
         }
-        Set<ContactDTO> contactDTOsSamePlace = new HashSet<>();
         Set<Contact> contactsSamePlace = place.getContacts();
         if(contactsSamePlace == null){
             return null;
         }
+        Set<ContactDTO> contactDTOsSamePlace = new HashSet<>();
         for (Contact contact: contactsSamePlace){
-            contactDTOsSamePlace.add(new ContactDTO(
-                    contact.getId(), contact.getFirstName(),
-                    contact.getLastName(), contact.getBirthDate()));
+            contactDTOsSamePlace.add(convertToDTO(contact));
         }
         return contactDTOsSamePlace;
     }
@@ -242,9 +226,7 @@ public class ContactDaoImpl implements ContactDao {
             return null;
         }
         for (Contact contact: contactsSameHobby){
-            contactDTOsSameHobby.add(new ContactDTO(
-                    contact.getId(), contact.getFirstName(),
-                    contact.getLastName(), contact.getBirthDate()));
+            contactDTOsSameHobby.add(convertToDTO(contact));
         }
         return contactDTOsSameHobby;
     }
@@ -263,8 +245,7 @@ public class ContactDaoImpl implements ContactDao {
                     (birthDate == contact.getBirthDate().getDate())&&
                     (birthMonth == contact.getBirthDate().getMonth())&&
                     (birthYear == contact.getBirthDate().getYear())){
-                return new ContactDTO(contact.getId(), contact.getFirstName(),
-                        contact.getLastName(), contact.getBirthDate());
+                return convertToDTO(contact);
             }
         }
         return null;
@@ -277,12 +258,13 @@ public class ContactDaoImpl implements ContactDao {
         if(contact == null){
             return null;
         }
-        Set<HobbyDTO> hobbyDTOs = new HashSet<>();
+        contact.getHobbies().add(hobby);
         sessionFactory.getCurrentSession().merge(contact);
+        Set<HobbyDTO> hobbyDTOs = new HashSet<>();
         Set<Hobby> hobbies = contact.getHobbies();
         if(hobbies != null){
             for (Hobby items: hobbies){
-                hobbyDTOs.add(new HobbyDTO(items.getId(), items.getTitle(), items.getDescription()));
+                hobbyDTOs.add(convertToDTO(items));
             }
         }
         return hobbyDTOs;

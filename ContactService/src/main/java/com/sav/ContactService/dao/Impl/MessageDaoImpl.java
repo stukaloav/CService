@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import static com.sav.ContactService.util.EntityConverter.convertToDTO;
+
 @Component
 public class MessageDaoImpl implements MessageDao{
     @Autowired
@@ -37,14 +39,7 @@ public class MessageDaoImpl implements MessageDao{
         });
         if(conversation != null){
             for (Message message: conversation){
-                conversationDTO.add(new MessageDTO(
-                        message.getId(),
-                        message.getMessageDate(),
-                        message.getContent(),
-                        message.getSender().getFirstName(),
-                        message.getSender().getLastName(),
-                        message.getReceiver().getFirstName(),
-                        message.getReceiver().getLastName()));
+                conversationDTO.add(convertToDTO(message));
             }
         }
         return conversationDTO;
